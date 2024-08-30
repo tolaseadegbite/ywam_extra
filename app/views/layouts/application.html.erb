@@ -11,6 +11,10 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/navigation/navbar' %>
+
+    <div class="mt-2">
+      <%= yield %>
+    </div>
   </body>
 </html>
