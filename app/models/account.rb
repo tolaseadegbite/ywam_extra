@@ -6,6 +6,8 @@ class Account < ApplicationRecord
 
   has_person_name
 
+  validates :first_name, :last_name, :dob, presence: true
+
   def name
     first_name + " " + last_name
   end

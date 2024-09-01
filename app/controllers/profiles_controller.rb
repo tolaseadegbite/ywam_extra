@@ -4,19 +4,33 @@ class ProfilesController < ApplicationController
   before_action :owned_profile, only: [:edit, :update]
 
   def show
-    @account = Account.find_by(username: params[:username])
   end
 
   def edit
+    
   end
 
   def update
+    if @account.update(profile_params)
+      redirect_to(profile_url, notice: "Profile updated!")
+    else
+      render :edit, status: :unprocessable_entity
+      # render(
+      #   turbo_stream: turbo_stream.update(
+      #     "profile_form",
+      #     partial: "profiles/form",
+      #     locals: {
+      #       account: current_account
+      #     }
+      #   )
+      # )
+    end
   end
 
   private
 
     def profile_params
-      params.require(:account).permit(:first_name, :last_name, :dob)
+      params.require(:account).permit(:first_name, :last_name, :dob, :bio)
     end
 
     def find_account

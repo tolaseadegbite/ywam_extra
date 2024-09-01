@@ -1,0 +1,9 @@
+<% if f.object.errors.any? %>
+  <div class='text-danger'>
+    <ul>
+      <% f.object.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

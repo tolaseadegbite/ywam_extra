@@ -1,0 +1,43 @@
+<div class="relative">
+    <%= render 'profiles/components/cover_image' %>
+
+    <%= render 'profiles/components/cover_image_edit_button' %>
+    </a>
+</div>
+
+<div class="flex items-center gap-4 mx-5 justify-between">
+    <div class="z-30">
+        
+        <%= render 'profiles/components/avatar' %>
+
+        <div class="lg:flex items-center gap-3 mb-3">
+
+            <%= render 'profiles/components/email_and_bio' %>
+           
+           <%= render 'profiles/components/verification_button' %>
+        </div>
+
+    </div>
+
+    <div class="flex">
+        <%= render 'profiles/components/actions_button' %>
+
+        <%= render 'profiles/components/share_button' %>
+
+        <% if @account == current_account %>
+            <%= render 'profiles/components/edit_button' %>
+        <% else %>
+            <%= render 'profiles/components/follow_button' %>
+        <% end %>
+    </div>
+</div>
+
+<div class="mx-5">
+    <%= render 'profiles/components/bio' %>
+
+    <%= render 'profiles/components/location_dob_registration_info' %>
+        
+    <div class="flex gap-7 text-sm mb-4">
+        <%= render 'profiles/components/followings_followers_stat' %>
+    </div>
+</div>

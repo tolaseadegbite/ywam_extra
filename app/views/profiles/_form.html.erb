@@ -1,0 +1,32 @@
+<%= form_with(model: account, url: { action: "update" }, html: { class: "space-y-6", id: "profile_form" }, data: { turbo_frame: "_top" }) do |f| %>
+    <%= render 'layouts/errors', f: f %>
+    
+    <div class="grid md:grid-cols-2 md:gap-6">
+        <div class="field">
+            <%= f.label :first_name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+        </div>
+        
+        <div class="field">
+            <%= f.label :last_name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+        </div>
+    </div>
+    
+    <div class="field">
+      <%= f.label "Date of birth", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.date_field :dob, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+
+    <div class="field">
+        <%= f.label :bio, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_area :bio, autofocus: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update profile", class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-3" %>
+
+      <%= link_to "Cancel", profile_path(current_account.username), data: { turbo_frame: "_top" } %>
+    </div>
+
+<% end %>

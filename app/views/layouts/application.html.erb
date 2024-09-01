@@ -17,6 +17,8 @@
     <div class="max-w-screen-l">
       <%= render partial: 'layouts/flash', locals: { message: flash[:notice] } %>
       <%= yield %>
+
+      <%= turbo_frame_tag "modal" %>
     </div>
   </body>
 </html>
