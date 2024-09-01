@@ -12,8 +12,10 @@
 
   <body>
     <%= render 'layouts/navigation/navbar' %>
+    <%= render 'layouts/navigation/sidebar' %>
 
-    <div class="max-w-screen-l p-4">
+    <div class="max-w-screen-l">
+      <%= render partial: 'layouts/flash', locals: { message: flash[:notice] } %>
       <%= yield %>
     </div>
   </body>

@@ -4,5 +4,7 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+// Use the correct import based on the actual package export
+import NotificationController from "@stimulus-components/notification"
+
+application.register("notification", NotificationController)

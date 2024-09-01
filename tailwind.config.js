@@ -4,6 +4,8 @@ module.exports = {
     './public/*.html',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
+    './app/assets/stylesheets/**/*.css',
+    './app/assets/stylesheets/*.css',
     './app/views/**/*',
     './node_modules/flowbite/**/*.js',
   ],

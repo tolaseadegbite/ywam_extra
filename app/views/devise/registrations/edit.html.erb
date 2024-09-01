@@ -1,28 +1,14 @@
-<div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto my-10">
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto my-10">
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
     <h5 class="text-xl font-medium text-gray-900 dark:text-white">Account settings</h5>
 
     <%= render "devise/shared/error_messages", resource: resource %>
-
+    
     <div class="field">
+      
       <%= f.label :email, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :firstname, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.text_field :firstname, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :surname, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.text_field :surname, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
-    </div>
-
-    <div class="field">
-      <%= f.label "Date of birth", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.date_field :dob, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
     </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

@@ -3,4 +3,10 @@ class Account < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_person_name
+
+  def name
+    first_name + " " + last_name
+  end
 end
