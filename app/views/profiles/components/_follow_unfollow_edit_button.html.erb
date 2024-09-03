@@ -1,0 +1,5 @@
+<% if @account == current_account %>
+    <%= render 'profiles/components/edit_button' %>
+<% else %>
+    <%= render 'profiles/components/follow_unfollow_button' %>
+<% end %>

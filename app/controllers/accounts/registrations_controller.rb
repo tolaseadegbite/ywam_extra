@@ -10,9 +10,9 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+  end
 
   # GET /resource/edit
   # def edit
@@ -42,12 +42,12 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :firstname, :surname, :city, :state, :country, :bio, :account_type, :organization_name, :organization_type, :avatar, :dob])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :first_name, :last_name, :city, :state, :country, :bio, :account_type, :organization_name, :organization_type, :avatar, :dob])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :firstname, :surname, :city, :state, :country, :bio, :account_type, :organization_name, :organization_type, :avatar, :dob])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :first_name, :last_name, :city, :state, :country, :bio, :account_type, :organization_name, :organization_type, :avatar, :dob])
   end
 
   # The path used after sign up.

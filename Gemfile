@@ -31,3 +31,4 @@ end
 gem "devise"
 gem "annotate", "~> 3.2"
 gem 'name_of_person'
+gem 'faker'

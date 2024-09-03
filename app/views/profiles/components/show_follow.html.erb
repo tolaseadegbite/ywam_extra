@@ -1,0 +1,44 @@
+<div class="mx-5">
+    <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+        <ul class="flex flex-wrap -mb-px">
+            <li class="me-2">
+                <%= link_to "Following", profile_following_path(current_account.username), class: "inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500", aria: { current: "page" } %>
+            </li>
+            <li class="me-2">
+                <%= link_to "Followers", profile_followers_path(current_account.username), class: "inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" %>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700 mt-3">
+    <% @accounts.each do |account| %>
+        <li class="py-3 sm:pb-4">
+        
+            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="flex-shrink-0">
+                    <%= link_to profile_path(account.username) do %>
+                        <img class="w-8 h-8 rounded-full" src="https://img.freepik.com/free-photo/people-showing-support-respect-with-yellow-background-suicide-prevention-day_23-2151607937.jpg?size=626&ext=jpg&ga=GA1.1.1506676730.1725233996&semt=ais_hybrid" alt="Neil image">
+                    <% end %>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                        <%= link_to account.name, profile_path(account.username) %>
+                    </p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                        @<%= account.username %>
+                    </p>
+                </div>
+                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                    <% if account == current_account %>
+                        <%= render 'profiles/components/edit_button' %>
+                    <% else %>
+                        <div id="follow_form_<%= account.id %>">
+                            <%= follow_button(account) %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </li>
+    <% end %>
+</ul>

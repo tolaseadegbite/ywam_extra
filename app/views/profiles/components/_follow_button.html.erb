@@ -1,3 +1,4 @@
-<%= link_to edit_registration_path(current_account), class: "rounded py-2 px-4 rounded bg-blue-600 flex items-center gap-2 text-white hover:bg-blue-700 ml-auto" do %>
-    Follow
+<%= form_with(model: current_account.active_relationships.build) do |f| %>
+  <div><%= hidden_field_tag :followed_id, account.id %></div>
+  <%= f.submit "Follow", class: "cursor-pointer rounded py-2 px-4 rounded bg-blue-600 flex items-center gap-2 text-white hover:bg-blue-700 ml-auto" %>
 <% end %>

@@ -1,9 +1,11 @@
-<span class="flex gap-1">
-    <span class="font-bold">
-    934
-    </span>
+<%= link_to profile_followers_path(@account.username) do %>
+    <span class="flex gap-1">
+        <span id="followers" class="font-bold">
+            <%= @account.followers.count %>
+        </span>
 
-    <span class="text-gray-500">
-    Followers
+        <span class="text-gray-500">
+            Followers
+        </span>
     </span>
-</span>
+<% end %>

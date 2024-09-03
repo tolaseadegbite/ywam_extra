@@ -12,7 +12,7 @@
 
         <div class="lg:flex items-center gap-3 mb-3">
 
-            <%= render 'profiles/components/email_and_bio' %>
+            <%= render 'profiles/components/username_and_bio' %>
            
            <%= render 'profiles/components/verification_button' %>
         </div>
@@ -24,11 +24,7 @@
 
         <%= render 'profiles/components/share_button' %>
 
-        <% if @account == current_account %>
-            <%= render 'profiles/components/edit_button' %>
-        <% else %>
-            <%= render 'profiles/components/follow_button' %>
-        <% end %>
+        <%= render 'profiles/components/follow_unfollow_edit_button' %>
     </div>
 </div>
 
