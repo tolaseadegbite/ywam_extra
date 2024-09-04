@@ -37,4 +37,24 @@ class Account < ApplicationRecord
   def following?(other_account)
     following.include?(other_account)
   end
+
+  # active storage image and validations
+  # avatar
+  has_one_attached :avatar do |attachable|
+    attachable.variant :display, resize_to_limit: [200, 200]
+  end
+
+  validates :avatar, content_type: { in: %w[image/jpeg image/png],
+                                    message: "must be a valid image format" },
+                    size:         { less_than: 1.megabytes,
+                                    message:   "should be less than 1MB" }
+  # cover image
+  has_one_attached :cover_image do |attachable|
+    attachable.variant :display, resize_to_limit: [1225, 388]
+  end
+
+  validates :cover_image, content_type: { in: %w[image/jpeg image/png],
+                                    message: "must be a valid image format" },
+                    size:         { less_than: 1.megabytes,
+                                    message:   "should be less than 1MB" }
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     registrations: 'accounts/registrations'
   }
 
-  resources :relationships,       only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
   
   root 'pages#home'
   get "up" => "rails/health#show", as: :rails_health_check
@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     get '/followers', to: 'profiles#followers', as: :profile_followers
     get '/edit', to: 'profiles#edit', as: :edit_profile
     patch '/edit', to: 'profiles#update', as: :update_profile
+    delete '/cover_image', to: 'profiles#destroy_cover_image', as: :destroy_profile_cover_image
   end
 end

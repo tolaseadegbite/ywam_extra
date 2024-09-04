@@ -1,6 +1,11 @@
 <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
     <span class="sr-only">Open user menu</span>
-    <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww" alt="user photo">
+
+    <% if current_account.avatar.attached? %>
+        <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
+    <% else %>
+        <%= image_tag('default avatar', class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
+    <% end %>
 </button>
 
 <!-- Dropdown menu -->
@@ -8,7 +13,11 @@
     <%= link_to profile_path(current_account.username), class: "block hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" do %>
         <div class="px-4 py-3 flex items-center gap-2">
             <div>
-                <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww" alt="user photo">
+                <% if current_account.avatar.attached? %>
+                    <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
+                <% else %>
+                    <%= image_tag('default avatar', class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
+                <% end %>
             </div>
 
             <div>

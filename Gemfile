@@ -32,3 +32,4 @@ gem "devise"
 gem "annotate", "~> 3.2"
 gem 'name_of_person'
 gem 'faker'
+gem "active_storage_validations", "0.9.8"

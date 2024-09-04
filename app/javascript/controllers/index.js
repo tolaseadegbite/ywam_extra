@@ -4,7 +4,8 @@
 
 import { application } from "./application"
 
-// Use the correct import based on the actual package export
-import NotificationController from "@stimulus-components/notification"
-
+import NotificationController from "./notification_controller"
 application.register("notification", NotificationController)
+
+import ProfileEditFormController from "./profile_edit_form_controller"
+application.register("profile-edit-form", ProfileEditFormController)

@@ -1,0 +1,20 @@
+<div class="relative">
+    <% if @account.cover_image.attached? %>
+        <%= image_tag(@account.cover_image, class: "w-full h-40 object-cover rounded-b-xl", alt: "cover image preview") %>
+    <% else %>
+        <div class="w-full h-72 object-cover rounded-b-xl bg-blue-400"></div>
+    <% end %>
+
+    <%= render 'profiles/components/form_cover_image_buttons' %>
+
+</div>
+
+<div class="relative inline-block">
+    <% if @account.avatar.attached? %>
+        <%= image_tag(@account.avatar, class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture") %>
+    <% else %>
+        <%= image_tag('default avatar.png', class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture") %>
+    <% end %>
+
+    <%= render 'profiles/components/form_avatar_button' %>
+</div>

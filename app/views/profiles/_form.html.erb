@@ -1,35 +1,43 @@
-<%= form_with(model: account, url: { action: "update" }, html: { class: "space-y-6", id: "profile_form" }, data: { turbo_frame: "_top" }) do |f| %>
+<%= form_with(model: account, url: { action: "update" }, html: { class: "space-y-6", id: "profile_form" }, data: { turbo_frame: "_top", controller: "profile-edit-form" }) do |f| %>
     <%= render 'layouts/errors', f: f %>
     
-    <div class="grid md:grid-cols-2 md:gap-6">
+    <div>
+        <%= render 'profiles/components/form_images_preview' %>
+    </div>
+    
+    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "avatarFile" } %>
+
+    <%= f.file_field :cover_image, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "coverImageFile" } %>
+
+    <div class="grid md:grid-cols-2 md:gap-6 mx-4">
         <div class="field">
             <%= f.label :first_name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+            <%= f.text_field :first_name, autocomplete: "first_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
         </div>
         
         <div class="field">
             <%= f.label :last_name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+            <%= f.text_field :last_name, autocomplete: "last_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
         </div>
     </div>
 
-    <div class="field">
+    <div class="mx-4">
         <%= f.label :username, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_field :username, autofocus: true, autocomplete: "last_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+        <%= f.text_field :username, autocomplete: "last_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
     </div>
     
-    <div class="field">
+    <div class="mx-4">
       <%= f.label "Date of birth", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
       <%= f.date_field :dob, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
     </div>
 
-    <div class="field">
+    <div class="mx-4">
         <%= f.label :bio, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_area :bio, autofocus: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        <%= f.text_area :bio, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
     </div>
 
-    <div class="actions">
-      <%= f.submit "Update profile", class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-3" %>
+    <div class="actions mx-4">
+      <%= f.submit "Update profile", class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-3" %>
 
       <%= link_to "Cancel", :back, data: { turbo_frame: "_top" } %>
     </div>
