@@ -1,7 +1,7 @@
 <div class="relative">
     <% if @account.cover_image.attached? %>
         <div id="<%= dom_id(@account, :cover_image) %>">
-            <%= image_tag(@account.cover_image, class: "w-full h-40 object-cover rounded-b-xl", alt: "cover image preview") %>
+            <%= image_tag(@account.cover_image, class: "w-full h-40 object-cover rounded-b-xl", alt: "cover image preview", data: { "profile-edit-form-target": "coverImagePreview" }) %>
         </div>
     <% else %>
         <%= render 'profiles/components/default_cover_image' %>
@@ -11,9 +11,9 @@
 
 <div class="relative inline-block">
     <% if @account.avatar.attached? %>
-        <%= image_tag(@account.avatar, class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture") %>
+        <%= image_tag(@account.avatar, class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture", data: { "profile-edit-form-target": "avatarPreview" }) %>
     <% else %>
-        <%= image_tag('default avatar.png', class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture") %>
+        <%= image_tag('default avatar.png', class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture", data: { "profile-edit-form-target": "avatarPreview" }) %>
     <% end %>
 
     <%= render 'profiles/components/form_avatar_button' %>

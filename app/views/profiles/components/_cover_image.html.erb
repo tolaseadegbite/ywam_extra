@@ -1,6 +1,6 @@
 <%# Checks if cover image is attached or renders a default cover image %>
 <% if @account.cover_image.attached? %>
-    <%= image_tag(@account.cover_image, class: "w-full h-72 object-cover rounded-b-xl", alt: "cover image") %>
+    <%= image_tag(@account.cover_image, class: "w-full h-72 object-cover rounded-b-xl", alt: "cover image", data: { profile_edit_form_target: "coverImagePreview" }, class: "w-full h-72 object-cover rounded-b-xl", alt: "Cover Image") %>
 <% else %>
     <div class="w-full h-72 object-cover rounded-b-xl bg-blue-400"></div>
     <%# <a href="#" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-white/50 hover:bg-white flex items-center justify-center">

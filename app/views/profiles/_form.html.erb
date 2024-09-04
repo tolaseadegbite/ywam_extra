@@ -6,9 +6,9 @@
     </div>
     
     <div class="mb-5">
-        <%= f.file_field :avatar, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "avatarFile" } %>
+        <%= f.file_field :avatar, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "avatarFile", action: "change->profile-edit-form#avatarChanged" } %>
 
-        <%= f.file_field :cover_image, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "coverImageFile" } %>
+        <%= f.file_field :cover_image, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "coverImageFile", action: "change->profile-edit-form#coverImageChanged" } %>
     </div>
 
     <div class="grid md:grid-cols-2 md:gap-6 mx-4 mb-5">
