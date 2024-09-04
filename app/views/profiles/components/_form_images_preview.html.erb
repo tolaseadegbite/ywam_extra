@@ -1,12 +1,12 @@
 <div class="relative">
     <% if @account.cover_image.attached? %>
-        <%= image_tag(@account.cover_image, class: "w-full h-40 object-cover rounded-b-xl", alt: "cover image preview") %>
+        <div id="<%= dom_id(@account, :cover_image) %>">
+            <%= image_tag(@account.cover_image, class: "w-full h-40 object-cover rounded-b-xl", alt: "cover image preview") %>
+        </div>
     <% else %>
-        <div class="w-full h-72 object-cover rounded-b-xl bg-blue-400"></div>
+        <%= render 'profiles/components/default_cover_image' %>
     <% end %>
-
     <%= render 'profiles/components/form_cover_image_buttons' %>
-
 </div>
 
 <div class="relative inline-block">

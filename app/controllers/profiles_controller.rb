@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  include ActionView::RecordIdentifier
   before_action :authenticate_account!
   before_action :find_account
   before_action :owned_profile, only: [:edit, :update, :update, :destroy_cover_image]
@@ -40,11 +41,16 @@ class ProfilesController < ApplicationController
   end
 
   def destroy_cover_image
-    if @account.cover_image.attached?
-      @account.cover_image.purge
-      redirect_to profile_url(current_account.username), notice: 'Cover image deleted successfully'
-    else
-      redirect_to profile_url(current_account.username), notice: 'Nothing to delete'
+    @account.cover_image.purge
+
+    respond_to do |format|
+      format.html {redirect_to profile_url(current_account.username), notice: 'Cover image deleted successfully'}
+        format.turbo_stream {
+        render turbo_stream: [
+          turbo_stream.replace(dom_id(@account, :cover_image), partial: 'profiles/components/default_cover_image'),
+          turbo_stream.remove('form_cover_image_delete_button')
+        ]
+      }     
     end
   end
 

@@ -1,15 +1,17 @@
-<%= form_with(model: account, url: { action: "update" }, html: { class: "space-y-6", id: "profile_form" }, data: { turbo_frame: "_top", controller: "profile-edit-form" }) do |f| %>
+<%= form_with(model: account, url: { action: "update" }, html: { id: "profile_form" }, data: { turbo_frame: "_top", controller: "profile-edit-form" }) do |f| %>
     <%= render 'layouts/errors', f: f %>
     
     <div>
         <%= render 'profiles/components/form_images_preview' %>
     </div>
     
-    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "avatarFile" } %>
+    <div class="mb-5">
+        <%= f.file_field :avatar, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "avatarFile" } %>
 
-    <%= f.file_field :cover_image, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "coverImageFile" } %>
+        <%= f.file_field :cover_image, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "coverImageFile" } %>
+    </div>
 
-    <div class="grid md:grid-cols-2 md:gap-6 mx-4">
+    <div class="grid md:grid-cols-2 md:gap-6 mx-4 mb-5">
         <div class="field">
             <%= f.label :first_name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
             <%= f.text_field :first_name, autocomplete: "first_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
@@ -21,17 +23,17 @@
         </div>
     </div>
 
-    <div class="mx-4">
+    <div class="mx-4 mb-5">
         <%= f.label :username, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
         <%= f.text_field :username, autocomplete: "last_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
     </div>
     
-    <div class="mx-4">
+    <div class="mx-4 mb-5">
       <%= f.label "Date of birth", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
       <%= f.date_field :dob, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
     </div>
 
-    <div class="mx-4">
+    <div class="mx-4 mb-5">
         <%= f.label :bio, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
         <%= f.text_area :bio, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
     </div>
