@@ -1,5 +1,7 @@
 <%= form_with(model: account, url: { action: "update" }, html: { id: "profile_form" }, data: { turbo_frame: "_top", controller: "profile-edit-form" }) do |f| %>
-    <%= render 'layouts/errors', f: f %>
+    <div class="mb-5">
+        <%= render 'layouts/errors', f: f %>
+    </div>
     
     <div>
         <%= render 'profiles/components/form_images_preview' %>
