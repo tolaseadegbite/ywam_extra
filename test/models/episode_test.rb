@@ -2,14 +2,16 @@
 #
 # Table name: episodes
 #
-#  id          :bigint           not null, primary key
-#  likes_count :integer          default(0), not null
-#  saves_count :integer          default(0), not null
-#  title       :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  category_id :bigint           not null
-#  podcast_id  :bigint           not null
+#  id            :bigint           not null, primary key
+#  description   :text             not null
+#  episode_type  :integer          default("standard"), not null
+#  follows_count :integer          default(0), not null
+#  saves_count   :integer          default(0), not null
+#  title         :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  category_id   :bigint           not null
+#  podcast_id    :bigint           not null
 #
 # Indexes
 #

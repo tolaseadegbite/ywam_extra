@@ -1,7 +1,6 @@
 <%= form_with(model: account, url: { action: "update" }, html: { id: "profile_form" }, data: { turbo_frame: "_top", controller: "profile-edit-form" }) do |f| %>
-    <div class="mb-5">
-        <%= render 'layouts/errors', f: f %>
-    </div>
+
+    <%= render 'layouts/errors', f: f %>
     
     <div>
         <%= render 'profiles/components/form_images_preview' %>
@@ -40,10 +39,8 @@
         <%= f.text_area :bio, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
     </div>
 
-    <div class="actions mx-4">
-      <%= f.submit "Update profile", class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-3" %>
-
-      <%= link_to "Cancel", :back, data: { turbo_frame: "_top" } %>
+    <div class="actions mx-4 mb-5">
+      <%= f.submit "Update profile", class: "rounded-full py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 cursor-pointer" %>
     </div>
 
 <% end %>

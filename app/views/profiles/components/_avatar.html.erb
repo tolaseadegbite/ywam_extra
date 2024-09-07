@@ -1,5 +1,5 @@
 <% if @account.avatar.attached? %>
     <%= image_tag(@account.avatar, class: "w-28 h-28 object-cover rounded-full border-2 border-white -mt-14", alt: "profile picture") %>
 <% else %>
-    <%= image_tag('default avatar', class: "w-28 h-28 object-cover rounded-full border-2 border-white -mt-14", alt: "profile picture") %>
+    <%= image_tag('others/default avatar', class: "w-28 h-28 object-cover rounded-full border-2 border-white -mt-14", alt: "profile picture") %>
 <% end %>

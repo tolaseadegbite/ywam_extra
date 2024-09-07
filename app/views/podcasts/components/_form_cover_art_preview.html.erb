@@ -1,0 +1,14 @@
+<div class="relative inline-block">
+    <% if @podcast.cover_art.attached? %>
+        <div id="<%= dom_id(@podcast, :cover_art) %>">
+            <%= image_tag(@podcast.cover_art, class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "cover art preview", data: { "podcast-form-target": "coverArtPreview" }) %>
+        </div>
+    <% else %>
+        <div id="<%= dom_id(@podcast, :cover_art) %>">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" class="w-20 h-20 object-cover rounded-lg border-2 border-white bg-blue-400" alt="Default Cover Art" data-podcast-form-target="coverArtPreview">
+        </div>
+    <% end %>
+
+    <%= render 'podcasts/components/form_cover_art_button' %>
+    
+</div>

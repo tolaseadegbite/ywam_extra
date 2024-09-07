@@ -1,0 +1,37 @@
+<%= form_with(model: [podcast], html: { id: "podcast_form", class: "mx-5" }, data: { turbo_frame: "_top", controller: "podcast-form" }) do |f| %>
+    <div class="mb-5">
+        <%= render 'layouts/errors', f: f %>
+    </div>
+    
+    <div>
+        <%= render 'podcasts/components/form_cover_art_preview' %>
+    </div>
+    
+    <div class="mb-5">
+        <%= f.file_field :cover_art, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "podcast-form-target": "coverArtFile", action: "change->podcast-form#coverArtChanged" } %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :category, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <% unless f.object.new_record? %>
+            <%= f.select :category_id, Category.all.pluck(:name, :id), { include_blank: "Select category", selected: @podcast.category.id }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", required: true %>
+        <% else %>
+            <%= f.select :category_id, Category.all.pluck(:name, :id), { include_blank: "Select category" }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", required: true %>
+        <% end %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :name, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+    
+    <div class="field mb-5">
+        <%= f.label :about, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_area :about, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Publish", class: "rounded-full py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5" %>
+    </div>
+
+<% end %>

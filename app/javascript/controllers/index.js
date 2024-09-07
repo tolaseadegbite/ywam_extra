@@ -4,8 +4,14 @@
 
 import { application } from "./application"
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
 import NotificationController from "./notification_controller"
 application.register("notification", NotificationController)
+
+import PodcastFormController from "./podcast_form_controller"
+application.register("podcast-form", PodcastFormController)
 
 import ProfileEditFormController from "./profile_edit_form_controller"
 application.register("profile-edit-form", ProfileEditFormController)

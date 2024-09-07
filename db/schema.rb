@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_06_005058) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_06_053957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,12 +91,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_06_005058) do
 
   create_table "episodes", force: :cascade do |t|
     t.string "title", null: false
+    t.text "description", null: false
     t.bigint "podcast_id", null: false
     t.bigint "category_id", null: false
-    t.integer "likes_count", default: 0, null: false
+    t.integer "follows_count", default: 0, null: false
     t.integer "saves_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "episode_type", default: 0, null: false
     t.index ["category_id"], name: "index_episodes_on_category_id"
     t.index ["podcast_id"], name: "index_episodes_on_podcast_id"
   end
@@ -124,8 +126,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_06_005058) do
 
   create_table "podcasts", force: :cascade do |t|
     t.string "name", null: false
+    t.text "about", null: false
     t.integer "episodes_count", default: 0, null: false
-    t.integer "followers_count", default: 0, null: false
+    t.integer "follows_count", default: 0, null: false
     t.bigint "account_id", null: false
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false

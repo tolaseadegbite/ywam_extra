@@ -2,14 +2,15 @@
 #
 # Table name: podcasts
 #
-#  id              :bigint           not null, primary key
-#  episodes_count  :integer          default(0), not null
-#  followers_count :integer          default(0), not null
-#  name            :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  account_id      :bigint           not null
-#  category_id     :bigint           not null
+#  id             :bigint           not null, primary key
+#  about          :text             not null
+#  episodes_count :integer          default(0), not null
+#  follows_count  :integer          default(0), not null
+#  name           :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  account_id     :bigint           not null
+#  category_id    :bigint           not null
 #
 # Indexes
 #

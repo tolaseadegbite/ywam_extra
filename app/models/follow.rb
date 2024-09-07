@@ -21,6 +21,8 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class Follow < ApplicationRecord
+  validates :account_id, uniqueness: { scope: [:followable_id, :followable_type] }
+  
   belongs_to :account
-  belongs_to :followable, polymorphic: true
+  belongs_to :followable, polymorphic: true, counter_cache: :follows_count
 end

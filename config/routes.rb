@@ -1,12 +1,14 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do 
+  root 'podcasts#index'
+
   devise_for :accounts, controllers: {
     sessions: 'accounts/sessions',
     registrations: 'accounts/registrations'
   }
 
   resources :relationships, only: [:create, :destroy]
-  
-  root 'pages#home'
+  resources :podcasts
+  resources :episodes
   get "up" => "rails/health#show", as: :rails_health_check
 
   scope(path: ':username', constraints: { username: /[^\/]+/ }) do

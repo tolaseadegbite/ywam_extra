@@ -13,7 +13,7 @@
     <% if @account.avatar.attached? %>
         <%= image_tag(@account.avatar, class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture", data: { "profile-edit-form-target": "avatarPreview" }) %>
     <% else %>
-        <%= image_tag('default avatar.png', class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture", data: { "profile-edit-form-target": "avatarPreview" }) %>
+        <%= image_tag('others/default avatar.png', class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "profile picture", data: { "profile-edit-form-target": "avatarPreview" }) %>
     <% end %>
 
     <%= render 'profiles/components/form_avatar_button' %>

@@ -4,7 +4,7 @@
     <% if current_account.avatar.attached? %>
         <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
     <% else %>
-        <%= image_tag('default avatar', class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
+        <%= image_tag('others/default avatar', class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
     <% end %>
 </button>
 
@@ -16,7 +16,7 @@
                 <% if current_account.avatar.attached? %>
                     <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
                 <% else %>
-                    <%= image_tag('default avatar', class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
+                    <%= image_tag('others/default avatar', class: "w-8 h-8 rounded-full", alt: "Menu avatar") %>
                 <% end %>
             </div>
 
