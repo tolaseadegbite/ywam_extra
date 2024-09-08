@@ -7,6 +7,12 @@ export default class extends Controller {
     this.open()
     // needed because ESC key does not trigger close event
     this.element.addEventListener("close", this.enableBodyScroll.bind(this))
+
+    this.element.addEventListener('turbo:submit-end', () => {
+      Array.from(document.getElementsByClassName('close-modal-btn')).forEach((btn) => {
+        btn.click();
+      });
+    });
   }
 
   disconnect() {

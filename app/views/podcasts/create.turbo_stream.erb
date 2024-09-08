@@ -1,0 +1,5 @@
+<%= turbo_stream.prepend "podcasts" do %>
+    <%= render 'podcasts/podcast', podcast: @podcast %>
+<% end %>
+
+<%= render_turbo_stream_flash_messages %>

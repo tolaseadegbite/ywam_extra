@@ -9,14 +9,15 @@
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button>
-            <h1 class="text-3xl font-bold ml-3">All Podcasts</h1>
+            <h1 class="font-semibold text-2xl p-2">All Podcasts</h1>
         </div>
 
         <%= link_to new_podcast_path, class: "rounded-full py-2 px-4 bg-blue-800 lg:flex items-center gap-2 text-white hover:bg-blue-700 ml-auto", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
             New podcast
         <% end %>
     </div>
-    <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+    
+    <div id="podcasts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         <%= render @podcasts %>
     </div>
 </div>

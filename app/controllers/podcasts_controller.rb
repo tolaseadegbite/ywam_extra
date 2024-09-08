@@ -15,7 +15,16 @@ class PodcastsController < ApplicationController
   end
 
   def create
-    
+    @podcast = current_account.podcasts.build(podcast_params)
+
+    if @podcast.save
+      respond_to do |format|
+        format.html { redirect_to @podcast, notice: "Podcast created successfully" }
+        format.turbo_stream { flash.now[:notice] = 'Podcast created successfully' }
+      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -31,6 +40,10 @@ class PodcastsController < ApplicationController
   end
 
   private
+
+    def podcast_params
+      params.require(:podcast).permit(:name, :about, :cover_art, :category_id)
+    end
 
     def find_podcast
       @podcast = Podcast.find(params[:id])
