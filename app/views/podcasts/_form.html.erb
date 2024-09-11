@@ -29,9 +29,14 @@
         <%= f.label :about, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
         <%= f.text_area :about, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
     </div>
+    
+    <div class="field mb-5">
+        <%= f.label :tags, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.select :tag_ids, Tag.all.pluck(:name, :id), {}, { multiple: true, id: "select-tags" } %>
+    </div>
 
     <div class="actions">
-      <%= f.submit "Publish", class: "cursor-pointer rounded-full py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5" %>
+      <%= f.submit "Publish", class: "w-full cursor-pointer rounded-full py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5 md:max-w-fit" %>
     </div>
 
 <% end %>

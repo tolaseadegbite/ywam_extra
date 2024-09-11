@@ -1,0 +1,5 @@
+<%= turbo_stream.replace 'follow_button' do %>
+    <%= render 'follows/button', followable: @followable %>
+<% end %>
+
+<%= render_turbo_stream_flash_messages %>

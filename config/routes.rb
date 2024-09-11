@@ -7,8 +7,13 @@ Rails.application.routes.draw do
   }
 
   resources :relationships, only: [:create, :destroy]
-  resources :podcasts
-  resources :episodes
+  resources :podcasts do
+    resources :episodes
+  end
+
+  resources :tags
+  resources :follows, only: [:create, :destroy]
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   scope(path: ':username', constraints: { username: /[^\/]+/ }) do

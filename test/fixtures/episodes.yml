@@ -27,11 +27,11 @@
 one:
   title: MyString
   podcast: one
-  likes_count: 1
+  follows_count: 1
   saves_count: 1
 
 two:
   title: MyString
   podcast: two
-  likes_count: 1
+  follows_count: 1
   saves_count: 1

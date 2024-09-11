@@ -7,7 +7,7 @@ class PodcastsController < ApplicationController
   end
 
   def show
-    
+    @episodes = @podcast.episodes.order(id: :desc)
   end
 
   def new
@@ -42,7 +42,7 @@ class PodcastsController < ApplicationController
   private
 
     def podcast_params
-      params.require(:podcast).permit(:name, :about, :cover_art, :category_id)
+      params.require(:podcast).permit(:name, :about, :cover_art, :category_id, tag_ids: [])
     end
 
     def find_podcast

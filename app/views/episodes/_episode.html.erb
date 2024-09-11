@@ -1,0 +1,22 @@
+<div class="flex space-x-5 border-t hover:rounded-xl px-3 py-5 hover:bg-gray-200 cursor-pointer">
+    <div class="flex-shrink-0">
+        <% if episode.cover_art.attached? %>
+            <%= image_tag(episode.cover_art, class: "w-28 h-28 object-cover rounded-xl") %>
+        <% else %>
+            <%= image_tag('podcasts/man.jpg', class: "w-28 h-28 object-cover rounded-xl") %>
+        <% end %>
+    </div>
+
+    <div>
+        <h3 class="text-xl font-semibold">
+            <%= link_to episode.title, podcast_episode_path(@podcast, episode) %>
+        </h3>
+        <h4 class="text-md text-gray-600 mb-3">
+            <%= episode.title %>
+        </h4>
+        <p class="text-sm text-gray-600 mb-3">
+            <%= episode.description.truncate(170) %>
+        </p>
+        <span class=""><%= render_date(episode) %> | 17 min 6 sec</span>
+    </div>
+</div>
