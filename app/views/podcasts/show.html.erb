@@ -1,3 +1,5 @@
+<% provide(:title, @podcast.name) %>
+
 <%= render 'podcasts/components/sidebar' %>
 
 <div class="sm:ml-64">
@@ -5,7 +7,7 @@
         <div class="header flex items-center gap-5 bg-gray-800 pt-8 pb-5 px-5 rounded-b-xl">
             <div class="">
                 <% if @podcast.cover_art.attached? %>
-                    <%= image_tag(@podcast.cover_art.variant(resize_to_limit: [500, 500])) %>
+                    <%= image_tag(@podcast.cover_art, class: "w-48 h-48 object-cover rounded-xl") %>
                 <% else %>
                     <%= image_tag('podcasts/hands.png', class: "w-48 h-48 object-cover rounded-xl") %>
                 <% end %>

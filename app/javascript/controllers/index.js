@@ -15,3 +15,6 @@ application.register("podcast-form", PodcastFormController)
 
 import ProfileEditFormController from "./profile_edit_form_controller"
 application.register("profile-edit-form", ProfileEditFormController)
+
+import TomSelectController from "./tom_select_controller"
+application.register("tom-select", TomSelectController)

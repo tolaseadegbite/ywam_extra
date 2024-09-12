@@ -3,7 +3,7 @@ class PodcastsController < ApplicationController
   before_action :find_podcast, only: %w[show edit update destroy]
 
   def index
-    @podcasts = Podcast.all.includes(:account).order(id: :desc)
+    @podcasts = Podcast.all.includes(:account).ordered
   end
 
   def show

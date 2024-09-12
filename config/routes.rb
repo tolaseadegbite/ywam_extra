@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     resources :episodes
   end
 
-  resources :tags
+  resources :tags, only: [:create, :show]
+
   resources :follows, only: [:create, :destroy]
 
   get "up" => "rails/health#show", as: :rails_health_check
