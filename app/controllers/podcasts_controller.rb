@@ -7,7 +7,7 @@ class PodcastsController < ApplicationController
   end
 
   def show
-    @episodes = @podcast.episodes.order(id: :desc)
+    @episodes = @podcast.episodes.ordered
   end
 
   def new

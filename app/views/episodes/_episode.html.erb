@@ -1,22 +1,42 @@
-<div class="flex space-x-5 border-t hover:rounded-xl px-3 py-5 hover:bg-gray-200 cursor-pointer">
-    <div class="flex-shrink-0">
-        <% if episode.cover_art.attached? %>
-            <%= image_tag(episode.cover_art, class: "w-28 h-28 object-cover rounded-xl") %>
-        <% else %>
-            <%= image_tag('podcasts/man.jpg', class: "w-28 h-28 object-cover rounded-xl") %>
-        <% end %>
-    </div>
+<%= turbo_frame_tag episode do %>
+    <div class="flex space-x-5 border-t hover:rounded px-3 py-5 hover:bg-gray-100 cursor-pointer">
+        <div class="flex-shrink-0">
+            <% if episode.cover_art.attached? %>
+                <%= image_tag(episode.cover_art, class: "w-28 h-28 object-cover rounded shadow") %>
+            <% else %>
+                <%= image_tag('podcasts/man.jpg', class: "w-28 h-28 object-cover rounded shadow") %>
+            <% end %>
+        </div>
 
-    <div>
-        <h3 class="text-xl font-semibold">
-            <%= link_to episode.title, podcast_episode_path(@podcast, episode) %>
-        </h3>
-        <h4 class="text-md text-gray-600 mb-3">
-            <%= episode.title %>
-        </h4>
-        <p class="text-sm text-gray-600 mb-3">
-            <%= episode.description.truncate(170) %>
-        </p>
-        <span class=""><%= render_date(episode) %> | 17 min 6 sec</span>
+        <div>
+            <h3 class="text-xl font-semibold">
+                <%= link_to episode.title, podcast_episode_path(@podcast, episode) %>
+            </h3>
+            <h4 class="text-md text-gray-600 mb-3">
+                <%= @podcast.name %>
+            </h4>
+            <p class="text-sm text-gray-600 mb-3">
+                <%= episode.description.truncate(170) %>
+            </p>
+            <span class=""><%= render_date(episode) %> | 17 min 6 sec</span>
+
+            <div class="flex gap-3 mt-3">
+                <span>
+                    Add to playlist
+                </span>
+                <span>
+                    Download
+                </span>
+                <span>
+                    Share
+                </span>
+                <span>
+                    <%= link_to 'Edit', edit_podcast_episode_path(@podcast, episode), data: {action: "click->dialog#open", turbo_frame: :modal} %>
+                </span>
+                <span>
+                    <%= link_to 'Delete', podcast_episode_path(@podcast, episode), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+                </span>
+            </div>
+        </div>
     </div>
-</div>
+<% end %>

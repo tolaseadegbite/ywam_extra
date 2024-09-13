@@ -24,12 +24,12 @@
 #  fk_rails_...  (podcast_id => podcasts.id)
 #
 class Episode < ApplicationRecord
-  validates :title, :description, presence: true
+  validates :title, :description, :episode_type, presence: true
 
   belongs_to :podcast
   belongs_to :category
 
-  has_many :episode_tags
+  has_many :episode_tags, dependent: :destroy
   has_many :tags, through: :episode_tags
 
   # An episode can have many followers
@@ -62,4 +62,6 @@ class Episode < ApplicationRecord
     special: 11,
     bonus: 12
   }
+
+  scope :ordered, -> { order(id: :desc) }
 end
