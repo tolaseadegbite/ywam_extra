@@ -1,0 +1,6 @@
+<%= render 'layouts/modal_dialog' do %>
+  <div data-action="turbo:submit-end->dialog#submitEnd">
+    <h1 class="font-semibold text-2xl p-3 border-b">Edit Podcast</h1>
+    <%= render "form", podcast: @podcast %>
+  </div>
+<% end %>

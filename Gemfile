@@ -21,6 +21,7 @@ end
 
 group :development do
   gem "web-console"
+  gem "rails_live_reload"
 end
 
 group :test do

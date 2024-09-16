@@ -32,7 +32,14 @@ class PodcastsController < ApplicationController
   end
 
   def update
-    
+    if @podcast.update(podcast_params)
+      respond_to do |format|
+        format.html { redirect_to @podcast, notice: "Podcast updated successfully" }
+        # format.turbo_stream { flash.now[:notice] = "Podcast updated successfully" }
+      end
+    else
+      render :edit
+    end
   end
 
   def destroy

@@ -1,0 +1,9 @@
+<%= turbo_stream.replace 'show_header' do %>
+  <%= render 'podcasts/components/show_header' %>
+<% end %>
+
+<%= turbo_stream.replace 'about' do %>
+  <%= render 'podcasts/components/about' %>
+<% end %>
+
+<%= render_turbo_stream_flash_messages %>
