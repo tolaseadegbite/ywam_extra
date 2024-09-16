@@ -7,6 +7,7 @@
 #  episodes_count :integer          default(0), not null
 #  follows_count  :integer          default(0), not null
 #  name           :string           not null
+#  reviews_count  :integer          default(0)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  account_id     :bigint           not null
@@ -35,6 +36,8 @@ class Podcast < ApplicationRecord
   # A podcast can have many followers
   has_many :follows, as: :followable
   has_many :followers, through: :follows, source: :account
+
+  has_many :reviews, as: :reviewable, dependent: :destroy
 
   # cover art
   has_one_attached :cover_art do |attachable|

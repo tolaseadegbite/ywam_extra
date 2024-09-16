@@ -20,21 +20,23 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 /* scrollbar styling */
-::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    /* // border-radius: 10px; */
-    background-color: #F5F5F5;
+::-webkit-scrollbar-track {
+  /* Pure function to calculate shadow with no side effects */
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px; /* Add rounded corners */
+  background-color: #F5F5F5;
 }
-::-webkit-scrollbar
-{
-    width: 12px;
-    background-color: #F5F5F5;
-    margin: 20px 0;
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+  /* Add padding to avoid overlap with rounded corners */
+  padding-right: 2px; /* Adjust as needed */
 }
-::-webkit-scrollbar-thumb
-{
-    /* // border-radius: 10px; */
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color: #323738;
+
+::-webkit-scrollbar-thumb {
+  /* Keep the thumb styling immutable */
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px; /* Apply rounded corners */
+  background-color: #323738;
 }

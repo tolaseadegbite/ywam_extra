@@ -8,12 +8,14 @@ Rails.application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
   resources :podcasts do
-    resources :episodes
+    resources :episodes, except: [:index]
   end
-
   resources :tags, only: [:create, :show]
-
   resources :follows, only: [:create, :destroy]
+
+  resources :podcasts do
+    resources :reviews
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 
