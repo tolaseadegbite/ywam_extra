@@ -1,0 +1,5 @@
+<% unless current_account && current_account.reviews.where(reviewable: @podcast).exists? %>
+    <%= link_to "New review", new_podcast_review_path(@podcast), data: { turbo_frame: dom_id(Review.new) }, class: "inline-block mt-3" %>
+<% else %>
+    <%= render 'reviews/review_restriction_text' %>
+<% end %>

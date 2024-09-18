@@ -8,6 +8,8 @@ class PodcastsController < ApplicationController
 
   def show
     @episodes = @podcast.episodes.ordered
+    @reviews = @podcast.reviews.includes(:account).ordered
+    @review = Review.new
   end
 
   def new
@@ -23,7 +25,7 @@ class PodcastsController < ApplicationController
         format.turbo_stream { flash.now[:notice] = 'Podcast created successfully' }
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

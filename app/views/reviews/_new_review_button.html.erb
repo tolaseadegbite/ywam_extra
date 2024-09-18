@@ -1,0 +1,5 @@
+<% unless current_account && current_account.reviews.where(reviewable: reviewable).exists? %>
+    <%= link_to "Create new review", new_polymorphic_path([reviewable, :review]), data: { turbo_frame: dom_id(Review.new) }, class: "inline-block mt-3" %>
+<% else %>
+    <%= render 'reviews/review_restriction_text' %>
+<% end %>

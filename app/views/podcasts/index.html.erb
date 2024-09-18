@@ -12,7 +12,7 @@
             <h1 class="font-semibold text-2xl p-2">All Podcasts</h1>
         </div>
 
-        <%= link_to new_podcast_path, class: "rounded-full py-2 px-4 bg-blue-800 lg:flex items-center gap-2 text-white hover:bg-blue-700 ml-auto", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
+        <%= link_to new_podcast_path, class: "rounded py-2 px-4 bg-blue-800 lg:flex items-center gap-2 text-white hover:bg-blue-700 ml-auto", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
             New podcast
         <% end %>
     </div>

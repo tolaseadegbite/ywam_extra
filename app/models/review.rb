@@ -27,4 +27,6 @@ class Review < ApplicationRecord
 
   belongs_to :reviewable, polymorphic: true, counter_cache: :reviews_count
   belongs_to :account
+
+  scope :ordered, -> { order(id: :asc) }
 end

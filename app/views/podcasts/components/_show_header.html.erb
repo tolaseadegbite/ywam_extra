@@ -1,4 +1,14 @@
 <div style="margin-bottom: 0rem;">
     <h1 class="text-6xl font-semibold capitalize"> <%= @podcast.name %></h1>
-    <h6 class="py-5 font-semibold"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
+
+    <div class="flex gap-3 items-center">
+        
+        <% if @podcast.account.avatar.attached? %>
+            <%= link_to image_tag(@podcast.account.avatar, class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+        <% else %>
+            <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+        <% end %>
+
+        <h6 class="py-5 font-semibold"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
+    </div>
 </div>
