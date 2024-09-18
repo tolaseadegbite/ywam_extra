@@ -55,10 +55,10 @@
                         </ul>
                     </div>
 
-                    <%= link_to podcast_path(@podcast)+'#ratings' do %>
+                    <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
                         <%= pluralize(@podcast.reviews.count, 'rating') %>
 
-                        (5.0 <span class="text-yellow-500">★</span>)
+                        (<%= @podcast.average_rating %> <span class="text-yellow-500 text-2xl">★</span>)
                     <% end %>
 
                     <span id="podcastDropdownButton" data-dropdown-toggle="dropdown" class="cursor-pointer">
@@ -101,7 +101,7 @@
                             Latest Episodes
                         </h2>
 
-                        <div id="episodes" class="my-4">
+                        <div id="episodes" class="mt-4 mb-8">
                             <div>
                                 <%= render @episodes %>
                             </div>

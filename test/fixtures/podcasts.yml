@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  about          :text             not null
+#  average_rating :decimal(, )      default(0.0)
 #  episodes_count :integer          default(0), not null
 #  follows_count  :integer          default(0), not null
 #  name           :string           not null

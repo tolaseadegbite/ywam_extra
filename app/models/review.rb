@@ -21,12 +21,20 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class Review < ApplicationRecord
-  validates :rating, presence: true, inclusion: { in: 1..5 }
+  validates :rating, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 6 }
   validates :comment, presence: true, length: { minimum: 10 }
   validates :account_id, uniqueness: { scope: [:reviewable_type, :reviewable_id], message: 'has already reviewed this item' }
+
+  # update update_average_rating column when review is creates, updated and destroyed
+  after_commit :update_average_rating, on: [:create, :update, :destroy]
 
   belongs_to :reviewable, polymorphic: true, counter_cache: :reviews_count
   belongs_to :account
 
   scope :ordered, -> { order(id: :asc) }
+
+  # after commit callback
+  def update_average_rating
+    reviewable.update!(average_rating: reviewable.reviews.average(:rating))
+  end
 end
