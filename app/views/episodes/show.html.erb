@@ -1,7 +1,11 @@
 <% provide(:title, sanitize(@episode.title)) %>
 
-<main style="padding:1rem">
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_0.7fr] gap-10">
+<%= render 'podcasts/components/sidebar' %>
+
+<%= render 'podcasts/components/sidebar_menu' %>
+
+<main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
+    <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)260px] gap-0 md:gap-10 xl:gap-20">
         <div class="relative">
             <turbo-frame id="about">
                 <%= render 'episodes/components/about' %>
@@ -14,7 +18,7 @@
             </turbo-frame>
 
             <div class="inline-flex items-center gap-7 py-0 mb-5">
-                <div class="inline-flex gap-7 items-center text-gray-600">
+                <div class="inline-flex gap-7 items-center">
 
                     <span id="episodePlaylistDropdownButton" data-dropdown-toggle="episode_playlist_button_dropdown" class="cursor-pointer inline-flex gap-1 items-center">
 
