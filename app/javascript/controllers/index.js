@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import AudioPlayerController from "./audio_player_controller"
+application.register("audio-player", AudioPlayerController)
+
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
 

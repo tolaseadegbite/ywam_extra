@@ -11,7 +11,7 @@
     <div class="flex-1">
       <!-- Account Name and Rating -->
       <div class="flex justify-between items-center mb-2">
-        <h4 class="text-md font-semibold text-gray-900"><%= link_to review.account.username, profile_path(review.account.username) %></h4>
+        <h4 class="text-md text-gray-900"><%= link_to review.account.username, profile_path(review.account.username) %></h4>
         <!-- Star Rating -->
         <div class="flex items-center">
           <% 5.times do |i| %>

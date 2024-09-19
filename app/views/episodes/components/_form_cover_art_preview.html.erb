@@ -1,7 +1,7 @@
 <div class="relative inline-block">
     <% if @episode.cover_art.attached? %>
         <div id="<%= dom_id(@episode, :cover_art) %>">
-            <%= image_tag(@episode.cover_art, class: "w-20 h-20 object-cover rounded-full border-2 border-white -mt-11 ml-4", alt: "cover art preview", data: { "podcast-form-target": "coverArtPreview" }) %>
+            <%= image_tag(@episode.cover_art, class: "w-20 h-20 object-cover rounded-lg border-2 border-white", alt: "cover art preview", data: { "podcast-form-target": "coverArtPreview" }) %>
         </div>
     <% else %>
         <div id="<%= dom_id(@episode, :cover_art) %>">

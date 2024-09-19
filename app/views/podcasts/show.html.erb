@@ -1,6 +1,6 @@
-<% provide(:title, @podcast.name) %>
+<% provide(:title, sanitize(@podcast.name)) %>
 
-<main style="padding: 5rem 2rem">
+<main style="padding:1rem">
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-10">
         <div class="relative">
             <turbo-frame id="about">
@@ -15,10 +15,6 @@
 
             <div class="inline-flex items-center gap-7 py-0 mb-11">
                 <div class="inline-flex gap-7 items-center">
-
-                    <%= link_to new_podcast_episode_path(@podcast), class: "rounded py-2 px-4 bg-blue-800 items-center gap-2 text-white hover:bg-blue-700", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
-                        New episode
-                    <% end %>
 
                     <span id="episodeDropdownButton" data-dropdown-toggle="episode_button_dropdown" class="cursor-pointer inline-flex gap-1 items-center">
                         All Episodes (<%= @podcast.episodes.count %>)
@@ -97,7 +93,7 @@
                 <div>
                     <div>
 
-                        <h2 class="text-2xl font-semibold">
+                        <h2 class="text-2xl">
                             Latest Episodes
                         </h2>
 
@@ -110,7 +106,7 @@
 
                     <section id="ratings">
 
-                        <h2 id="reviews_header" class="text-2xl font-semibold">
+                        <h2 id="reviews_header" class="text-2xl">
                             <span id="<%= dom_id(@podcast, :reviews_count) %>">
                                 <%= pluralize(@podcast.reviews.count, 'Review') %>
                             </span>
@@ -134,7 +130,7 @@
                     <div>
                         <h2 class="text-xl mb-3">Support <%= @podcast.name %></h2>
                         <p class="mb-3">Become a supporter of the show</p>
-                        <%= button_to(root_path, class:"inline-flex gap-1 items-center py-2 px-4 text-white text-sm lg:text-base font-bold bg-blue-900 rounded-md whitespace-nowrap mb-3") do %>
+                        <%= button_to(root_path, class:"inline-flex gap-1 items-center py-2 px-4 text-white text-sm lg:text-base font-bold bg-blue-800 hover:bg-blue-900 rounded-md whitespace-nowrap mb-3") do %>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                 <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                             </svg>

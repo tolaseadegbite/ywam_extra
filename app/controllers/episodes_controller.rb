@@ -1,7 +1,8 @@
 class EpisodesController < ApplicationController
   before_action :authenticate_account!, only: %w[create edit update destroy]
-  before_action :find_episode, only: %w[edit update destroy]
+  before_action :find_episode, only: %w[show edit update destroy]
   before_action :find_podcast
+  # before_action :ensure_frame_response, only: %i[ new edit show ]
 
   def new
     @episode = Episode.new
@@ -28,11 +29,22 @@ class EpisodesController < ApplicationController
   def update
     if @episode.update(episode_params)
       respond_to do |format|
-        format.html { redirect_to @podcast, notice: "Episode updated successfully" }
-        format.turbo_stream { flash.now[:notice] = "Episode updated successfully" }
+        flash[:notice] = "Episode updated successfully"
+        format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @episode)) }
+        # format.turbo_stream { flash.now[:notice] = "Episode updated successfully" }
       end
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
+      # render(
+      #   turbo_stream: turbo_stream.update(
+      #     "episode_form",
+      #     partial: "episodes/form",
+      #     locals: {
+      #       podcast: @podcast,
+      #       episode: @episode
+      #     }
+      #   )
+      # )
     end
   end
 
@@ -46,8 +58,12 @@ class EpisodesController < ApplicationController
 
   private
 
+    # def ensure_frame_response
+    #   redirect_to root_path unless turbo_frame_request?
+    # end
+
     def episode_params
-      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :category_id, tag_ids: [])
+      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :audio, :category_id, tag_ids: [])
     end
 
     def find_podcast

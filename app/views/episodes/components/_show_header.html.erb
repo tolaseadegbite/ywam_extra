@@ -1,5 +1,6 @@
 <div style="margin-bottom: 0rem;">
-    <h1 class="text-6xl font-semibold capitalize"> <%= @podcast.name %></h1>
+    <h5 class="mb-5 text-gray-800"><%= link_to sanitize("&larr; #{@podcast.name} (All episodes)"), @episode.podcast, data: { turbo_frame: "_top" } %></h5>
+    <h1 class="text-4xl font-semibold capitalize leading-tight"> <%= @episode.title %></h1>
 
     <div class="flex gap-3 items-center">
         
@@ -9,11 +10,11 @@
             <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
         <% end %>
 
-        <h6 class="py-5"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
+        <h6 class="py-5 text-gray-800"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
 
         <span>•</span>
 
-        <%= render_date(@podcast) %>
+        <%= render_date(@episode) %>
 
     </div>
 </div>

@@ -25,7 +25,6 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class Podcast < ApplicationRecord
-  validates :name, :about, presence: true
   validates :name, presence: true, length: { minimum: 10 }
 
   belongs_to :account

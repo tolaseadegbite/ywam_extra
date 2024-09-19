@@ -40,7 +40,7 @@ class PodcastsController < ApplicationController
         # format.turbo_stream { flash.now[:notice] = "Podcast updated successfully" }
       end
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

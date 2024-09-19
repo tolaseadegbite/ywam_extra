@@ -1,3 +1,21 @@
-<%= turbo_stream.replace @episode %>
+<%= turbo_stream.replace 'about' do %>
+    <%= render 'episodes/components/about' %>
+<% end %>
+
+<%= turbo_stream.replace 'about' do %>
+    <%= render 'episodes/components/about' %>
+<% end %>
+
+<%= turbo_stream.replace 'show_header' do %>
+    <%= render 'episodes/components/show_header' %>
+<% end %>
+
+<%= turbo_stream.replace 'audio' do %>
+    <%= render 'episodes/components/audio' %>
+<% end %>
+
+<%= turbo_stream.replace 'description' do %>
+    <%= render 'episodes/components/description' %>
+<% end %>
 
 <%= render_turbo_stream_flash_messages %>

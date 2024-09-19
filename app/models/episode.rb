@@ -25,6 +25,7 @@
 #
 class Episode < ApplicationRecord
   validates :title, :description, :episode_type, presence: true
+  validates :title, presence: true, length: { minimum: 10 }
 
   belongs_to :podcast
   belongs_to :category
@@ -45,6 +46,8 @@ class Episode < ApplicationRecord
                                     message: "must be a valid image format" },
                     size:         { less_than: 1.megabytes,
                                     message:   "should be less than 1MB" }
+
+  has_one_attached :audio
 
   # Episode types
   enum episode_type: {
