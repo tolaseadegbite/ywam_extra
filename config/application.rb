@@ -25,5 +25,8 @@ module YwamExtra
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.assets.css_compressor = nil
+
+    config.action_view.sanitized_allowed_tags = ['p', 'br', 'strong', 'em']  # allowed tags
+    config.action_view.sanitized_allowed_attributes = ['style']  # allowed attributes
   end
 end

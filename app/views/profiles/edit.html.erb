@@ -1,6 +1,6 @@
 <%= render 'layouts/modal_dialog' do %>
   <div data-action="turbo:submit-end->dialog#submitEnd">
-    <h1 class="font-semibold text-2xl p-2">Profile Settings</h1>
+    <h1 class="text-2xl p-2">Profile Settings</h1>
     <%= render "form", account: current_account %>
   </div>
 <% end %>

@@ -75,6 +75,19 @@
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="podcastDropdownButton">
+                            
+                            <% if @episode.audio.attached? %>
+                                <li>
+                                    <%= link_to rails_blob_url(@episode.audio, disposition: 'attachment', filename: @episode.audio.filename), class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                        </svg>
+
+                                        Download
+                                    <% end %>
+                                </li>
+                            <% end %>
+                            
                             <li>
                                 <%= link_to edit_podcast_episode_path(@podcast, @episode), class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
