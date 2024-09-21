@@ -1,8 +1,8 @@
-<%= turbo_stream.replace 'show_header' do %>
+<%= turbo_stream.update 'show_header' do %>
   <%= render 'podcasts/components/show_header' %>
 <% end %>
 
-<%= turbo_stream.replace 'about' do %>
+<%= turbo_stream.update 'about' do %>
   <%= render 'podcasts/components/about' %>
 <% end %>
 

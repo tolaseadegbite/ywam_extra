@@ -1,2 +1,13 @@
-<%= turbo_stream.replace @review %>
+<%= turbo_stream.replace @review do %>
+  <%= render @review, reviewable: @reviewable %>
+<% end %>
+
+<%= turbo_stream.update 'reviews_count_rating' do %>
+  <%= render "podcasts/components/reviews_count_rating", reviewable: @reviewable %>
+<% end %>
+
+<%= turbo_stream.update dom_id(@reviewable, :reviews_count) do %>
+  <%= render 'reviews/reviews_count', reviewable: @reviewable %>
+<% end %>
+
 <%= render_turbo_stream_flash_messages %>

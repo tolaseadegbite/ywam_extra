@@ -86,11 +86,11 @@
                         </ul>
                     </div>
 
-                    <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
-                        <%= pluralize(@podcast.reviews.count, 'rating') %>
-
-                        (<%= @podcast.average_rating %> <span class="text-yellow-500 text-2xl">★</span>)
-                    <% end %>
+                    <div id="reviews_count_rating">
+                        <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
+                            <%= render 'podcasts/components/reviews_count_rating', reviewable: @podcast %>
+                        <% end %>
+                    </div>
 
                     <span id="podcastDropdownButton" data-dropdown-toggle="dropdown" class="cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
@@ -143,7 +143,7 @@
 
                         <h2 id="reviews_header" class="text-2xl">
                             <span id="<%= dom_id(@podcast, :reviews_count) %>">
-                                <%= pluralize(@podcast.reviews.count, 'Review') %>
+                                <%= render 'reviews/reviews_count', reviewable: @podcast %>
                             </span>
                         </h2>
                         

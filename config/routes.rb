@@ -1,5 +1,6 @@
-Rails.application.routes.draw do 
-  root 'podcasts#index'
+Rails.application.routes.draw do
+
+  root 'podcasts#index'  
 
   devise_for :accounts, controllers: {
     sessions: 'accounts/sessions',
@@ -7,15 +8,16 @@ Rails.application.routes.draw do
   }
 
   resources :relationships, only: [:create, :destroy]
+
   resources :podcasts do
-    resources :episodes, except: [:index]
+    resources :reviews
+    resources :episodes do
+      resources :plays, only: [:create, :destroy]
+    end
   end
   resources :tags, only: [:create, :show]
   resources :follows, only: [:create, :destroy]
 
-  resources :podcasts do
-    resources :reviews
-  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 

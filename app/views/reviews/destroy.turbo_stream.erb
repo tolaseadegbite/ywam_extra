@@ -1,13 +1,18 @@
 <!-- Remove the review that was just deleted -->
 <%= turbo_stream.remove @review %>
 
-<!-- Replace the review restriction text with the new review button -->
-<%= turbo_stream.replace 'review_restriction_text' do %>
+<!-- update the review restriction text with the new review button -->
+<%= turbo_stream.update 'review_restriction_text' do %>
   <%= render 'reviews/new_review_button', reviewable: @reviewable %>
 <% end %>
 
-<%= turbo_stream.replace dom_id(@reviewable, :reviews_count) do %>
-  <%= pluralize(@reviewable.reviews.count, 'Review') %>
+
+<%= turbo_stream.update dom_id(@reviewable, :reviews_count) do %>
+  <%= render 'reviews/reviews_count', reviewable: @reviewable %>
+<% end %>
+
+<%= turbo_stream.update 'reviews_count_rating' do %>
+  <%= render "podcasts/components/reviews_count_rating", reviewable: @reviewable %>
 <% end %>
 
 <!-- Optional: Render any flash messages for feedback -->

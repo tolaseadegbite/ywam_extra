@@ -31,7 +31,7 @@ class EpisodesController < ApplicationController
       respond_to do |format|
         flash[:notice] = "Episode updated successfully"
         format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @episode)) }
-        # format.turbo_stream { flash.now[:notice] = "Episode updated successfully" }
+        format.turbo_stream { flash.now[:notice] = "Episode updated successfully" }
       end
     else
       render :edit, status: :unprocessable_entity

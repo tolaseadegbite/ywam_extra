@@ -10,6 +10,7 @@ class PodcastsController < ApplicationController
     @episodes = @podcast.episodes.ordered
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
+    @review = Play.new
   end
 
   def new
@@ -37,7 +38,7 @@ class PodcastsController < ApplicationController
     if @podcast.update(podcast_params)
       respond_to do |format|
         format.html { redirect_to @podcast, notice: "Podcast updated successfully" }
-        # format.turbo_stream { flash.now[:notice] = "Podcast updated successfully" }
+        format.turbo_stream { flash.now[:notice] = "Podcast updated successfully" }
       end
     else
       render :edit, status: :unprocessable_entity

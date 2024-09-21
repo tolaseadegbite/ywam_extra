@@ -37,6 +37,9 @@ class Episode < ApplicationRecord
   has_many :follows, as: :followable
   has_many :followers, through: :follows, source: :account
 
+  has_many :plays, dependent: :destroy
+  has_many :play_accounts, through: :plays, source: :account
+
   # cover art
   has_one_attached :cover_art do |attachable|
     attachable.variant :display, resize_to_limit: [500, 500]

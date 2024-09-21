@@ -106,6 +106,9 @@
                                     Delete
                                 <% end %>
                             </li>
+                            <li id="mark_as_played">
+                                <%= render 'plays/play_unplay', episode: @episode, podcast: @episode.podcast, play: @play %>
+                            </li>
                         </ul>
                     </div>
                     

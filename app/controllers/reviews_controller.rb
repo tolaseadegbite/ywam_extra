@@ -43,7 +43,7 @@ class ReviewsController < ApplicationController
     if @review.update(review_params)
       respond_to do |format|
         format.html { redirect_to @reviewable, notice: 'Review was successfully updated.' }
-        format.turbo_stream { flash[:notice] = "Review was successfully updated." }
+        format.turbo_stream
       end
     else
       render :edit, status: :unprocessable_entity
@@ -52,10 +52,10 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-      respond_to do |format|
-        format.html { redirect_to @reviewable, notice: "Review deleted." }
-        format.turbo_stream { flash.now[:notice] = "Review deleted." }
-      end
+    respond_to do |format|
+      format.html { redirect_to @reviewable, notice: "Review deleted." }
+      format.turbo_stream
+    end
   end
 
   private

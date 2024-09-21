@@ -58,8 +58,9 @@ class Account < ApplicationRecord
   has_many :follows
   has_many :followed_podcasts, through: :follows, source: :followable, source_type: 'Podcast'
   has_many :followed_episodes, through: :follows, source: :followable, source_type: 'Episode'
-
   has_many :reviews, dependent: :destroy
+  has_many :plays, dependent: :destroy
+  has_many :played_episodes, through: :plays, source: :episode
 
   # Follows a account.
   def follow(other_account)
