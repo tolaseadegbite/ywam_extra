@@ -21,11 +21,70 @@
             <div class="inline-flex items-center gap-7 py-0 mb-11">
                 <div class="inline-flex gap-7 items-center">
 
-                    <% if !(current_account == @podcast.account) %>
-                        <%= render 'follows/button', followable: @podcast %>
-                    <% end %>
+                    <span id="episodeDropdownButton" data-dropdown-toggle="episode_button_dropdown" class="cursor-pointer inline-flex gap-1 items-center">
+                        All Episodes (<%= @podcast.episodes.count %>)
 
-                    <%= link_to 'All Episodes', podcast_episodes_path(@podcast) %>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+
+                    </span>
+
+                    <!-- Episode Dropdown menu -->
+                    <div id="episode_button_dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="episodeDropdownButton">
+                            <li>
+                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                    All Episodes
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-400">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                    </svg>
+
+                                <% end %>
+                            </li>
+                            <li>
+                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                    Unplayed
+                                <% end %>
+                            </li>
+                            <li>
+                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                    In Progress
+                                <% end %>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <span id="episodeOrderDropdownButton" data-dropdown-toggle="episode_order_button_dropdown" class="cursor-pointer inline-flex gap-1 items-center">
+                        Oldest to Newest
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+
+                    </span>
+
+                    <!-- Episode Dropdown menu -->
+                    <div id="episode_order_button_dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="episodeOrderDropdownButton">
+                            <li>
+                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                    Oldest to Newest
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-400">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                    </svg>
+
+                                <% end %>
+                            </li>
+                            <li>
+                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                    Newest to Oldest
+                                <% end %>
+                            </li>
+                        </ul>
+                    </div>
 
                     <div id="reviews_count_rating">
                         <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
@@ -67,16 +126,11 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10">
                 <div>
-                    <div>
+                    <%= render 'episodes/components/search_bar' %>
 
-                        <h2 class="text-2xl">
-                            Latest Episodes
-                        </h2>
-
-                        <div id="episodes" class="mt-4 mb-8">
-                            <div>
-                                <%= render @episodes %>
-                            </div>
+                    <div id="episodes" class="mt-4 mb-8">
+                        <div>
+                            <%= render @episodes %>
                         </div>
                     </div>
 

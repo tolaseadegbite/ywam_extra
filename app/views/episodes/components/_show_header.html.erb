@@ -16,5 +16,9 @@
 
         <%= render_date(@episode) %>
 
+        <span>•</span>
+
+        <%= pluralize(@podcast.episodes.count, 'episode') %>
+
     </div>
 </div>

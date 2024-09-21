@@ -10,7 +10,7 @@
             <span class="text-gray-500"> (<%= followable.follows_count %>) </span>
         <% end %>
     <% else %>  
-        <%= button_to(follow_path(follow), class:"py-2 px-4 text-white text-sm lg:text-base font-bold bg-blue-900 rounded-md whitespace-nowrap", method: :delete ) do %>
+        <%= button_to(follow_path(follow), class:"inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 font-bold", method: :delete ) do %>
             Unfollow
 
             <span> (<%= followable.follows_count %>) </span>

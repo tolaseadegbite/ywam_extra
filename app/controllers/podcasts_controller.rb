@@ -7,7 +7,7 @@ class PodcastsController < ApplicationController
   end
 
   def show
-    @episodes = @podcast.episodes.ordered
+    @episodes = @podcast.episodes.ordered.first(10)
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
     @review = Play.new

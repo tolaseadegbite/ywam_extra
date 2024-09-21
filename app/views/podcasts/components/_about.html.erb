@@ -21,7 +21,7 @@
 
 <div class="inline-flex items-center gap-2">
 
-    <%= link_to '#', class:"inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" do %>
+    <!--<%#= link_to '#', class:"inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" do %>
         4.9
         
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -29,11 +29,7 @@
         </svg>
 
         <span class="text-gray-500"> (189)</span>
-    <% end %>
-
-    <% if !(current_account == @podcast.account) %>
-        <%= render 'follows/button', followable: @podcast %>
-    <% end %>
+    <%# end %>-->
     
     <%= link_to new_podcast_episode_path(@podcast), class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
         New episode

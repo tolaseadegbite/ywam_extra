@@ -16,7 +16,9 @@ class ReviewsController < ApplicationController
   
     if @review.save
       respond_to do |format|
-        format.html { redirect_to @reviewable, notice: 'Review was successfully created.' }
+        flash[:notice] = "Review was successfully created."
+        format.html { redirect_back( @reviewable, fallback_location: @reviewable) }
+        # format.html { redirect_to @reviewable, notice: 'Review was successfully created.' }
         format.turbo_stream
       end
     else
@@ -42,7 +44,9 @@ class ReviewsController < ApplicationController
   def update
     if @review.update(review_params)
       respond_to do |format|
-        format.html { redirect_to @reviewable, notice: 'Review was successfully updated.' }
+        flash[:notice] = "Review was successfully updated."
+        format.html { redirect_back( @reviewable, fallback_location: @reviewable) }
+        # format.html { redirect_to @reviewable, notice: 'Review was successfully updated.' }
         format.turbo_stream
       end
     else
@@ -53,7 +57,9 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy
     respond_to do |format|
-      format.html { redirect_to @reviewable, notice: "Review deleted." }
+      flash[:notice] = "Review deleted."
+      format.html { redirect_back( @reviewable, fallback_location: @reviewable) }
+      # format.html { redirect_to @reviewable, notice: "Review deleted." }
       format.turbo_stream
     end
   end

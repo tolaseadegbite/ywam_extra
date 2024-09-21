@@ -2,7 +2,12 @@ class EpisodesController < ApplicationController
   before_action :authenticate_account!, only: %w[create edit update destroy]
   before_action :find_episode, only: %w[show edit update destroy]
   before_action :find_podcast
-  # before_action :ensure_frame_response, only: %i[ new edit show ]
+
+  def index
+    @episodes = @podcast.episodes.ordered
+    @reviews = @podcast.reviews.includes(:account).ordered
+    @review = Review.new
+  end
 
   def new
     @episode = Episode.new

@@ -20,7 +20,7 @@
 #  fk_rails_...  (episode_id => episodes.id)
 #
 class Play < ApplicationRecord
-  validates :account_id, uniqueness: [scope: :episode_id]
+  validates :account_id, uniqueness: {scope: :episode_id, message: "has already marked this episode as played"}
   
   belongs_to :account
   belongs_to :episode
