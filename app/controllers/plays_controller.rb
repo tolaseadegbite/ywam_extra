@@ -1,29 +1,34 @@
 class PlaysController < ApplicationController
   before_action :authenticate_account!
+  before_action :set_episode_and_podcast
   before_action :set_play, only: [:destroy]
-  before_action :set_episode, only: [:destroy]
-  before_action :set_podcast
 
   def create
-    @play = current_account.plays.build(play_params)
+    @play = current_account.plays.find_or_initialize_by(play_params)
     @play.account = current_account
+
     if @play.save
       respond_to do |format|
-        flash[:notice] = "Mark as played!"
         format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @play.episode)) }
-        format.turbo_stream { flash.now[:notice] = 'Mark as played!' } 
+        format.turbo_stream do
+          flash.now[:notice] = 'Marked as played!'
+          render_turbo_update
+        end
       end
     else
-      flash[:notice] = @play.errors.full_messages.to_sentence
+      handle_error
     end
-  end
+  end  
 
   def destroy
     @play.destroy
     respond_to do |format|
-      flash[:notice] = "Mark as unplayed!"
-      format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @episode)) } 
-      format.turbo_stream { flash.now[:notice] = 'Mark as unplayed!' } 
+      flash[:notice] = "Marked as unplayed!"
+      format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @episode)) }
+      format.turbo_stream do
+        flash.now[:notice] = 'Marked as unplayed!'
+        render_turbo_update
+      end
     end
   end
 
@@ -37,11 +42,21 @@ class PlaysController < ApplicationController
     @play = current_account.plays.find(params[:id])
   end
 
-  def set_episode
+  def set_episode_and_podcast
     @episode = Episode.find(params[:episode_id])
+    @podcast = Podcast.find(params[:podcast_id])
   end
 
-  def set_podcast
-    @podcast = Podcast.find(params[:podcast_id])
+  def render_turbo_update
+    render turbo_stream: turbo_stream.update('mark_as_played', 
+      partial: 'plays/play_unplay', 
+      locals: { podcast: @podcast, episode: @play.episode, play: @play })
+  end
+
+  def handle_error
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @play&.episode)) }
+      format.json { render json: { error: @play.errors.full_messages.to_sentence }, status: :unprocessable_entity }
+    end
   end
 end

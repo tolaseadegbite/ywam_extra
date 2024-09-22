@@ -3,7 +3,7 @@ import WaveSurfer from "wavesurfer.js";
 
 // Connects to data-controller="audio-player"
 export default class extends Controller {
-  static values = { url: String };
+  static values = { url: String, podcastId: Number, episodeId: Number };
   static targets = ["preview", "currentTime", "totalTime", "speedButton"];
 
   connect() {
@@ -14,42 +14,71 @@ export default class extends Controller {
       url: this.urlValue,
     });
 
-    this.wavesurfer.on("audioprocess", () => {
-      this.updateProgress();
-    });
-
-    this.wavesurfer.on("ready", () => {
-      this.updateTotalDuration();
-    });
-
-    // Detect when audio finishes
+    this.wavesurfer.on("audioprocess", () => this.updateProgress());
+    this.wavesurfer.on("ready", () => this.updateTotalDuration());
     this.wavesurfer.on("finish", () => {
       this.resetPlayPauseButton();
+      this.markEpisodeAsPlayed();
     });
 
     this.currentSpeedIndex = 0;
     this.speeds = [1, 1.25, 1.5, 2];
   }
 
-  togglePlaying(e) {
-    e.preventDefault(); // Prevent default link behavior
+  disconnect() {
+    this.wavesurfer.destroy();
+  }
+
+  markEpisodeAsPlayed() {
+    const podcastId = this.podcastIdValue;
+    const episodeId = this.episodeIdValue;
+  
+    console.log("Podcast ID:", podcastId, "Episode ID:", episodeId); // Log values
+    
+    if (!podcastId || !episodeId) {
+      console.error("Invalid podcast or episode ID");
+      return;
+    }
+
+    fetch(`/podcasts/${podcastId}/episodes/${episodeId}/plays`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        "Accept": "text/vnd.turbo-stream.html",
+      },
+      body: JSON.stringify({ play: { episode_id: episodeId } }),
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.text();
+    })
+    .then(data => Turbo.renderStreamMessage(data))
+    .catch(error => {
+      console.error("Error marking episode as played:", error);
+      alert("Failed to mark episode as played. Please try again.");
+    });
+  }
+
+  togglePlaying(event) {
+    event.preventDefault();
     this.wavesurfer.playPause();
-    let link = e.target.closest("a");
-    Array.from(link.children).forEach((child) =>
-      child.classList.toggle("hidden")
-    );
+    this.updatePlayPauseButton();
   }
 
-  rewind(e) {
-    e.preventDefault();  // Prevent page reload
-    const currentTime = this.wavesurfer.getCurrentTime();
-    this.wavesurfer.seekTo(Math.max((currentTime - 20) / this.wavesurfer.getDuration(), 0));
+  rewind(event) {
+    event.preventDefault();
+    this.seekAudio(-20);
   }
 
-  fastForward(e) {
-    e.preventDefault();  // Prevent page reload
+  fastForward(event) {
+    event.preventDefault();
+    this.seekAudio(20);
+  }
+
+  seekAudio(seconds) {
     const currentTime = this.wavesurfer.getCurrentTime();
-    this.wavesurfer.seekTo(Math.min((currentTime + 20) / this.wavesurfer.getDuration(), 1));
+    this.wavesurfer.seekTo(Math.min(Math.max((currentTime + seconds) / this.wavesurfer.getDuration(), 0), 1));
   }
 
   updateProgress() {
@@ -76,11 +105,21 @@ export default class extends Controller {
   }
 
   resetPlayPauseButton() {
-    let playButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:first-child');
-    let pauseButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:last-child');
-
-    // Ensure the play button is shown and pause button is hidden
+    const playButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:first-child');
+    const pauseButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:last-child');
     playButton.classList.remove("hidden");
     pauseButton.classList.add("hidden");
+  }
+
+  updatePlayPauseButton() {
+    const playButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:first-child');
+    const pauseButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:last-child');
+    if (this.wavesurfer.isPlaying()) {
+      playButton.classList.add("hidden");
+      pauseButton.classList.remove("hidden");
+    } else {
+      playButton.classList.remove("hidden");
+      pauseButton.classList.add("hidden");
+    }
   }
 }

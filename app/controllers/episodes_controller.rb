@@ -2,6 +2,7 @@ class EpisodesController < ApplicationController
   before_action :authenticate_account!, only: %w[create edit update destroy]
   before_action :find_episode, only: %w[show edit update destroy]
   before_action :find_podcast
+  
 
   def index
     @episodes = @podcast.episodes.ordered
@@ -40,16 +41,6 @@ class EpisodesController < ApplicationController
       end
     else
       render :edit, status: :unprocessable_entity
-      # render(
-      #   turbo_stream: turbo_stream.update(
-      #     "episode_form",
-      #     partial: "episodes/form",
-      #     locals: {
-      #       podcast: @podcast,
-      #       episode: @episode
-      #     }
-      #   )
-      # )
     end
   end
 

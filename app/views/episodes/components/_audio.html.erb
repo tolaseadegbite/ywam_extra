@@ -1,5 +1,8 @@
 <% if @episode.audio.attached? %>
-  <div data-controller="audio-player" data-audio-player-url-value="<%= url_for(@episode.audio) %>">
+  <div data-controller="audio-player" 
+    data-audio-player-url-value="<%= url_for(@episode.audio) %>"
+    data-audio-player-podcast-id-value="<%= @episode.podcast.id %>" 
+    data-audio-player-episode-id-value="<%= @episode.id %>">
 
     <div class="w-full flex items-center gap-4">
 
