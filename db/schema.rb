@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_20_182659) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_21_214611) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -115,6 +115,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_20_182659) do
     t.index ["followable_type", "followable_id"], name: "index_follows_on_followable"
   end
 
+  create_table "playlist_episodes", force: :cascade do |t|
+    t.bigint "playlist_id", null: false
+    t.bigint "episode_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["episode_id"], name: "index_playlist_episodes_on_episode_id"
+    t.index ["playlist_id"], name: "index_playlist_episodes_on_playlist_id"
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "visibility", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_playlists_on_account_id"
+  end
+
   create_table "plays", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "episode_id", null: false
@@ -184,6 +203,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_20_182659) do
   add_foreign_key "episodes", "categories"
   add_foreign_key "episodes", "podcasts"
   add_foreign_key "follows", "accounts"
+  add_foreign_key "playlist_episodes", "episodes"
+  add_foreign_key "playlist_episodes", "playlists"
+  add_foreign_key "playlists", "accounts"
   add_foreign_key "plays", "accounts"
   add_foreign_key "plays", "episodes"
   add_foreign_key "podcast_tags", "podcasts"

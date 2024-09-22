@@ -1,0 +1,30 @@
+<%= form_with(model: [playlist], html: { id: "playlist_form", class: "mx-5" }, data: { turbo_frame: "_top", controller: "podcast-form" }) do |f| %>
+    <div class="mb-5">
+        <%= render 'layouts/errors', f: f %>
+    </div>
+    
+    <div class="field mb-5">
+        <%= f.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :name, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+    
+    <div class="field mb-5">
+        <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :visibility, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.select :visibility, Playlist.visibilities.keys.map { |key| [key.humanize, key] }, { prompt: "Select visibility" }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", required: true } %>
+    </div>
+
+    <div class="mb-5">
+        <%= f.label :photo, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.file_field :photo, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Create playlist", class: "cursor-pointer rounded py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5 md:max-w-fit" %>
+    </div>
+
+<% end %>

@@ -1,0 +1,15 @@
+<%= link_to playlist, class: "p-3 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out block" do %>
+    <% if playlist.photo.attached? %>
+        <%= image_tag(playlist.photo, class: "h-auto max-w-full rounded-lg") %>
+    <% else %>
+        <%= image_tag('podcasts/hands.png', class: "h-auto max-w-full rounded-lg") %>
+    <% end %>
+    <div class="my-2">
+        <h1 class=""><%= (playlist.name).truncate(38) %></h1>
+        <div class="text-gray-500 text-sm capitalize">
+            <p><%= playlist.visibility %> <span> • </span> playlist</p>
+            <p><%= time_ago_in_words(playlist.updated_at) %></p>
+            <p class="font-semibold">View full playlist</p>
+        </div>
+    </div>
+<% end %>

@@ -1,8 +1,8 @@
-<% provide(:title, sanitize(@podcast.name)) %>
+<% provide(:title, "All episodes - #{@podcast.name}") %>
 
-<%= render 'podcasts/components/sidebar' %>
+<%= render 'layouts/navigation/sidebar' %>
 
-<%= render 'podcasts/components/sidebar_menu' %>
+<%= render 'layouts/navigation/sidebar_menu' %>
 
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
