@@ -2,10 +2,11 @@ class EpisodesController < ApplicationController
   before_action :authenticate_account!, only: %w[create edit update destroy]
   before_action :find_episode, only: %w[show edit update destroy]
   before_action :find_podcast
-  
 
   def index
-    @episodes = @podcast.episodes.ordered
+    sort_order = params[:sort] || 'desc'
+
+    @episodes = @podcast.episodes.public_send(sort_order)
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
   end

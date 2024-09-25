@@ -7,7 +7,6 @@
 #  episode_type  :integer          default("standard"), not null
 #  follows_count :integer          default(0), not null
 #  saves_count   :integer          default(0), not null
-#  status        :integer          default(0)
 #  title         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -70,12 +69,6 @@ class Episode < ApplicationRecord
     bonus: 12
   }
 
-  # Episode types
-  enum episode_type: {
-    unplayed: 0,
-    in_progress: 1,
-    played: 2
-  }
-
-  scope :ordered, -> { order(id: :desc) }
+  scope :desc, -> { order(id: :desc) }
+  scope :asc, -> { order(id: :asc) }
 end

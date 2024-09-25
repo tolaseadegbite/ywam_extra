@@ -1,0 +1,362 @@
+I have a status field (enum) on my episode table.
+
+# Episode Statuses
+  enum episode_type: {
+    unplayed: 0,
+    in_progress: 1,
+    played: 2
+  }
+
+I want to be able to update this columns based on the status of the player. If the audio player is done playing, update the episode status to "played", if it is playing but  not not finished, update the status to "in progress". For "in progress", I guess we are going to find a way to store the progress of the audio player somehow so that when another page is visited before the the audio finish playing, we won't lose the progress.
+
+current code
+
+audio player stimulus controller
+
+import { Controller } from "@hotwired/stimulus";
+import WaveSurfer from "wavesurfer.js";
+
+// Connects to data-controller="audio-player"
+export default class extends Controller {
+  static values = { url: String, podcastId: Number, episodeId: Number };
+  static targets = ["preview", "currentTime", "totalTime", "speedButton"];
+
+  connect() {
+    this.wavesurfer = WaveSurfer.create({
+      container: this.previewTarget,
+      waveColor: "#D1D5DB",
+      progressColor: "#1A237E",
+      url: this.urlValue,
+    });
+
+    this.wavesurfer.on("audioprocess", () => this.updateProgress());
+    this.wavesurfer.on("ready", () => this.updateTotalDuration());
+    this.wavesurfer.on("finish", () => {
+      this.resetPlayPauseButton();
+      this.markEpisodeAsPlayed();
+    });
+
+    this.currentSpeedIndex = 0;
+    this.speeds = [1, 1.25, 1.5, 2];
+  }
+
+  disconnect() {
+    this.wavesurfer.destroy();
+  }
+
+  markEpisodeAsPlayed() {
+    const podcastId = this.podcastIdValue;
+    const episodeId = this.episodeIdValue;
+  
+    console.log("Podcast ID:", podcastId, "Episode ID:", episodeId); // Log values
+    
+    if (!podcastId || !episodeId) {
+      console.error("Invalid podcast or episode ID");
+      return;
+    }
+
+    fetch(`/podcasts/${podcastId}/episodes/${episodeId}/plays`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        "Accept": "text/vnd.turbo-stream.html",
+      },
+      body: JSON.stringify({ play: { episode_id: episodeId } }),
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.text();
+    })
+    .then(data => Turbo.renderStreamMessage(data))
+    .catch(error => {
+      console.error("Error marking episode as played:", error);
+      alert("Failed to mark episode as played. Please try again.");
+    });
+  }
+
+  togglePlaying(event) {
+    event.preventDefault();
+    this.wavesurfer.playPause();
+    this.updatePlayPauseButton();
+  }
+
+  rewind(event) {
+    event.preventDefault();
+    this.seekAudio(-20);
+  }
+
+  fastForward(event) {
+    event.preventDefault();
+    this.seekAudio(20);
+  }
+
+  seekAudio(seconds) {
+    const currentTime = this.wavesurfer.getCurrentTime();
+    this.wavesurfer.seekTo(Math.min(Math.max((currentTime + seconds) / this.wavesurfer.getDuration(), 0), 1));
+  }
+
+  updateProgress() {
+    const currentTime = this.formatTime(this.wavesurfer.getCurrentTime());
+    this.currentTimeTarget.textContent = currentTime;
+  }
+
+  updateTotalDuration() {
+    const totalTime = this.formatTime(this.wavesurfer.getDuration());
+    this.totalTimeTarget.textContent = totalTime;
+  }
+
+  changeSpeed() {
+    this.currentSpeedIndex = (this.currentSpeedIndex + 1) % this.speeds.length;
+    const newSpeed = this.speeds[this.currentSpeedIndex];
+    this.wavesurfer.setPlaybackRate(newSpeed);
+    this.speedButtonTarget.textContent = `${newSpeed}x`;
+  }
+
+  formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${secs}`;
+  }
+
+  resetPlayPauseButton() {
+    const playButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:first-child');
+    const pauseButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:last-child');
+    playButton.classList.remove("hidden");
+    pauseButton.classList.add("hidden");
+  }
+
+  updatePlayPauseButton() {
+    const playButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:first-child');
+    const pauseButton = this.element.querySelector('svg[viewBox="0 0 24 24"]:last-child');
+    if (this.wavesurfer.isPlaying()) {
+      playButton.classList.add("hidden");
+      pauseButton.classList.remove("hidden");
+    } else {
+      playButton.classList.remove("hidden");
+      pauseButton.classList.add("hidden");
+    }
+  }
+}
+
+episode rb
+
+# == Schema Information
+#
+# Table name: episodes
+#
+#  id            :bigint           not null, primary key
+#  description   :text             not null
+#  episode_type  :integer          default("standard"), not null
+#  follows_count :integer          default(0), not null
+#  saves_count   :integer          default(0), not null
+#  status        :integer          default(0)
+#  title         :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  category_id   :bigint           not null
+#  podcast_id    :bigint           not null
+#
+# Indexes
+#
+#  index_episodes_on_category_id  (category_id)
+#  index_episodes_on_podcast_id   (podcast_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (category_id => categories.id)
+#  fk_rails_...  (podcast_id => podcasts.id)
+#
+class Episode < ApplicationRecord
+  validates :title, :description, :episode_type, presence: true
+  validates :title, presence: true, length: { minimum: 10 }
+
+  belongs_to :podcast
+  belongs_to :category
+
+  has_many :episode_tags, dependent: :destroy
+  has_many :tags, through: :episode_tags
+
+  # An episode can have many followers
+  has_many :follows, as: :followable
+  has_many :followers, through: :follows, source: :account
+
+  has_many :plays, dependent: :destroy
+  has_many :play_accounts, through: :plays, source: :account
+
+  # cover art
+  has_one_attached :cover_art do |attachable|
+    attachable.variant :display, resize_to_limit: [500, 500]
+  end
+
+  validates :cover_art, content_type: { in: %w[image/jpeg image/png],
+                                    message: "must be a valid image format" },
+                    size:         { less_than: 1.megabytes,
+                                    message:   "should be less than 1MB" }
+
+  has_one_attached :audio
+
+  # Episode types
+  enum episode_type: {
+    standard: 0,
+    trailer: 1,
+    interview: 2,
+    solo: 3,
+    panel_discussion: 4,
+    storytelling: 5,
+    educational: 6,
+    question_and_answer: 7,
+    review: 8,
+    news: 9,
+    debate: 10,
+    special: 11,
+    bonus: 12
+  }
+
+  # Episode Statuses
+  enum episode_type: {
+    unplayed: 0,
+    in_progress: 1,
+    played: 2
+  }
+
+  scope :ordered, -> { order(id: :desc) }
+end
+
+class PlaysController < ApplicationController
+  before_action :authenticate_account!
+  before_action :set_episode_and_podcast
+  before_action :set_play, only: [:destroy]
+
+  def create
+    @play = current_account.plays.find_or_initialize_by(play_params)
+    @play.account = current_account
+
+    if @play.save
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @play.episode)) }
+        format.turbo_stream do
+          flash.now[:notice] = 'Marked as played!'
+          render_turbo_update
+        end
+      end
+    else
+      handle_error
+    end
+  end  
+
+  def destroy
+    @play.destroy
+    respond_to do |format|
+      flash[:notice] = "Marked as unplayed!"
+      format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @episode)) }
+      format.turbo_stream do
+        flash.now[:notice] = 'Marked as unplayed!'
+        render_turbo_update
+      end
+    end
+  end
+
+  private
+
+  def play_params
+    params.require(:play).permit(:episode_id)
+  end
+
+  def set_play
+    @play = current_account.plays.find(params[:id])
+  end
+
+  def set_episode_and_podcast
+    @episode = Episode.find(params[:episode_id])
+    @podcast = Podcast.find(params[:podcast_id])
+  end
+
+  def render_turbo_update
+    render turbo_stream: turbo_stream.update('mark_as_played', 
+      partial: 'plays/play_unplay', 
+      locals: { podcast: @podcast, episode: @play.episode, play: @play })
+  end
+
+  def handle_error
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @play&.episode)) }
+      format.json { render json: { error: @play.errors.full_messages.to_sentence }, status: :unprocessable_entity }
+    end
+  end
+end
+
+episodes controller
+
+class EpisodesController < ApplicationController
+  before_action :authenticate_account!, only: %w[create edit update destroy]
+  before_action :find_episode, only: %w[show edit update destroy]
+  before_action :find_podcast
+  
+
+  def index
+    @episodes = @podcast.episodes.ordered
+    @reviews = @podcast.reviews.includes(:account).ordered
+    @review = Review.new
+  end
+
+  def new
+    @episode = Episode.new
+  end
+  
+  def create
+    @episode = @podcast.episodes.build(episode_params)
+    # @episode.account = current_account
+
+    if @episode.save
+      respond_to do |format|
+        format.html { redirect_to @podcast, notice: "Episode created successfully" }
+        format.turbo_stream { flash.now[:notice] = "Episode created successfully" }
+      end
+    else
+      render :new
+    end
+  end
+
+  def edit
+    
+  end
+
+  def update
+    if @episode.update(episode_params)
+      respond_to do |format|
+        flash[:notice] = "Episode updated successfully"
+        format.html { redirect_back(fallback_location: podcast_episode_path(@podcast, @episode)) }
+        format.turbo_stream { flash.now[:notice] = "Episode updated successfully" }
+      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @episode.destroy
+    respond_to do |format|
+      format.html { redirect_to @podcast, notice: "Episode deleted successfully" }
+      format.turbo_stream { flash.now[:notice] = "Episode deleted successfully" }
+    end
+  end
+
+  private
+
+    # def ensure_frame_response
+    #   redirect_to root_path unless turbo_frame_request?
+    # end
+
+    def episode_params
+      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :audio, :category_id, tag_ids: [])
+    end
+
+    def find_podcast
+      @podcast = Podcast.find(params[:podcast_id])
+    end
+
+    def find_episode
+      @episode = Episode.find(params[:id])
+    end
+end
