@@ -1,4 +1,4 @@
-<%= link_to podcast, class: "p-3 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out block" do %>
+<%= link_to podcast, class: "p-3 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out block", data: { turbo_frame: "_top" } do %>
     <% if podcast.cover_art.attached? %>
         <%= image_tag(podcast.cover_art, class: "h-auto max-w-full rounded-lg") %>
     <% else %>
@@ -6,6 +6,6 @@
     <% end %>
     <div class="my-2">
         <h1 class=""><%= (podcast.name).truncate(38) %></h1>
-        <h2 class=" text-gray-500"><%= (podcast.account.name).truncate(38) %></h2>
+        <h2 class="text-gray-500"><%= (podcast.account.name).truncate(38) %></h2>
     </div>
 <% end %>

@@ -17,6 +17,11 @@ class EpisodesController < ApplicationController
     # Reviews and a new review instance
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new

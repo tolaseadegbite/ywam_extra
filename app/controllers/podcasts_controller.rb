@@ -4,11 +4,16 @@ class PodcastsController < ApplicationController
 
   def index
     @podcasts = Podcast.all.includes(:account).ordered
-    @pagy, @podcasts = pagy(@podcasts, limit: 12)
+    @pagy, @podcasts = pagy_countless(@podcasts, limit: 12)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def show
-    @episodes = @podcast.episodes.desc.first(10)
+    @episodes = @podcast.episodes.desc.first(5)
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
     @review = Play.new
@@ -24,7 +29,7 @@ class PodcastsController < ApplicationController
     if @podcast.save
       respond_to do |format|
         format.html { redirect_to @podcast, notice: "Podcast created successfully" }
-        format.turbo_stream { flash.now[:notice] = 'Podcast created successfully' }
+        # format.turbo_stream { flash.now[:notice] = 'Podcast created successfully' }
       end
     else
       render :new, status: :unprocessable_entity
