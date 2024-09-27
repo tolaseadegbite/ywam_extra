@@ -12,5 +12,8 @@
     
     <div id="podcasts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         <%= render @podcasts %>
+        <div class="block my-5">
+            <%== pagy_nav(@pagy, link_extra: 'data-turbo-action="advance"') if @pagy.pages > 1 %>
+        </div>
     </div>
 </div>

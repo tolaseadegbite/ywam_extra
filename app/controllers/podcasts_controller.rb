@@ -4,6 +4,7 @@ class PodcastsController < ApplicationController
 
   def index
     @podcasts = Podcast.all.includes(:account).ordered
+    @pagy, @podcasts = pagy(@podcasts, limit: 12)
   end
 
   def show

@@ -87,34 +87,16 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10">
                 <div>
-                    <%= render 'episodes/components/search_bar' %>
+                    <%= render 'episodes/components/search_bar', podcast: @podcast %>
 
-                    <div id="episodes" class="mt-4 mb-8">
-                        <div>
-                            <%= render @episodes %>
-                        </div>
+                    <div class="mt-4 mb-8">
+                        <%= turbo_frame_tag "episodes" do %>
+                            <%= render @episodes %>  <!-- Rendering only paginated episodes -->
+                            <div class="block my-5">
+                                <%== pagy_nav(@pagy, link_extra: 'data-turbo-action="advance"') if @pagy.pages > 1 %>
+                            </div>
+                        <% end %>
                     </div>
-
-                    <section id="ratings">
-
-                        <h2 id="reviews_header" class="text-2xl">
-                            <span id="<%= dom_id(@podcast, :reviews_count) %>">
-                                <%= render 'reviews/reviews_count', reviewable: @podcast %>
-                            </span>
-                        </h2>
-                        
-                        <% if account_signed_in? %>
-                            <%= turbo_frame_tag 'review_button' do %>
-                                <%= render 'reviews/new_review_button', reviewable: @podcast %>
-                            <% end %>
-                        <% end %>
-                        
-                        <%= turbo_frame_tag Review.new %>
-
-                        <%= turbo_frame_tag "reviews" do %>
-                            <%= render @reviews %>
-                        <% end %>
-                    </section>
                 </div>
 
                 <div>
