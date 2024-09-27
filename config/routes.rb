@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     resources :reviews
     resources :episodes do
       resources :plays, only: [:create, :destroy]
+      member do
+        post 'save_progress'
+      end
     end
   end
   resources :tags, only: [:create, :show]

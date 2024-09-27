@@ -62,6 +62,7 @@ class Account < ApplicationRecord
   has_many :plays, dependent: :destroy
   has_many :played_episodes, through: :plays, source: :episode
   has_many :playlists, dependent: :destroy
+  has_many :episode_progresses, dependent: :destroy
 
   # Follows a account.
   def follow(other_account)

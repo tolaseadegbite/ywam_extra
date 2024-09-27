@@ -1,11 +1,12 @@
 <% if @episode.audio.attached? %>
+  <% progress = current_account.episode_progresses.find_by(episode: @episode)&.progress %>
   <div data-controller="audio-player" 
-    data-audio-player-url-value="<%= url_for(@episode.audio) %>"
-    data-audio-player-podcast-id-value="<%= @episode.podcast.id %>" 
-    data-audio-player-episode-id-value="<%= @episode.id %>">
+       data-audio-player-url-value="<%= url_for(@episode.audio) %>"
+       data-audio-player-podcast-id-value="<%= @episode.podcast.id %>" 
+       data-audio-player-episode-id-value="<%= @episode.id %>"
+       data-audio-player-saved-progress-value="<%= progress || 0 %>">
 
     <div class="w-full flex items-center gap-4">
-
       <!-- Play/Pause Button -->
       <%= link_to "#", class: "p-4 bg-blue-500 rounded-full", data: { action: "audio-player#togglePlaying" } do %>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
@@ -23,7 +24,6 @@
     <div class="flex gap-3 items-center text-sm pt-2">
       <!-- Rewind Button -->
       <%= link_to "#", class: "flex items-center gap-1 justify-center items-center font-semibold", data: { action: "audio-player#rewind" } do %>
-
         20s
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
@@ -35,7 +35,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
         </svg>
-
         20s
       <% end %>
 
@@ -48,5 +47,4 @@
       </div>
     </div>
   </div>
-    
 <% end %>

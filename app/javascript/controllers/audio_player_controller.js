@@ -1,9 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 import WaveSurfer from "wavesurfer.js";
 
-// Connects to data-controller="audio-player"
 export default class extends Controller {
-  static values = { url: String, podcastId: Number, episodeId: Number };
+  static values = { 
+    url: String, 
+    podcastId: Number, 
+    episodeId: Number,
+    savedProgress: Number
+  };
   static targets = ["preview", "currentTime", "totalTime", "speedButton"];
 
   connect() {
@@ -14,19 +18,58 @@ export default class extends Controller {
       url: this.urlValue,
     });
 
-    this.wavesurfer.on("audioprocess", () => this.updateProgress());
-    this.wavesurfer.on("ready", () => this.updateTotalDuration());
+    this.wavesurfer.on("audioprocess", () => {
+      this.updateProgress();
+      this.saveProgress();
+    });
+    this.wavesurfer.on("ready", () => {
+      this.updateTotalDuration();
+      this.loadSavedProgress();
+    });
     this.wavesurfer.on("finish", () => {
       this.resetPlayPauseButton();
       this.markEpisodeAsPlayed();
+      this.clearSavedProgress();
     });
 
     this.currentSpeedIndex = 0;
     this.speeds = [1, 1.25, 1.5, 2];
+
+    // Set up periodic saving to server
+    this.progressSaveInterval = setInterval(() => this.saveProgressToServer(), 30000); // Save every 30 seconds
   }
 
   disconnect() {
     this.wavesurfer.destroy();
+    clearInterval(this.progressSaveInterval);
+  }
+
+  saveProgress() {
+    const currentTime = this.wavesurfer.getCurrentTime();
+    localStorage.setItem(`episode_progress_${this.episodeIdValue}`, currentTime.toString());
+  }
+
+  loadSavedProgress() {
+    const savedTime = this.savedProgressValue || localStorage.getItem(`episode_progress_${this.episodeIdValue}`);
+    if (savedTime) {
+      this.wavesurfer.seekTo(parseFloat(savedTime) / this.wavesurfer.getDuration());
+    }
+  }
+
+  clearSavedProgress() {
+    localStorage.removeItem(`episode_progress_${this.episodeIdValue}`);
+  }
+
+  saveProgressToServer() {
+    const currentTime = this.wavesurfer.getCurrentTime();
+    fetch(`/podcasts/${this.podcastIdValue}/episodes/${this.episodeIdValue}/save_progress`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+      },
+      body: JSON.stringify({ progress: currentTime }),
+    }).catch(error => console.error("Error saving progress:", error));
   }
 
   markEpisodeAsPlayed() {

@@ -60,6 +60,12 @@ class EpisodesController < ApplicationController
     end
   end
 
+  def save_progress
+    @episode = Episode.find(params[:id])
+    current_account.episode_progresses.find_or_initialize_by(episode: @episode).update(progress: params[:progress])
+    head :ok
+  end
+
   private
 
     # def ensure_frame_response

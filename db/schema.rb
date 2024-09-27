@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_21_214611) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_27_085710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_214611) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "episode_progresses", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "episode_id", null: false
+    t.float "progress"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_episode_progresses_on_account_id"
+    t.index ["episode_id"], name: "index_episode_progresses_on_episode_id"
   end
 
   create_table "episode_tags", force: :cascade do |t|
@@ -198,6 +208,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_214611) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "episode_progresses", "accounts"
+  add_foreign_key "episode_progresses", "episodes"
   add_foreign_key "episode_tags", "episodes"
   add_foreign_key "episode_tags", "tags"
   add_foreign_key "episodes", "categories"

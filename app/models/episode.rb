@@ -33,6 +33,8 @@ class Episode < ApplicationRecord
   has_many :episode_tags, dependent: :destroy
   has_many :tags, through: :episode_tags
 
+  has_many :episode_progresses, dependent: :destroy
+
   # An episode can have many followers
   has_many :follows, as: :followable
   has_many :followers, through: :follows, source: :account
