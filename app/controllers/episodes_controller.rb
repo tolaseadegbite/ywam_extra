@@ -24,6 +24,12 @@ class EpisodesController < ApplicationController
     end
   end
 
+  def show
+    @commentable = @episode
+    @comment = Comment.new
+    @comments = @episode.comments
+  end
+
   def new
     @episode = Episode.new
   end

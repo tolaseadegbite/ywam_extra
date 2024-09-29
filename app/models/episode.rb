@@ -27,6 +27,10 @@ class Episode < ApplicationRecord
   validates :title, :description, :episode_type, presence: true
   validates :title, presence: true, length: { minimum: 10 }
 
+  def display_name
+    title
+  end
+
   belongs_to :podcast
   belongs_to :category
 
@@ -41,6 +45,8 @@ class Episode < ApplicationRecord
 
   has_many :plays, dependent: :destroy
   has_many :play_accounts, through: :plays, source: :account
+
+  has_many :comments, -> { order(created_at: :desc) }, as: :commentable, dependent: :destroy
 
   # cover art
   has_one_attached :cover_art do |attachable|

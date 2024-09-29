@@ -25,5 +25,8 @@ application.register("profile-edit-form", ProfileEditFormController)
 import RatingController from "./rating_controller"
 application.register("rating", RatingController)
 
+import ResetFormController from "./reset_form_controller"
+application.register("reset-form", ResetFormController)
+
 import TomSelectController from "./tom_select_controller"
 application.register("tom-select", TomSelectController)

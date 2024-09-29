@@ -12,12 +12,21 @@ Rails.application.routes.draw do
   resources :podcasts do
     resources :reviews
     resources :episodes do
+      resources :comments, only: [:create]
       resources :plays, only: [:create, :destroy]
       member do
         post 'save_progress'
       end
     end
+    resources :comments, only: [:create, :destroy]
   end
+
+  resources :comments do
+    resources :comments, only: [:create]
+  end
+
+  resources :comments, only: [:edit, :update, :destroy]
+
   resources :tags, only: [:create, :show]
   resources :follows, only: [:create, :destroy]
   

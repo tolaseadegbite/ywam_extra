@@ -25,7 +25,11 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class Podcast < ApplicationRecord
-  validates :name, presence: true, length: { minimum: 10 }
+  validates :name, presence: true, length: { minimum: 5 }
+
+  def display_name
+    name
+  end
 
   belongs_to :account
   belongs_to :category
@@ -39,6 +43,7 @@ class Podcast < ApplicationRecord
   has_many :followers, through: :follows, source: :account
 
   has_many :reviews, as: :reviewable, dependent: :destroy
+  # has_many :comments, -> { order(created_at: :desc) }, as: :commentable, dependent: :destroy
 
   # cover art
   has_one_attached :cover_art do |attachable|
