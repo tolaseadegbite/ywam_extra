@@ -40,6 +40,12 @@
 
         </div>
         
-        <p class="py-3"><%= @podcast.about %></p>
+        <p class="py-2"><%= @podcast.about %></p>
+
+        <div>
+            <%= link_to 'Edit', edit_dashboard_podcast_path(@podcast), class: "inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700", data: {action: "click->dialog#open", turbo_frame: :modal} %>
+
+            <%= link_to 'Delete', dashboard_podcast_path(@podcast), class: "inline-flex gap-1 items-center rounded text-sm px-4 py-2 bg-red-800 items-center text-white hover:bg-red-900", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+        </div>
     </div>
 </div>

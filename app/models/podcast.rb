@@ -34,9 +34,9 @@ class Podcast < ApplicationRecord
   belongs_to :account
   belongs_to :category
   
-  has_many :episodes
-  has_many :podcast_tags
-  has_many :tags, through: :podcast_tags
+  has_many :episodes, dependent: :destroy
+  has_many :podcast_tags, dependent: :destroy
+  has_many :tags, through: :podcast_tags, dependent: :destroy
 
   # A podcast can have many followers
   has_many :follows, as: :followable

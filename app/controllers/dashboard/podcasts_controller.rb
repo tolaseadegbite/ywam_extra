@@ -44,7 +44,10 @@ class Dashboard::PodcastsController < ApplicationController
   end
 
   def destroy
-    
+    @podcast.destroy
+    respond_to do |format|
+      format.html { redirect_to dashboard_podcasts_url, notice: "Podcast deleted successfully" }
+    end
   end
 
   private
