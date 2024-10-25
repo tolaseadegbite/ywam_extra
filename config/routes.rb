@@ -21,6 +21,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+  namespace :dashboard do
+    resources :podcasts do
+      resources :episodes
+    end
+    # get '/', to: '/dashboard/dashboard#index'
+  end
+
   resources :comments do
     resources :comments, only: [:create]
   end

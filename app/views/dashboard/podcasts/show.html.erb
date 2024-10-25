@@ -1,0 +1,74 @@
+<%= render 'layouts/navigation/sidebar' %>
+
+<%= render 'layouts/navigation/sidebar_menu' %>
+
+<main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
+
+    <%= render 'dashboard/podcasts/components/show_header' %>
+
+    <h2 class="text-3xl font-semibold capitalize leading-tight my-2">Episodes</h2>
+
+    <div class="episodes py-3 md:py-3 xl:py-5">
+        <% if @episodes.present?     %>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Episode title
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Created by
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Has audio?
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Status
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Date created
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @episodes.each do |episode| %>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= link_to episode.title, dashboard_podcast_episode_path(@podcast, episode) %>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= link_to @podcast.account.name, profile_path(@podcast.account.username) %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <% if episode.audio.attached? %>
+                                        Yes
+                                    <% else %>
+                                        No
+                                    <% end %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= link_to '', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900" do %>
+                                        Unpublish
+                                    <% end %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= render_date(episode) %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        <% else %>
+            <div class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 flex items-center gap-2" role="alert">
+                <span class="font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                </svg>
+                </span> 
+                There are no episodes created for this podcast
+            </div>
+        <% end %>
+    </div>
+</p>
