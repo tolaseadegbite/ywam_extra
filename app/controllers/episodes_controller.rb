@@ -1,5 +1,5 @@
 class EpisodesController < ApplicationController
-  before_action :authenticate_account!, only: %w[create edit update destroy]
+  before_action :authenticate_account!, except: %w[index show]
   before_action :find_episode, only: %w[show edit update destroy]
   before_action :find_podcast
 

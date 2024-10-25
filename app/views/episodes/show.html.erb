@@ -55,9 +55,11 @@
                         </ul>
                     </div>
 
-                    <div id="mark_as_played">
-                        <%= render 'plays/play_unplay', episode: @episode, podcast: @episode.podcast, play: @play %>
-                    </div>
+                    <% if account_signed_in? && @episode.audio.attached? %>
+                        <div id="mark_as_played">
+                            <%= render 'plays/play_unplay', episode: @episode, podcast: @episode.podcast, play: @play %>
+                        </div>
+                    <% end %>
 
                     <span>92 comments</span>
 

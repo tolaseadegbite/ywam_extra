@@ -62,21 +62,23 @@
          </li>
       </ul>
 
-      <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
-         <h3 class="text-1.5xl px-2">Followed Podcasts</h3>
-         <% current_account.followed_podcasts.each do |podcast| %>
-            <li>
-               <%= link_to podcast, class: "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
-                  <% if podcast.cover_art.attached? %>
-                     <%= image_tag(podcast.cover_art, class: "w-6 h-6 rounded", alt: "#{podcast.name} cover art") %>
-                  <% else %>
-                     <%= image_tag('podcasts/hands.png', class: "w-6 h-6 rounded", alt: "#{podcast.name} default cover art") %>
+      <% if account_signed_in? %>
+         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+            <h3 class="text-1.5xl px-2">Followed Podcasts</h3>
+            <% current_account.followed_podcasts.each do |podcast| %>
+               <li>
+                  <%= link_to podcast, class: "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+                     <% if podcast.cover_art.attached? %>
+                        <%= image_tag(podcast.cover_art, class: "w-6 h-6 rounded", alt: "#{podcast.name} cover art") %>
+                     <% else %>
+                        <%= image_tag('podcasts/hands.png', class: "w-6 h-6 rounded", alt: "#{podcast.name} default cover art") %>
+                     <% end %>
+                     <span class="ms-3"><%= podcast.name.truncate(21) %></span>
                   <% end %>
-                  <span class="ms-3"><%= podcast.name.truncate(21) %></span>
-               <% end %>
-            </li>
-         <% end %>
-      </ul>
+               </li>
+            <% end %>
+         </ul>
+      <% end %>
 
       <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
          <h3 class="text-1.5xl px-2">Explore</h3>
