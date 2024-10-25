@@ -4,7 +4,13 @@
 
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
-    <h1 class="text-4xl font-semibold capitalize leading-tight my-2"> My Podcasts</h1>
+    <div class="flex items-center justify-between">
+        <h1 class="text-4xl font-semibold capitalize leading-tight my-2"> My Podcasts</h1>
+
+        <%= link_to new_dashboard_podcast_path, class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
+            New Podcast
+        <% end %>
+    </div>
 
     <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -14,13 +20,16 @@
                         Podcast name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Date created
+                        Created by
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Nos of episodes
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Status
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Date created
                     </th>
                 </tr>
             </thead>
@@ -31,8 +40,8 @@
                             <%= link_to podcast.name, dashboard_podcast_path(podcast) %>
                         </th>
                         <td class="px-6 py-4">
-                            <%= render_date(podcast) %>
-                        </td>
+                                    <%= link_to podcast.account.name, profile_path(podcast.account.username) %>
+                                </td>
                         <td class="px-6 py-4">
                             <%= podcast.episodes.count %>
                         </td>
@@ -40,6 +49,9 @@
                             <%= link_to '', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900" do %>
                                 Unpublish
                             <% end %>
+                        </td>
+                        <td class="px-6 py-4">
+                            <%= render_date(podcast) %>
                         </td>
                     </tr>
                 <% end %>

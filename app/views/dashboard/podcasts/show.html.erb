@@ -4,9 +4,11 @@
 
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
-    <%= render 'dashboard/podcasts/components/show_header' %>
+    <turbo-frame id="show_header">
+        <%= render 'dashboard/podcasts/components/show_header' %>
+    </turbo-frame>
 
-    <h2 class="text-3xl font-semibold capitalize leading-tight my-2">Episodes</h2>
+    <h2 class="text-3xl font-semibold capitalize leading-tight mt-10">Episodes</h2>
 
     <div class="episodes py-3 md:py-3 xl:py-5">
         <% if @episodes.present?     %>

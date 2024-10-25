@@ -6,6 +6,14 @@ class Dashboard::PodcastsController < ApplicationController
     @podcasts = current_account.podcasts.includes(:account).ordered
   end
 
+  def new
+    @podcast = Podcast.new
+  end
+
+  def create
+
+  end
+
   def show
     @episodes = @podcast.episodes
   end
@@ -15,7 +23,14 @@ class Dashboard::PodcastsController < ApplicationController
   end
 
   def update
-    
+    if @podcast.update(podcast_params)
+      respond_to do |format|
+        format.html { redirect_to dashboard_podcast_url(@podcast), notice: "Podcast updated successfully" }
+        format.turbo_stream { flash.now[:notice] = "Podcast updated successfully" }
+      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
