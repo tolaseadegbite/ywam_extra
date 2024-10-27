@@ -5,6 +5,10 @@ class Dashboard::PodcastsController < ApplicationController
 
   def index
     @podcasts = current_account.podcasts.includes(:account).ordered
+    if params[:search].present?
+      search_query = "%#{params[:search].downcase}%"
+      @podcasts = current_account.podcasts.where("LOWER(name) LIKE ? OR LOWER(about) LIKE ?", search_query, search_query)
+    end
   end
 
   def new
