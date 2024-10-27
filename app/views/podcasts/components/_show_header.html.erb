@@ -10,12 +10,12 @@
     <div class="flex gap-3 items-center text-gray-600">
         
         <% if @podcast.account.avatar.attached? %>
-            <%= link_to image_tag(@podcast.account.avatar, class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+            <%= link_to image_tag(@podcast.account.avatar, class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username), data: { turbo_frame: "_top" } %>
         <% else %>
-            <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+            <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username), data: { turbo_frame: "_top" } %>
         <% end %>
 
-        <h6 class="py-5"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
+        <h6 class="py-5"><%= link_to @podcast.account.name, profile_path(@podcast.account.username), data: { turbo_frame: "_top" } %></h6>
 
         <span>•</span>
 
@@ -23,7 +23,7 @@
 
         <span>•</span>
 
-        <%= pluralize(@podcast.episodes.count, 'episode') %>
+        <%= pluralize(@podcast.episodes.where(status: :published).count, 'episode') %>
 
     </div>
 </div>

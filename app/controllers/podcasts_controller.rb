@@ -16,7 +16,7 @@ class PodcastsController < ApplicationController
     @episodes = @podcast.episodes.where(status: :published).recent(5)
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
-    @review = Play.new
+    @play = Play.new
   end
 
   def new
