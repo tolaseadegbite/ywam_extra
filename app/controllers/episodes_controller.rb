@@ -4,7 +4,7 @@ class EpisodesController < ApplicationController
   before_action :find_podcast
 
   def index
-    sort_order = params[:sort] || 'desc'
+    sort_order = params[:sort] || 'published'
     @episodes = @podcast.episodes.public_send(sort_order)
     
     if params[:search].present?
@@ -84,7 +84,7 @@ class EpisodesController < ApplicationController
     # end
 
     def episode_params
-      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :audio, :category_id, tag_ids: [])
+      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :audio, :ststus, :category_id, tag_ids: [])
     end
 
     def find_podcast

@@ -61,9 +61,7 @@
                                     <% end %>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <%= link_to '', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900" do %>
-                                        Unpublish
-                                    <% end %>
+                                    <%= episode.status.humanize %>
                                 </td>
                                 <td class="px-6 py-4">
                                     <%= render_date(episode) %>

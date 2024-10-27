@@ -7,6 +7,7 @@
 #  episode_type  :integer          default("standard"), not null
 #  follows_count :integer          default(0), not null
 #  saves_count   :integer          default(0), not null
+#  status        :integer          default("draft")
 #  title         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -77,6 +78,15 @@ class Episode < ApplicationRecord
     bonus: 12
   }
 
+  # Episode statuses
+  enum status: {
+    draft: 0,
+    published: 1,
+    archived: 2
+  }
+
   scope :desc, -> { order(id: :desc) }
   scope :asc, -> { order(id: :asc) }
+  scope :published, -> { where(status: :published) }
+  scope :recent, -> (n) { order(id: :desc).limit(n) }
 end

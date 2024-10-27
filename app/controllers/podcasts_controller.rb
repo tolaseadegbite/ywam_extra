@@ -13,7 +13,7 @@ class PodcastsController < ApplicationController
   end
 
   def show
-    @episodes = @podcast.episodes.desc.first(5)
+    @episodes = @podcast.episodes.where(status: :published).recent(5)
     @reviews = @podcast.reviews.includes(:account).ordered
     @review = Review.new
     @review = Play.new

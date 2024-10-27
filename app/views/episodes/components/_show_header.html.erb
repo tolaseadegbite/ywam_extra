@@ -18,7 +18,7 @@
 
         <span>•</span>
 
-        <%= pluralize(@podcast.episodes.count, 'episode') %>
+        <%= pluralize(@episodes.where(status: :published).count, 'episode') %>
 
     </div>
 </div>

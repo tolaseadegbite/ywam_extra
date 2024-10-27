@@ -42,7 +42,7 @@ class Dashboard::EpisodesController < ApplicationController
     # end
 
     def episode_params
-      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :audio, :category_id, tag_ids: [])
+      params.require(:episode).permit(:title, :description, :episode_type, :cover_art, :audio, :status, :category_id, tag_ids: [])
     end
 
     def find_podcast
