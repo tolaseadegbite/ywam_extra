@@ -1,0 +1,23 @@
+<%= turbo_frame_tag episode do %>
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= link_to episode.title, dashboard_podcast_episode_path(@podcast, episode) %>
+        </th>
+        <td class="px-6 py-4">
+            <%= link_to @podcast.account.name, profile_path(@podcast.account.username) %>
+        </td>
+        <td class="px-6 py-4">
+            <% if episode.audio.attached? %>
+                Yes
+            <% else %>
+                No
+            <% end %>
+        </td>
+        <td class="px-6 py-4">
+            <%= episode.status.humanize %>
+        </td>
+        <td class="px-6 py-4">
+            <%= render_date(episode) %>
+        </td>
+    </tr>
+<% end %>

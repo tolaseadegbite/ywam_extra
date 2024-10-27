@@ -30,6 +30,16 @@ class Dashboard::PodcastsController < ApplicationController
 
   def show
     @episodes = @podcast.episodes
+    
+    if params[:search].present?
+      search_query = "%#{params[:search].downcase}%"
+      @episodes = @episodes.where("LOWER(title) LIKE ? OR LOWER(description) LIKE ?", search_query, search_query)
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def edit

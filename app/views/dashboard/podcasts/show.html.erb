@@ -19,57 +19,41 @@
         </div>
     </div>
 
-    <h2 class="text-3xl font-semibold capitalize leading-tight mt-10">Episodes</h2>
+    <h2 class="text-3xl font-semibold capitalize leading-tight mt-10 text-center mb-5">Episodes</h2>
+
+    <div class="w-1/2 mx-auto">
+        <%= form_with url: dashboard_podcast_path(@podcast), method: :get, data: { turbo_frame: "episodes", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
+            <%= text_field_tag "search", nil, placeholder: "Search title or description", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        <% end %>
+    </div>
 
     <div class="episodes py-3 md:py-3 xl:py-5">
         <% if @episodes.present?     %>
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Episode title
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Created by
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Has audio?
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Date created
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% @episodes.each do |episode| %>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <%= link_to episode.title, dashboard_podcast_episode_path(@podcast, episode) %>
+                <%= turbo_frame_tag "episodes" do %>
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Episode title
                                 </th>
-                                <td class="px-6 py-4">
-                                    <%= link_to @podcast.account.name, profile_path(@podcast.account.username) %>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <% if episode.audio.attached? %>
-                                        Yes
-                                    <% else %>
-                                        No
-                                    <% end %>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <%= episode.status.humanize %>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <%= render_date(episode) %>
-                                </td>
+                                <th scope="col" class="px-6 py-3">
+                                    Created by
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Has audio?
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Date created
+                                </th>
                             </tr>
-                        <% end %>
-                    </tbody>
-                </table>
+                        </thead>
+                        <%= render @episodes %>
+                    </table>
+                <% end %>
             </div>
         <% else %>
             <div class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 flex items-center gap-2" role="alert">
