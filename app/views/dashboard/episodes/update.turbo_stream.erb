@@ -1,0 +1,17 @@
+<%= turbo_stream.update 'show_header' do %>
+    <%= render 'dashboard/episodes/components/show_header' %>
+<% end %>
+
+<%= turbo_stream.update 'cover_image' do %>
+    <%= render 'dashboard/episodes/components/cover_image' %>
+<% end %>
+
+<%= turbo_stream.update 'description' do %>
+    <%= render 'dashboard/episodes/components/description' %>
+<% end %>
+
+<%= turbo_stream.update 'audio' do %>
+    <%= render 'episodes/components/audio', episode: @episode %>
+<% end %>
+
+<%= render_turbo_stream_flash_messages %>

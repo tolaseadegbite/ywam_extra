@@ -2,10 +2,6 @@
     <%= render 'episodes/components/about' %>
 <% end %>
 
-<%= turbo_stream.update 'about' do %>
-    <%= render 'episodes/components/about' %>
-<% end %>
-
 <%= turbo_stream.update 'show_header' do %>
     <%= render 'episodes/components/show_header' %>
 <% end %>

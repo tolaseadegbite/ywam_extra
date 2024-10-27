@@ -1,0 +1,29 @@
+<%= render 'layouts/navigation/sidebar' %>
+
+<%= render 'layouts/navigation/sidebar_menu' %>
+
+<main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
+
+    <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)] gap-0 md:gap-10 xl:gap-20">
+
+        <div>
+            <turbo-frame id="cover_image">
+                <%= render 'dashboard/episodes/components/cover_image' %>
+            </turbo-frame>
+        </div>
+
+        <div>
+            <turbo-frame id="show_header">
+                <%= render 'dashboard/episodes/components/show_header' %>
+            </turbo-frame>
+
+            <div id="audio" class="mb-8">
+                <%= render 'episodes/components/audio', episode: @episode %>
+            </div>
+
+            <div id="description" class="mb-8">
+                <%= render 'dashboard/episodes/components/description', episode: @episode %>
+            </div>
+        </div>
+    </div>
+</p>

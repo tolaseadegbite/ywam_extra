@@ -4,9 +4,20 @@
 
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
-    <turbo-frame id="show_header">
-        <%= render 'dashboard/podcasts/components/show_header' %>
-    </turbo-frame>
+    <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)] gap-0 md:gap-10 xl:gap-20">
+
+        <div class="relative">
+            <turbo-frame id="cover_image">
+                <%= render 'dashboard/podcasts/components/cover_image' %>
+            </turbo-frame>
+        </div>
+
+        <div>
+            <turbo-frame id="show_header">
+                <%= render 'dashboard/podcasts/components/show_header' %>
+            </turbo-frame>
+        </div>
+    </div>
 
     <h2 class="text-3xl font-semibold capitalize leading-tight mt-10">Episodes</h2>
 
@@ -73,4 +84,4 @@
             </div>
         <% end %>
     </div>
-</p>
+</main>

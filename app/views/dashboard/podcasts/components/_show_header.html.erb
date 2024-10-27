@@ -4,48 +4,35 @@
     <h5 class="mb-5 text-gray-800"><%= link_to sanitize("&larr; #{@podcast.name}"), @podcast, data: { turbo_frame: "_top" } %></h5>
 <% end %>
 
-<div class="flex gap-5 items-center">
-    <% if @podcast.cover_art.attached? %>
-        <%= image_tag(@podcast.cover_art, class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
-    <% else %>
-        <%= image_tag('podcasts/hands.png', class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
-    <% end %>
 
-    <%= link_to edit_dashboard_podcast_path(@podcast), class: "absolute top-36 left-10 w-8 h-8 rounded-full bg-white/50 hover:bg-white flex items-center justify-center transition duration-300 ease-in-out", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-        </svg>
-    <% end %>
+<div style="margin-bottom: 0rem;">
+    <h1 class="text-6xl font-semibold capitalize"> <%= @podcast.name %></h1>
 
-    <div style="margin-bottom: 0rem;">
-        <h1 class="text-6xl font-semibold capitalize"> <%= @podcast.name %></h1>
-
-        <div class="flex gap-3 items-center text-gray-600">
-            
-            <% if @podcast.account.avatar.attached? %>
-                <%= link_to image_tag(@podcast.account.avatar, class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
-            <% else %>
-                <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
-            <% end %>
-
-            <h6 class="py-5"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
-
-            <span>•</span>
-
-            <%= render_date(@podcast) %>
-
-            <span>•</span>
-
-            <%= pluralize(@podcast.episodes.count, 'episode') %>
-
-        </div>
+    <div class="flex gap-3 items-center text-gray-600">
         
-        <p class="py-2"><%= @podcast.about %></p>
+        <% if @podcast.account.avatar.attached? %>
+            <%= link_to image_tag(@podcast.account.avatar, class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+        <% else %>
+            <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+        <% end %>
 
-        <div>
-            <%= link_to 'Edit', edit_dashboard_podcast_path(@podcast), class: "inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700", data: {action: "click->dialog#open", turbo_frame: :modal} %>
+        <h6 class="py-5"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
 
-            <%= link_to 'Delete', dashboard_podcast_path(@podcast), class: "inline-flex gap-1 items-center rounded text-sm px-4 py-2 bg-red-800 items-center text-white hover:bg-red-900", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-        </div>
+        <span>•</span>
+
+        <%= render_date(@podcast) %>
+
+        <span>•</span>
+
+        <%= pluralize(@podcast.episodes.count, 'episode') %>
+
+    </div>
+    
+    <p class="py-2"><%= @podcast.about %></p>
+
+    <div>
+        <%= link_to 'Edit', edit_dashboard_podcast_path(@podcast), class: "inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700", data: {action: "click->dialog#open", turbo_frame: :modal} %>
+
+        <%= link_to 'Delete', dashboard_podcast_path(@podcast), class: "inline-flex gap-1 items-center rounded text-sm px-4 py-2 bg-red-800 items-center text-white hover:bg-red-900", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
     </div>
 </div>

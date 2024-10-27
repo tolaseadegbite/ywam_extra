@@ -1,0 +1,52 @@
+<%= form_with(model: [:dashboard, podcast, episode], html: { id: "episode_form", class: "mx-5" }, data: { turbo_frame: "_top", controller: "podcast-form" }) do |f| %>
+    <div class="mb-5">
+        <%= render 'layouts/errors', f: f %>
+    </div>
+    
+    <div>
+        <%= render 'episodes/components/form_cover_art_preview' %>
+    </div>
+    
+    <div class="mb-">
+        <%= f.file_field :cover_art, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "podcast-form-target": "coverArtFile", action: "change->podcast-form#coverArtChanged" } %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :title, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+    
+    <div class="field mb-5">
+        <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_area :description, rows: 3, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6 mb-5">
+
+        <div class="">
+            <%= f.label :category, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                <%= f.select :category_id, Category.all.pluck(:name, :id), { include_blank: "Select category" }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", required: true %>
+        </div>
+
+        <div class="">
+            <%= f.label :episode_type, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.select :episode_type, Episode.episode_types.keys.map { |key| [key.humanize, key] }, { prompt: "Select episode type" }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", required: true } %>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <%= f.label :audio, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= episode.audio.filename if episode.audio.attached? %>
+        <%= f.file_field :audio, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" %>
+    </div>
+    
+    <div class="field mb-5" data-controller="tom-select">
+        <%= f.label :tags, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.select :tag_ids, Tag.all.pluck(:name, :id), {}, { multiple: true, id: "select-tags" } %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Publish", class: "cursor-pointer rounded py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5 md:max-w-fit" %>
+    </div>
+
+<% end %>

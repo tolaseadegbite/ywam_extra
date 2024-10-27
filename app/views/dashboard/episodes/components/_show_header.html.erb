@@ -1,0 +1,41 @@
+<% if controller.controller_name == 'podcasts' %>
+    <h5 class="mb-5 text-gray-800"><%= link_to sanitize("&larr; My podcasts"), dashboard_podcasts_path, data: { turbo_frame: "_top" } %></h5>
+<% elsif controller.controller_name == 'episodes' %>
+    <h5 class="mb-5 text-gray-800"><%= link_to sanitize("&larr; #{(@podcast.name)}"), dashboard_podcast_path(@podcast), data: { turbo_frame: "_top" } %></h5>
+<% end %>
+
+
+<div style="margin-bottom: 0rem;">
+    <h1 class="text-4xl font-semibold capitalize leading-tight"> <%= @episode.title %></h1>
+
+    <div class="flex gap-3 items-center text-gray-600">
+        
+        <% if @podcast.account.avatar.attached? %>
+            <%= link_to image_tag(@podcast.account.avatar, class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+        <% else %>
+            <%= link_to image_tag('others/default avatar', class: "w-8 h-8 rounded-full object-cover", alt: "#{@podcast.account.username}'s avatar"), profile_path(@podcast.account.username) %>
+        <% end %>
+
+        <h6 class="py-5"><%= link_to @podcast.account.name, profile_path(@podcast.account.username) %></h6>
+
+        <span>•</span>
+
+        <%= render_date(@episode) %>
+        
+        <span>•</span>
+        
+        <div>
+            <%= link_to 'Edit', edit_dashboard_podcast_episode_path(@podcast, @episode), class: "inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700", data: {action: "click->dialog#open", turbo_frame: :modal} %>
+
+            <%= link_to 'Delete', dashboard_podcast_episode_path(@podcast, @episode), class: "inline-flex gap-1 items-center rounded text-sm px-4 py-2 bg-red-800 items-center text-white hover:bg-red-900", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+        </div>
+
+    </div>
+
+    <p class="text-sm text-gray-600 mb-3">
+        <% @episode.tags.each do |tag| %>
+            #<%= link_to tag.name, tag_path(tag.name) %>
+        <% end %>
+    </p>
+
+</div>
