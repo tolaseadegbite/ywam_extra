@@ -4,15 +4,15 @@ class EpisodesController < ApplicationController
   before_action :find_podcast
 
   def index
-    sort_order = params[:sort] || 'published'
-    @episodes = @podcast.episodes.public_send(sort_order)
+    sort_order = params[:sort] || 'desc'
+    @episodes = @podcast.episodes.published.public_send(sort_order)
     
     if params[:search].present?
       search_query = "%#{params[:search].downcase}%"
       @episodes = @episodes.where("LOWER(title) LIKE ? OR LOWER(description) LIKE ?", search_query, search_query)
     end
   
-    @pagy, @episodes = pagy(@episodes, limit: 5)
+    @pagy, @episodes = pagy_countless(@episodes, limit: 5)
   
     # Reviews and a new review instance
     @reviews = @podcast.reviews.includes(:account).ordered

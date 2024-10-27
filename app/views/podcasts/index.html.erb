@@ -6,15 +6,13 @@
 
 <div class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
-    <%= render 'podcasts/components/search_bar' %>
-    
-    <div id="podcasts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-        <%#= render @podcasts %>
-
-        <!--<div class="my-5">
-            <%== pagy_nav(@pagy, link_extra: 'data-turbo-action="advance"') %>
-        </div>-->
+    <div class="w-1/2 mx-auto my-5">
+        <%= render 'podcasts/components/search_bar' %>
     </div>
+
+    <%= content_tag(:"turbo-frame", id: "podcasts", class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6") do %>
+        <%= render @podcasts %>
+    <% end %>
 
     <div class="mt-10">
         <%= turbo_frame_tag :pagination, loading: :lazy, src: podcasts_path(format: :turbo_stream) %>

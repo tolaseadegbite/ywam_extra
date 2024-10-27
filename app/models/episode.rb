@@ -87,6 +87,8 @@ class Episode < ApplicationRecord
 
   scope :desc, -> { order(id: :desc) }
   scope :asc, -> { order(id: :asc) }
+  scope :draft, -> { where(status: :draftw) }
   scope :published, -> { where(status: :published) }
+  scope :archived, -> { where(status: :archived) }
   scope :recent, -> (n) { order(id: :desc).limit(n) }
 end

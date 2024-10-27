@@ -3,8 +3,19 @@ class PodcastsController < ApplicationController
   before_action :find_podcast, only: %w[show edit update destroy]
 
   def index
+    # @podcasts = Podcast.all.includes(:account).ordered
+    # @pagy, @podcasts = pagy_countless(@podcasts, limit: 12)
+
+    # sort_order = params[:sort] || 'ordered'
+    # @podcasts = Podcast.all.includes(:account).public_send(sort_order)
     @podcasts = Podcast.all.includes(:account).ordered
-    @pagy, @podcasts = pagy_countless(@podcasts, limit: 12)
+    
+    if params[:search].present?
+      search_query = "%#{params[:search].downcase}%"
+      @podcasts = @podcasts.where("LOWER(name) LIKE ? OR LOWER(about) LIKE ?", search_query, search_query)
+    end
+  
+    @pagy, @podcasts = pagy(@podcasts, limit: 12)
 
     respond_to do |format|
       format.html

@@ -47,6 +47,8 @@
                         </ul>
                     </div>
 
+                    <%= link_to 'All Episodes', podcast_episodes_path(@podcast) %>
+
                     <div id="reviews_count_rating">
                         <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
                             <%= render 'podcasts/components/reviews_count_rating', reviewable: @podcast %>
