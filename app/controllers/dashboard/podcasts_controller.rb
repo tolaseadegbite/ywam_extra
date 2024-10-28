@@ -36,10 +36,7 @@ class Dashboard::PodcastsController < ApplicationController
       @episodes = @episodes.where("LOWER(title) LIKE ? OR LOWER(description) LIKE ?", search_query, search_query)
     end
 
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
+    @pagy, @episodes = pagy_countless(@episodes, limit: 5)
   end
 
   def edit
