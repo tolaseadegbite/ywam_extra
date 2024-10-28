@@ -2,4 +2,8 @@
   <%= render 'dashboard/podcasts/components/show_header' %>
 <% end %>
 
+<%= turbo_stream.update 'cover_art' do %>
+    <%= render 'dashboard/podcasts/components/cover_art' %>
+<% end %>
+
 <%= render_turbo_stream_flash_messages %>

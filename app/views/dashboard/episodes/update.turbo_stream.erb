@@ -2,8 +2,8 @@
     <%= render 'dashboard/episodes/components/show_header' %>
 <% end %>
 
-<%= turbo_stream.update 'cover_image' do %>
-    <%= render 'dashboard/episodes/components/cover_image' %>
+<%= turbo_stream.update 'cover_art' do %>
+    <%= render 'dashboard/episodes/components/cover_art' %>
 <% end %>
 
 <%= turbo_stream.update 'description' do %>
