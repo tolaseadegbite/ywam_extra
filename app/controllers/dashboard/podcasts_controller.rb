@@ -5,10 +5,13 @@ class Dashboard::PodcastsController < ApplicationController
 
   def index
     @podcasts = current_account.podcasts.includes(:account).ordered
+
     if params[:search].present?
       search_query = "%#{params[:search].downcase}%"
       @podcasts = current_account.podcasts.where("LOWER(name) LIKE ? OR LOWER(about) LIKE ?", search_query, search_query)
     end
+
+    @pagy, @podcasts = pagy(@podcasts, limit: 3)
   end
 
   def new
@@ -29,14 +32,14 @@ class Dashboard::PodcastsController < ApplicationController
   end
 
   def show
-    @episodes = @podcast.episodes
+    @episodes = @podcast.episodes.includes(:podcast).desc
     
     if params[:search].present?
       search_query = "%#{params[:search].downcase}%"
       @episodes = @episodes.where("LOWER(title) LIKE ? OR LOWER(description) LIKE ?", search_query, search_query)
     end
 
-    @pagy, @episodes = pagy_countless(@episodes, limit: 5)
+    @pagy, @episodes = pagy(@episodes, limit: 5)
   end
 
   def edit

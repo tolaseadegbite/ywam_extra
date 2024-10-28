@@ -39,6 +39,10 @@
                 </thead>
                 <%= render @podcasts %>
             </table>
+
+            <div class="my-5 mx-auto">
+                <%== pagy_nav(@pagy) %>
+            </div>
         <% end %>
     </div>
 

@@ -29,8 +29,8 @@
 
     <div class="episodes py-3 md:py-3 xl:py-5">
         <% if @episodes.present? %>
-            <%= turbo_frame_tag "episodes" do %>
-                <div class="relative overflow-x-auto">
+            <div class="relative overflow-x-auto">
+                <%= turbo_frame_tag "episodes" do %>
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -55,12 +55,12 @@
                             <%= render @episodes %>
                         </tbody>
                     </table>
-                </div>
 
-                <div class="my-5 mx-auto">
-                    <%== pagy_nav(@pagy) %>
-                </div>
-            <% end %>
+                    <div class="my-5 mx-auto">
+                        <%== pagy_nav(@pagy) %>
+                    </div>
+                <% end %>
+            </div>
         <% else %>
             <div class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 flex items-center gap-2" role="alert">
                 <span class="font-medium">
