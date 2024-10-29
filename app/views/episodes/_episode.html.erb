@@ -1,6 +1,6 @@
 <%= turbo_frame_tag episode do %>
-    <div class="flex gap-5 border-t py-5">
-        <div class="flex-shrink-0">
+    <div class="flex flex-col md:flex-row gap-5 border-t py-5">
+        <div class="flex-shrink-0 hidden lg:block">
             <%= link_to podcast_episode_path(@podcast, episode), data: { turbo_frame: "_top" } do %>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-9">
                     <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" />
@@ -8,9 +8,9 @@
             <% end %>
         </div>
 
-        <div>
-            <h3 class="text-xl mb-3">
-                <%= link_to episode.title, podcast_episode_path(@podcast, episode), data: { turbo_frame: "_top" } %>
+        <div class="order-2 md:order1">
+            <h3 class="text-lg md:text-xl mb-3">
+                <%= link_to episode.title, podcast_episode_path(@podcast, episode), data: { turbo_frame: "_top" }, class: "" %>
             </h3>
             <p class="mb-3">
                 <%= episode.description.truncate(340) %>
@@ -57,11 +57,11 @@
             </div>
         </div>
 
-        <div class="flex-shrink-0" style="margin-left:auto;">
+        <div class="flex-shrink-0 order-1 md:order-2 ml-auto">
             <% if episode.cover_art.attached? %>
-                <%= image_tag(episode.cover_art, class: "w-20 h-20 object-cover rounded shadow") %>
+                <%= image_tag(episode.cover_art, class: "md:w-20 md:h-20 object-cover rounded shadow") %>
             <% else %>
-                <%= image_tag('podcasts/man.jpg', class: "w-20 h-20 object-cover rounded shadow") %>
+                <%= image_tag('podcasts/man.jpg', class: "md:w-20 md:h-20 object-cover rounded shadow") %>
             <% end %>
         </div>
     </div>

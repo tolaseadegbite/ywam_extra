@@ -1,8 +1,10 @@
-<% if @podcast.cover_art.attached? %>
-    <%= image_tag(@podcast.cover_art, class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
-<% else %>
-    <%= image_tag('podcasts/hands.png', class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
-<% end %>
+<div class="mx-auto">
+    <% if @podcast.cover_art.attached? %>
+        <%= image_tag(@podcast.cover_art, class: "md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
+    <% else %>
+        <%= image_tag('podcasts/hands.png', class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
+    <% end %>
+</div>
 
 <%= link_to edit_podcast_path(@podcast), class: "absolute top-4 left-4 w-8 h-8 rounded-full bg-white/50 hover:bg-white flex items-center justify-center transition duration-300 ease-in-out", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

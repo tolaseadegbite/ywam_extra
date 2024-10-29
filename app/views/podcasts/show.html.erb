@@ -4,7 +4,7 @@
 
 <%= render 'layouts/navigation/sidebar_menu' %>
 
-<main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
+<main class="py-5 mx-auto px-8 lg:px-8">
 
     <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)] gap-0 md:gap-10 xl:gap-20">
         <div class="relative">
@@ -18,8 +18,7 @@
                 <%= render 'podcasts/components/show_header' %>
             </turbo-frame>
 
-            <div class="inline-flex items-center gap-7 py-0 mb-11">
-                <div class="inline-flex gap-7 items-center">
+            <div class="inline-flex items-center gap-7 py-0 mb-5 md:mb-11">
 
                     <% if !(current_account == @podcast.account) %>
                         <%= render 'follows/button', followable: @podcast %>
@@ -62,27 +61,23 @@
                             </li>
                         </ul>
                     </div>
-                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10">
                 <div>
-                    <div>
+                    <h2 class="text-xl sm:text-xl md:text-2xl">
+                        Latest Episodes
+                    </h2>
 
-                        <h2 class="text-2xl">
-                            Latest Episodes
-                        </h2>
-
-                        <div id="episodes" class="mt-4 mb-8">
-                            <div>
-                                <%= render @episodes %>
-                            </div>
+                    <div id="episodes" class="mt-4 mb-8">
+                        <div>
+                            <%= render @episodes %>
                         </div>
                     </div>
 
                     <section id="ratings">
 
-                        <h2 id="reviews_header" class="text-2xl">
+                        <h2 id="reviews_header" class="text-xl sm:text-xl md:text-2xl">
                             <span id="<%= dom_id(@podcast, :reviews_count) %>">
                                 <%= render 'reviews/reviews_count', reviewable: @podcast %>
                             </span>
@@ -104,7 +99,7 @@
 
                 <div>
                     <div>
-                        <h2 class="text-xl mb-3">Support <%= @podcast.name %></h2>
+                        <h2 class="text-xl sm:text-xl md:text-2xl mb-3">Support <%= @podcast.name %></h2>
                         <p class="mb-3">Become a supporter of the show</p>
                         <%= button_to(root_path, class:"inline-flex gap-1 items-center py-2 px-4 text-white text-sm lg:text-base font-bold bg-blue-800 hover:bg-blue-900 rounded-md whitespace-nowrap mb-3") do %>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
