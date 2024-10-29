@@ -58,10 +58,12 @@
         </div>
 
         <div class="flex-shrink-0 order-1 md:order-2 ml-auto">
-            <% if episode.cover_art.attached? %>
-                <%= image_tag(episode.cover_art, class: "md:w-20 md:h-20 object-cover rounded shadow") %>
-            <% else %>
-                <%= image_tag('podcasts/man.jpg', class: "md:w-20 md:h-20 object-cover rounded shadow") %>
+            <%= link_to podcast_episode_path(@podcast, episode), data: { turbo_frame: "_top" } do %>
+                <% if episode.cover_art.attached? %>
+                    <%= image_tag(episode.cover_art, class: "md:w-20 md:h-20 object-cover rounded shadow") %>
+                <% else %>
+                    <%= image_tag('podcasts/man.jpg', class: "md:w-20 md:h-20 object-cover rounded shadow") %>
+                <% end %>
             <% end %>
         </div>
     </div>
