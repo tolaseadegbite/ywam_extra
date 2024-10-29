@@ -1,10 +1,37 @@
-<%= form_with(model: [commentable.is_a?(Episode) ? commentable.podcast : nil, commentable, Comment.new], local: true) do |f| %>
+<!--<%#= form_with(model: [commentable.is_a?(Episode) ? commentable.podcast : nil, commentable, Comment.new], local: true) do |f| %>
   <%#= render 'layouts/errors', object: f.object %>
   <div class="field mb-5">
-    <%= f.text_area :body, rows: 3, maxlength: 1000, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    <%#= f.text_area :body, rows: 3, maxlength: 1000, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
   </div>
 
   <div class="actions mb-5">
-    <%= f.submit "Submit Comment", class: "px-4 py-2 rounded bg-blue-800 items-center text-white hover:bg-blue-700 cursor-pointer" %>
+    <%#= f.submit "Submit Comment", class: "px-4 py-2 rounded bg-blue-800 items-center text-white hover:bg-blue-700 cursor-pointer" %>
   </div>
+<%# end %>-->
+
+<%= turbo_frame_tag dom_id(comment) do %>
+  <% url = if comment.persisted?
+             comment_path(comment)
+           else
+             case commentable
+             when Episode
+               podcast_episode_comments_path(commentable.podcast, commentable)
+             when Podcast
+               podcast_comments_path(commentable)
+             when Comment
+               comment_comments_path(commentable)
+             else
+               raise "Unexpected commentable type: #{commentable.class}"
+             end
+           end %>
+
+  <%= form_with(model: comment, url: url, local: true, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+    <div class="field mb-5">
+      <%= f.text_area :body, rows: 3, maxlength: 1000, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+    </div>
+
+    <div class="actions mb-5">
+      <%= f.submit comment.new_record? ? "Submit Comment" : "Update Comment", class: "px-4 py-2 rounded bg-blue-800 items-center text-white hover:bg-blue-700 cursor-pointer" %>
+    </div>
+  <% end %>
 <% end %>
