@@ -19,4 +19,11 @@
         <%#= pluralize(@episodes.where(status: :published).count, 'episode') %>
 
     </div>
+
+    
+    <p class="text-gray-600 mb-3"> Episode Topics: 
+        <% @episode.tags.each do |tag| %>
+            #<%= link_to tag.name, tag_path(tag.name) %>
+        <% end %>
+    </p>
 </div>
