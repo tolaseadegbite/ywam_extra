@@ -5,24 +5,34 @@
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
     <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)] gap-0 md:gap-10 xl:gap-20">
-
-        <div class="relative">
+        
+        <!-- Display this only on large screens -->
+        <div class="relative hidden md:block">
             <turbo-frame id="cover_art">
                 <%= render 'dashboard/podcasts/components/cover_art' %>
             </turbo-frame>
         </div>
+        <!-- end -->
 
         <div>
             <turbo-frame id="show_header">
                 <%= render 'dashboard/podcasts/components/show_header' %>
             </turbo-frame>
         </div>
+
+        <!-- Display this only on small screens -->
+        <div class="relative block md:hidden">
+            <turbo-frame id="cover_art">
+                <%= render 'dashboard/podcasts/components/cover_art' %>
+            </turbo-frame>
+        </div>
+        <!-- end -->
     </div>
 
     <% if @episodes.any? %>
-        <h2 class="text-3xl font-semibold capitalize leading-tight mt-10 text-center mb-5">Episodes</h2>
+        <h2 class="text-xl sm:text-xl md:text-3xl font-semibold capitalize leading-tight mt-10 text-center mb-5">Episodes</h2>
 
-        <div class="w-1/2 mx-auto">
+        <div class="w-full md:w-1/2 mx-auto">
             <%= form_with url: dashboard_podcast_path(@podcast), method: :get, data: { turbo_frame: "episodes", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
                 <%= text_field_tag "search", nil, placeholder: "Search title or description", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
             <% end %>
@@ -57,10 +67,11 @@
                             <%= render @episodes %>
                         </tbody>
                     </table>
+                </div>
 
-                    <div class="my-5 mx-auto">
-                        <%== pagy_nav(@pagy) %>
-                    </div>
+                <div class="my-5 mx-auto">
+                    <%== pagy_nav(@pagy) %>
+                </div>
             </div>
             <% else %>
                 <div class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 flex items-center gap-2" role="alert">

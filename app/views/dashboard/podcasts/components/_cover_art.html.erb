@@ -1,7 +1,7 @@
 <div class="relative inline-block mb-3">
 
     <% if @podcast.cover_art.attached? %>
-        <%= image_tag(@podcast.cover_art, class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
+        <%= image_tag(@podcast.cover_art, class: "md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
     <% else %>
         <%= image_tag('podcasts/hands.png', class: "w-[200px] md:w-[300px] h-auto sm:mx-auto md:mx-0 rounded-lg drop-shadow-md") %>
     <% end %>
