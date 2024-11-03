@@ -13,22 +13,26 @@
             </turbo-frame>
         </div>
         <!-- end -->
-
         <div>
             <turbo-frame id="show_header">
                 <%= render 'dashboard/podcasts/components/show_header' %>
             </turbo-frame>
-        </div>
 
-        <!-- Display this only on small screens -->
-        <div class="relative block md:hidden">
-            <turbo-frame id="cover_art">
-                <%= render 'dashboard/podcasts/components/cover_art' %>
-            </turbo-frame>
+            <!-- Display this only on small screens -->
+            <div class="relative block md:hidden">
+                <turbo-frame id="cover_art">
+                    <%= render 'dashboard/podcasts/components/cover_art' %>
+                </turbo-frame>
+            </div>
+            <!-- end -->
+
+            <div id="about" class="mb-5">
+                <%= render 'dashboard/podcasts/components/about', episode: @episode %>
+            </div>
         </div>
-        <!-- end -->
     </div>
 
+    <div>
     <% if @episodes.any? %>
         <h2 class="text-xl sm:text-xl md:text-3xl font-semibold capitalize leading-tight mt-10 text-center mb-5">Episodes</h2>
 

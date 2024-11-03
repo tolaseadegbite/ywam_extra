@@ -3,7 +3,11 @@
 <% end %>
 
 <%= turbo_stream.update 'cover_art' do %>
-    <%= render 'dashboard/podcasts/components/cover_art' %>
+  <%= render 'dashboard/podcasts/components/cover_art' %>
+<% end %>
+
+<%= turbo_stream.update 'about' do %>
+  <%= render 'dashboard/podcasts/components/about' %>
 <% end %>
 
 <%= render_turbo_stream_flash_messages %>
