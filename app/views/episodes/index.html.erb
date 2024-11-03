@@ -7,83 +7,91 @@
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
     <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)] gap-0 md:gap-10 xl:gap-20">
-        <div class="relative">
+        <!-- Display this only on large screens -->
+        <div class="relative hidden md:block">
             <turbo-frame id="about">
                 <%= render 'podcasts/components/about' %>
             </turbo-frame>
         </div>
+        <!-- end -->
 
         <div>
             <turbo-frame id="show_header">
                 <%= render 'podcasts/components/show_header' %>
             </turbo-frame>
 
-            <div class="inline-flex items-center gap-7 py-0 mb-11">
-                <div class="inline-flex gap-7 items-center">
+            <!-- Display this only on small screens -->
+            <div class="relative block md:hidden">
+                <turbo-frame id="about">
+                    <%= render 'podcasts/components/about' %>
+                </turbo-frame>
+            </div>
+            <!-- end -->
 
-                    <span id="episodeOrderDropdownButton" data-dropdown-toggle="episode_order_button_dropdown" class="cursor-pointer inline-flex gap-1 items-center">
-                        <%= params[:sort] == 'asc' ? 'Oldest to Newest' : 'Newest to Oldest' %>
+            <div class="flex flex-wrap items-center py-0 mb-5 md:mb-11 gap-2 md:gap-7">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                        </svg>
-                    </span>
+                <span id="episodeOrderDropdownButton" data-dropdown-toggle="episode_order_button_dropdown" class="cursor-pointer inline-flex gap-1 items-center">
+                    <%= params[:sort] == 'asc' ? 'Oldest to Newest' : 'Newest to Oldest' %>
 
-                    <!-- Episode Dropdown menu -->
-                    <div id="episode_order_button_dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="episodeOrderDropdownButton">
-                            <li>
-                                <%= link_to podcast_episodes_path(@podcast, sort: 'asc'), class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
-                                    Oldest to Newest
-                                    <%= render 'episodes/components/checkmark_svg' if params[:sort] == 'asc' %>
-                                <% end %>
-                            </li>
-                            <li>
-                                <%= link_to podcast_episodes_path(@podcast, sort: 'desc'), class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
-                                    Newest to Oldest
-                                    <%= render 'episodes/components/checkmark_svg' if params[:sort] == 'desc' || params[:sort].blank? %>
-                                <% end %>
-                            </li>
-                        </ul>
-                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                </span>
 
-                    <%= link_to 'All Episodes', podcast_episodes_path(@podcast) %>
+                <!-- Episode Dropdown menu -->
+                <div id="episode_order_button_dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="episodeOrderDropdownButton">
+                        <li>
+                            <%= link_to podcast_episodes_path(@podcast, sort: 'asc'), class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                Oldest to Newest
+                                <%= render 'episodes/components/checkmark_svg' if params[:sort] == 'asc' %>
+                            <% end %>
+                        </li>
+                        <li>
+                            <%= link_to podcast_episodes_path(@podcast, sort: 'desc'), class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                Newest to Oldest
+                                <%= render 'episodes/components/checkmark_svg' if params[:sort] == 'desc' || params[:sort].blank? %>
+                            <% end %>
+                        </li>
+                    </ul>
+                </div>
 
-                    <div id="reviews_count_rating">
-                        <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
-                            <%= render 'podcasts/components/reviews_count_rating', reviewable: @podcast %>
-                        <% end %>
-                    </div>
+                <%= link_to 'All Episodes', podcast_episodes_path(@podcast) %>
 
-                    <span id="podcastDropdownButton" data-dropdown-toggle="dropdown" class="cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                        </svg>
-                    </span>
+                <div id="reviews_count_rating">
+                    <%= link_to podcast_path(@podcast)+'#ratings', class: "" do %>
+                        <%= render 'podcasts/components/reviews_count_rating', reviewable: @podcast %>
+                    <% end %>
+                </div>
 
-                    <!-- Dropdown menu -->
-                    <div id="dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="podcastDropdownButton">
-                            <li>
-                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                                    </svg>
+                <span id="podcastDropdownButton" data-dropdown-toggle="dropdown" class="cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                    </svg>
+                </span>
 
-                                    Follow
-                                <% end %>
-                            </li>
-                            <li>
-                                <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                                    </svg>
+                <!-- Dropdown menu -->
+                <div id="dropdown" class="z-10 shadow-xl hidden bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="podcastDropdownButton">
+                        <li>
+                            <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                </svg>
 
-                                    Share
-                                <% end %>
-                            </li>
-                        </ul>
-                    </div>
+                                Follow
+                            <% end %>
+                        </li>
+                        <li>
+                            <%=  link_to root_path, class: "flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" do %>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                                </svg>
+
+                                Share
+                            <% end %>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -104,7 +112,7 @@
 
                 <div>
                     <div>
-                        <h2 class="text-xl mb-3">Support <%= @podcast.name %></h2>
+                        <h2 class="text-xl sm:text-xl md:text-2xl mb-3">Support <%= @podcast.name %></h2>
                         <p class="mb-3">Become a supporter of the show</p>
                         <%= button_to(root_path, class:"inline-flex gap-1 items-center py-2 px-4 text-white text-sm lg:text-base font-bold bg-blue-800 hover:bg-blue-900 rounded-md whitespace-nowrap mb-3") do %>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">

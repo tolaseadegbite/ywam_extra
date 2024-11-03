@@ -7,11 +7,14 @@
 <main class="py-5 mx-auto px-8 lg:px-8">
 
     <div class="max-w-screen-2xl grid grid-cols-1 md:grid-cols-[225px_minmax(100px,_1fr)] xl:grid-cols-[300px_minmax(100px,_1fr)] gap-0 md:gap-10 xl:gap-20">
-        <div class="relative">
-            <turbo-frame id="about">
-                <%= render 'podcasts/components/about' %>
-            </turbo-frame>
-        </div>
+
+        <!-- Display this only on large screens -->
+            <div class="relative hidden md:block">
+                <turbo-frame id="about">
+                    <%= render 'podcasts/components/about' %>
+                </turbo-frame>
+            </div>
+        <!-- end -->
 
         <div>
             <turbo-frame id="show_header">
@@ -62,6 +65,14 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Display this only on small screens -->
+            <div class="relative block md:hidden">
+                <turbo-frame id="about">
+                    <%= render 'podcasts/components/about' %>
+                </turbo-frame>
+            </div>
+            <!-- end -->
 
             <div class="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10">
                 <div>

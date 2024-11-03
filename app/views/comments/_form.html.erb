@@ -9,8 +9,8 @@
   </div>
 <%# end %>-->
 
-<%= turbo_frame_tag dom_id(comment) do %>
-  <% url = if comment.persisted?
+<%#= turbo_frame_tag dom_id(comment) do %>
+  <%# url = if comment.persisted?
              comment_path(comment)
            else
              case commentable
@@ -25,13 +25,13 @@
              end
            end %>
 
-  <%= form_with(model: comment, url: url, local: true, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+  <%#= form_with(model: comment, url: url, local: true, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
     <div class="field mb-5">
-      <%= f.text_area :body, rows: 3, maxlength: 1000, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
+      <%#= f.text_area :body, rows: 3, maxlength: 1000, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", required: true %>
     </div>
 
     <div class="actions mb-5">
-      <%= f.submit comment.new_record? ? "Submit Comment" : "Update Comment", class: "px-4 py-2 rounded bg-blue-800 items-center text-white hover:bg-blue-700 cursor-pointer" %>
+      <%#= f.submit comment.new_record? ? "Submit Comment" : "Update Comment", class: "px-4 py-2 rounded bg-blue-800 items-center text-white hover:bg-blue-700 cursor-pointer" %>
     </div>
-  <% end %>
-<% end %>
+  <%# end %>
+<%# end %>

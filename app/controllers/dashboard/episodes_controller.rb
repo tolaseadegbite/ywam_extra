@@ -3,6 +3,10 @@ class Dashboard::EpisodesController < ApplicationController
   before_action :find_episode, only: %w[show edit update destroy]
   before_action :find_podcast
 
+  def new
+    @episode = Episode.new
+  end
+
   def create
     @episode = @podcast.episodes.build(episode_params)
 
