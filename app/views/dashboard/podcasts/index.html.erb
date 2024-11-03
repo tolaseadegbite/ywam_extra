@@ -4,16 +4,16 @@
 
 <main class="py-3 md:py-3 xl:py-5 mx-auto px-8 lg:px-8">
 
-    <div class="flex items-center justify-between mb-5">
-        <h1 class="text-4xl font-semibold capitalize leading-tight my-2"> My Podcasts</h1>
+    <div class="flex flex-wrap md:flex-nowrap items-center justify-between mb-5">
+        <h1 class="text-4xl font-semibold capitalize leading-tight my-2 order-1 md:order:none"> My Podcasts</h1>
 
-        <div class="w-1/2">
+        <div class="w-full order-3 md:order-2 md:w-1/2">
             <%= form_with url: dashboard_podcasts_path, method: :get, data: { turbo_frame: "podcasts", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
                 <%= text_field_tag "search", nil, placeholder: "Search name or about", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
             <% end %>
         </div>
 
-        <%= link_to new_dashboard_podcast_path, class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
+        <%= link_to new_dashboard_podcast_path, class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
             New Podcast
         <% end %>
     </div>
