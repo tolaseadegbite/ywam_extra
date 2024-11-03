@@ -5,6 +5,12 @@ class ProfilesController < ApplicationController
   before_action :owned_profile, only: [:edit, :update, :update, :destroy_cover_image]
 
   def show
+    @podcasts = @account.podcasts.includes(:account).ordered
+
+    if params[:search].present?
+      search_query = "%#{params[:search].downcase}%"
+      @podcasts = @podcasts.where("LOWER(name) LIKE ? OR LOWER(about) LIKE ?", search_query, search_query)
+    end
   end
 
   def edit
