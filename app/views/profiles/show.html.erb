@@ -1,23 +1,21 @@
 <% provide(:title, @account.username) %>
 
-<div class="pl-0 transition-all" id="main">
-  <div class="lg:mx-32">
-    <%= render "profiles/components/profile_header" %>
-    
-    <%= render 'profiles/components/tabs' %>
+<div class="pb-3 md:pb-3 md:mx-auto md:px-8">
+  <%= render "profiles/components/profile_header" %>
+  
+  <%= render 'profiles/components/tabs' %>
 
-    <div class="py-3 md:py-3 mx-auto px-5">
+  <div class="py-3 md:py-3 mx-auto px-5">
 
-      <div class="sm:w-full md:w-1/2 md:mr-auto my-3">
-        <%= form_with url: profile_path(@account.username), method: :get, data: { turbo_frame: "podcasts", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
-          <%= text_field_tag "search", nil, placeholder: "Search by name or about", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
-        <% end %>
-      </div>
-
-      <%= content_tag(:"turbo-frame", id: "podcasts", class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6") do %>
-        <%= render @podcasts %>
+    <div class="sm:w-full md:w-1/2 md:mr-auto my-3">
+      <%= form_with url: profile_path(@account.username), method: :get, data: { turbo_frame: "podcasts", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
+        <%= text_field_tag "search", nil, placeholder: "Search by name or about", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
       <% end %>
-
     </div>
+
+    <%= content_tag(:"turbo-frame", id: "podcasts", class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6") do %>
+      <%= render @podcasts %>
+    <% end %>
+
   </div>
 </div>
