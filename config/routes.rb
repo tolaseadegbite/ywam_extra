@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :podcasts do
       resources :episodes
     end
+    resources :events
     # get '/', to: '/dashboard/dashboard#index'
   end
 

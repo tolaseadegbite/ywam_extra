@@ -12,4 +12,5 @@ class Category < ApplicationRecord
   
   has_many :podcasts
   has_many :episodes
+  has_many :events
 end

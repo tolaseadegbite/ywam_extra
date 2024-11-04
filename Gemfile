@@ -21,6 +21,8 @@ end
 
 group :development do
   gem "web-console"
+  gem "annotate", "~> 3.2"
+  gem "better_errors"
   # gem "rails_live_reload"
 end
 
@@ -30,8 +32,8 @@ group :test do
 end
 
 gem "devise"
-gem "annotate", "~> 3.2"
 gem 'name_of_person'
 gem 'faker'
 gem "active_storage_validations", "0.9.8"
 gem 'pagy', '~> 9.0'
+gem 'city-state'

@@ -1,0 +1,73 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id             :bigint           not null, primary key
+#  city           :string
+#  cost_type      :integer          not null
+#  country        :string
+#  details        :text             not null
+#  end_date       :date             not null
+#  end_time       :time             not null
+#  event_type     :integer          not null
+#  name           :string           not null
+#  start_date     :date             not null
+#  start_time     :time             not null
+#  state          :string
+#  status         :integer          default(0)
+#  streaming_link :string
+#  street_address :string
+#  time_zone      :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  account_id     :bigint           not null
+#  category_id    :bigint           not null
+#
+# Indexes
+#
+#  index_events_on_account_id   (account_id)
+#  index_events_on_category_id  (category_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (category_id => categories.id)
+#
+
+one:
+  name: MyString
+  start_date: 2024-11-04
+  end_date: 2024-11-04
+  start_time: 2024-11-04 16:06:09
+  end_time: 2024-11-04 16:06:09
+  details: MyText
+  street_address: MyString
+  streaming_link: MyString
+  account: one
+  category: one
+  event_type: 1
+  cost_type: 1
+  country: MyString
+  state: MyString
+  city: MyString
+  time_zone: MyString
+  status: 1
+
+two:
+  name: MyString
+  start_date: 2024-11-04
+  end_date: 2024-11-04
+  start_time: 2024-11-04 16:06:09
+  end_time: 2024-11-04 16:06:09
+  details: MyText
+  street_address: MyString
+  streaming_link: MyString
+  account: two
+  category: two
+  event_type: 1
+  cost_type: 1
+  country: MyString
+  state: MyString
+  city: MyString
+  time_zone: MyString
+  status: 1
