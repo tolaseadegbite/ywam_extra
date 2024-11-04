@@ -76,7 +76,7 @@ class Dashboard::PodcastsController < ApplicationController
 
     def restrict_user
       unless current_account == @podcast.account
-        redirect_to dashboard_podcast_url, notice: 'Access denied!'
+        redirect_to dashboard_podcasts_url, notice: 'Access denied!'
       end
     end
 end
