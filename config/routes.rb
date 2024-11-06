@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+  resources :events
+
   namespace :dashboard do
     resources :podcasts do
       resources :episodes
