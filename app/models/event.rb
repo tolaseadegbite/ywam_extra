@@ -49,7 +49,7 @@ class Event < ApplicationRecord
 
   # Image
   has_one_attached :image do |attachable|
-    attachable.variant :display, resize_to_limit: [500, 500]
+    attachable.variant :display, resize_to_limit: [1225, 388]
   end
 
   validates :image, content_type: { in: %w[image/jpeg image/png],
@@ -89,10 +89,11 @@ class Event < ApplicationRecord
   }
 
   # postgres enums for status
-  enum :status, {
-    draft: 'draft',
-    published: 'published'
-  }, default: 'draft'
+  enum status: {
+    past: 0,
+    ongoing: 1,
+    future: 2
+  }
 
   scope :ordered, -> { order(id: :desc) }
 
