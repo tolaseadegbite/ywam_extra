@@ -79,7 +79,7 @@ class Event < ApplicationRecord
   enum event_type: {
     'online': 0,
     'physical': 1,
-    'online and in-person': 2
+    'online and physical': 2
   }
 
   # cost type options
@@ -88,11 +88,11 @@ class Event < ApplicationRecord
     "Paid": 1
   }
 
-  # postgres enums for status
+  # enums for status
   enum status: {
-    past: 0,
-    ongoing: 1,
-    future: 2
+    draft: 0,
+    published: 1,
+    archived: 2
   }
 
   scope :ordered, -> { order(id: :desc) }

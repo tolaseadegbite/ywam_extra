@@ -19,6 +19,9 @@
             <%= event.end_time.strftime("%I:%M %p") %>
         </td>
         <td class="px-6 py-4">
+            <%= event.status.capitalize %>
+        </td>
+        <td class="px-6 py-4">
             <%= link_to event.account.name, profile_path(event.account.username), data: { turbo_frame: "_top" } %>
         </td>
         <td class="px-6 py-4">
