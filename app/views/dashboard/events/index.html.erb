@@ -1,0 +1,78 @@
+<% provide(:title, "My Events") %>
+
+<%#= render 'layouts/navigation/sidebar' %>
+
+<%#= render 'layouts/navigation/sidebar_menu' %>
+
+<main class="py-5 mx-auto px-8 lg:px-8">
+
+    <div class="flex flex-wrap md:flex-nowrap items-center justify-between mb-5">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize leading-tight order-1 md:order:none"> My Events</h1>
+
+        <div class="mt-3 w-full order-3 md:order-2 md:w-1/2 md:mt-0">
+            <%= form_with url: dashboard_events_path, method: :get, data: { turbo_frame: "events", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
+                <%= text_field_tag "search", nil, placeholder: "Search name or about", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+            <% end %>
+        </div>
+
+        <%= link_to new_dashboard_event_path, class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
+            New Event
+        <% end %>
+    </div>
+
+    <%= turbo_frame_tag "events" do %>
+        <% if @events.present? %>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Details
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Start Date
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                End Date
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Start Time
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                End Time
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Created by
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Date created
+                            </th>
+                        </tr>
+                    </thead>
+                    <%= render @events %>
+                </table>
+            </div>
+            
+            <div class="my-5 mx-auto">
+                <%== pagy_nav(@pagy) %>
+            </div>
+        <% else %>
+            <div class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 flex items-center gap-2" role="alert">
+                <span class="font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>
+                </span> 
+                <% if params[:search].present? %>
+                    There are no event for this search
+                <% else %>
+                    There are no events created
+                <% end %>
+            </div>
+        <% end %>
+    <% end %>
+
+</main>

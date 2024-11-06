@@ -1,0 +1,10 @@
+<div class="relative">
+    <% if @event.image.attached? %>
+        <div id="<%= dom_id(@event, :image) %>">
+            <%= image_tag(@event.image, class: "w-full h-40 object-cover rounded-b-xl", alt: "cover image preview", data: { "profile-edit-form-target": "coverImagePreview" }) %>
+        </div>
+    <% else %>
+        <%= render 'dashboard/events/components/default_image' %>
+    <% end %>
+    <%= render 'dashboard/events/components/form_image_buttons' %>
+</div>

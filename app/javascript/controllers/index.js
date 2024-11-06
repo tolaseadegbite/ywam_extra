@@ -10,6 +10,9 @@ application.register("audio-player", AudioPlayerController)
 import DebounceController from "./debounce_controller"
 application.register("debounce", DebounceController)
 
+import FormElementController from "./form_element_controller"
+application.register("form-element", FormElementController)
+
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
 

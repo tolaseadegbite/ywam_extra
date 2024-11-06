@@ -1,7 +1,7 @@
 class Dashboard::EventsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_account!
   before_action :find_event, only: %w[show edit update destroy]
-  before_action :restrict_user, only: %[show edit update destroy]
+  # before_action :restrict_account, only: %[show edit update destroy]
 
   def index
     @events = current_account.events.includes(:account).ordered
@@ -15,7 +15,7 @@ class Dashboard::EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new
+    @event = Event.new(event_params)
   end
 
   def create
@@ -59,14 +59,14 @@ class Dashboard::EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :details, :start_date, :end_date, :start_time, :end_time, :streaming_link, :status, :cost_type, :event_type, :country, :state, :city, :time_zone, :street_address, :category_id)
+    params.fetch(:event, {}).permit(:name, :details, :start_date, :end_date, :start_time, :end_time, :streaming_link, :status, :cost_type, :event_type, :country, :state, :city, :time_zone, :street_address, :category_id, :image)
   end
 
   def find_event
     @event = Event.find(params[:id])
   end
 
-  def restrict_user
+  def restrict_account
     unless current_account == @event.account
       redirect_to dashboard_events_url, notice: 'Access denied!'
     end

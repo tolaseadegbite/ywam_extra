@@ -1,0 +1,28 @@
+<tbody>
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+            <%= link_to event.name, dashboard_event_path(event), data: { turbo_frame: "_top" } %>
+        </th>
+        <td class="px-6 py-4">
+            <%= event.details.truncate(30) %>
+        </td>
+        <td class="px-6 py-4">
+            <%= event.start_date.strftime("%B %d") %>
+        </td>
+        <td class="px-6 py-4">
+            <%= event.end_date.strftime("%B %d") %>
+        </td>
+        <td class="px-6 py-4">
+            <%= event.start_time.strftime("%I:%M %p") %>
+        </td>
+        <td class="px-6 py-4">
+            <%= event.end_time.strftime("%I:%M %p") %>
+        </td>
+        <td class="px-6 py-4">
+            <%= link_to event.account.name, profile_path(event.account.username), data: { turbo_frame: "_top" } %>
+        </td>
+        <td class="px-6 py-4">
+            <%= render_date(event) %>
+        </td>
+    </tr>
+</tbody>

@@ -228,4 +228,15 @@ puts "Creating follow relationships for episodes..."
   account.follows.find_or_create_by!(followable: episode)
 end
 
+# puts "Creating events..."
+# rand(1..2).times do
+#   event = account.first.events.create!(
+#     name: Faker::Lorem.sentence(word_count: rand(4..6)).capitalize,
+#     details: Faker::Lorem.paragraph(sentence_count: 5),
+#     category: Category.all.sample
+#     start_date: Faker::Date.forward(days: 365)
+#     end_date: Faker::Date.between(from: start_date, to: 1.month.from_now)
+#   )
+# end
+
 puts "Seeding completed at #{Time.now}"

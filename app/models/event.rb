@@ -34,18 +34,28 @@
 #  fk_rails_...  (category_id => categories.id)
 #
 class Event < ApplicationRecord
-  # make sure the follwing event attributes are present before saving to database
+  # Make sure the follwing event attributes are present before saving to database
   validates :name, :details, :start_date, :start_time, :end_date, :end_time, :event_type, :cost_type, presence: true
 
-  # validates that states belong to proper country and cities belong to proper state
+  # Validates that states belong to proper country and cities belong to proper state
   validates :state, inclusion: { in: ->(record) { record.states.keys }, allow_blank: true }
   validates :city, inclusion: { in: ->(record) { record.cities }, allow_blank: true }
 
-  # associate event to a account
+  # Associate event to a account
   belongs_to :account
 
-  # associate event to a eventcategory
+  # Associate event to a eventcategory
   belongs_to :category
+
+  # Image
+  has_one_attached :image do |attachable|
+    attachable.variant :display, resize_to_limit: [500, 500]
+  end
+
+  validates :image, content_type: { in: %w[image/jpeg image/png],
+                                    message: "must be a valid image format" },
+                    size:         { less_than: 1.megabytes,
+                                    message:   "should be less than 1MB" }
 
   # associate the follwing objects to an event and also delete from database when the event is destroyed
   # has_many :event_speakers, dependent: :destroy
@@ -84,7 +94,7 @@ class Event < ApplicationRecord
     published: 'published'
   }, default: 'draft'
 
-  scope :ordered, -> { published }
+  scope :ordered, -> { order(id: :desc) }
 
   def countries
     CS.countries.with_indifferent_access

@@ -1,0 +1,116 @@
+<%= form_with(model: [:dashboard, event], html: { id: "podcast_form", class: "mx-5" }, data: { turbo_frame: "_top", controller: "profile-edit-form" }) do |f| %>
+
+    <div class="mb-5">
+        <%= render 'layouts/errors', f: f %>
+    </div>
+
+    <div>
+        <%= render 'dashboard/events/components/form_images_preview' %>
+    </div>
+    
+    <div class="mb-5">
+        <%= f.file_field :image, class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 hidden", data: { "profile-edit-form-target": "coverImageFile", action: "change->profile-edit-form#coverImageChanged" } %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :name, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+    
+    <div class="field mb-5">
+        <%= f.label :details, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_area :details, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :category, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.select :category_id, Category.all.pluck(:name, :id), { include_blank: "Select category" }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label "Streaming link", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :streaming_link, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6">
+
+        <div class="mb-5">
+            <%= f.label "Start date", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.date_field :start_date, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+
+        <div class="mb-5">
+            <%= f.label "Start time", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.time_field :start_time, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6">
+
+        <div class="mb-5">
+            <%= f.label "End date", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.date_field :end_date, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+
+        <div class="mb-5">
+            <%= f.label "End time", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.time_field :end_time, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 md:gap-6">
+
+        <div class="mb-5">
+            <%= f.label "Event type", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.select :event_type, Event.event_types.keys.map { |key| [key.humanize.capitalize, key] }, { include_blank: 'Is it in person or virtual?' }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+
+        <div class="mb-5">
+            <%= f.label "Cost type", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.select :cost_type, Event.cost_types.keys.map { |key| [key.humanize.capitalize, key] }, { include_blank: 'Is the event free of paid?' }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+    </div>
+
+    <%= turbo_frame_tag :cs_select do %>
+        <div data-controller="form-element">
+            <%= f.button "Validate", formaction: new_dashboard_event_path, formmethod: :get, data: { form_element_target: "remoteBtn", turbo_frame: :cs_select } %>
+
+            <div class="mb-5">
+                <%= f.label "Country", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+                <%= f.select :country, event.countries.invert, { include_blank: 'Which country is this event happening?' }, 
+                { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", 
+                data: { action: "change->form-element#autosubmit" } 
+                } %>
+            </div>
+
+            <div class="mb-5">
+                <%= f.label "State", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+                <%= f.select :state, event.states.invert, { include_blank: 'Which state is this event happening?' }, 
+                { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white", 
+                data: { action: "change->form-element#autosubmit" } 
+                } %>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <%= f.label "City", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+
+            <%= f.select :city, event.cities, { include_blank: 'Which city is this event happening?' }, 
+             { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+             } %>
+        </div>
+    <% end %>
+
+    
+    <div class="field mb-5">
+        <%= f.label :street_address, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :street_address, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Save event", class: "cursor-pointer rounded py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5 md:max-w-fit" %>
+    </div>
+
+<% end %>
