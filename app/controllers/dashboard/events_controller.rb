@@ -8,7 +8,7 @@ class Dashboard::EventsController < ApplicationController
 
     if params[:search].present?
       search_query = "%#{params[:search].downcase}%"
-      @events = current_account.events.where("LOWER(name) LIKE ? OR LOWER(about) LIKE ?", search_query, search_query)
+      @events = current_account.events.where("LOWER(name) LIKE ? OR LOWER(details) LIKE ?", search_query, search_query)
     end
 
     @pagy, @events = pagy(@events, limit: 3)

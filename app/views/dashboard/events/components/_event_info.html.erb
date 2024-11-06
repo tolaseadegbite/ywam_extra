@@ -6,7 +6,7 @@
 
 <div class="flex flex-wrap items-center py-0 my-5 gap-2 md:gap-7">
     <span>
-        <%= @event.start_date.strftime("%B %d") %> at <%= @event.start_time.strftime("at %I:%M %p") %> - <%= @event.end_date.strftime("%B %d") %> <%= @event.end_time.strftime("at %I:%M %p") %>
+        <%= @event.start_date.strftime("%B %d") %> <%= @event.start_time.strftime("at %I:%M %p") %> - <%= @event.end_date.strftime("%B %d") %> <%= @event.end_time.strftime("at %I:%M %p") %>
     </span>
 
     <span>•</span>

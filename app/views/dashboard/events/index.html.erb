@@ -11,7 +11,7 @@
 
         <div class="mt-3 w-full order-3 md:order-2 md:w-1/2 md:mt-0">
             <%= form_with url: dashboard_events_path, method: :get, data: { turbo_frame: "events", turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do %>
-                <%= text_field_tag "search", nil, placeholder: "Search name or about", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+                <%= text_field_tag "search", nil, placeholder: "Search name or details", class: "block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
             <% end %>
         </div>
 
