@@ -26,10 +26,17 @@
         <%= f.label :category, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
         <%= f.select :category_id, Category.all.pluck(:name, :id), { include_blank: "Select category" }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
     </div>
+    
+    <div class="grid md:grid-cols-2 md:gap-6">
+        <div class="field mb-5">
+            <%= f.label "Streaming platform", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.text_field :streaming_platform, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
 
-    <div class="field mb-5">
-        <%= f.label "Streaming link", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_field :streaming_link, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        <div class="field mb-5">
+            <%= f.label "Streaming link", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.text_field :streaming_link, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
     </div>
 
     <div class="grid md:grid-cols-2 md:gap-6">
@@ -102,11 +109,17 @@
              } %>
         </div>
     <% end %>
-
     
-    <div class="field mb-5">
-        <%= f.label :street_address, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_field :street_address, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    <div class="grid md:grid-cols-2 md:gap-6">
+        <div class="field mb-5">
+            <%= f.label :location, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.text_field :location, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
+
+        <div class="field mb-5">
+            <%= f.label :address, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.text_field :street_address, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        </div>
     </div>
 
     <div class="field mb-5">

@@ -1,0 +1,17 @@
+<% provide(:title, @account.username) %>
+
+<div class="pb-3 md:pb-3 md:mx-auto md:px-8">
+  <%= render "profiles/components/profile_header" %>
+  
+  <%= render 'profiles/components/tabs' %>
+
+  <div class="py-3 md:py-3 mx-auto px-5">
+
+    <p class="ml-auto mb-3 inline-block text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer">Search</p>
+
+    <%= content_tag(:"turbo-frame", id: "events", class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3") do %>
+        <%= render @events %>
+    <% end %>
+
+  </div>
+</div>

@@ -4,14 +4,14 @@ class EventsController < ApplicationController
   before_action :restrict_account, only: %[show]
 
   def index
-    @events = Event.all.includes(:account).ordered
+    @events = Event.all.includes(:account).published.ordered
 
     if params[:search].present?
       search_query = "%#{params[:search].downcase}%"
       @events = current_account.events.where("LOWER(name) LIKE ? OR LOWER(details) LIKE ?", search_query, search_query)
     end
 
-    @pagy, @events = pagy(@events, limit: 3)
+    @pagy, @events = pagy(@events, limit: 16)
   end
 
   def new
@@ -59,7 +59,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.fetch(:event, {}).permit(:name, :details, :start_date, :end_date, :start_time, :end_time, :streaming_link, :status, :cost_type, :event_type, :country, :state, :city, :time_zone, :street_address, :category_id, :image)
+    params.fetch(:event, {}).permit(:name, :details, :start_date, :end_date, :start_time, :end_time, :streaming_link, :status, :cost_type, :event_type, :country, :state, :city, :time_zone, :street_address, :category_id, :image, :location, :streaming_platform)
   end
 
   def find_event

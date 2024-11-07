@@ -60,6 +60,11 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def events
+    @events = @account.events.published.ordered
+    @pagy, @events = pagy(@events, limit: 16)
+  end
+
   private
 
     def profile_params

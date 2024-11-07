@@ -4,7 +4,7 @@
     <%= render 'dashboard/events/components/image_edit_button' %>
 </div>
 
-<div class="flex flex-wrap items-center py-0 my-5 gap-2 md:gap-7">
+<div class="flex flex-wrap items-center py-0 my-5 gap-2 md:gap-7 text-sm">
     <span>
         <%= @event.start_date.strftime("%B %d") %> <%= @event.start_time.strftime("at %I:%M %p") %> - <%= @event.end_date.strftime("%B %d") %> <%= @event.end_time.strftime("at %I:%M %p") %>
     </span>
@@ -12,6 +12,12 @@
     <span>•</span>
 
     <%= @event.event_type.capitalize %>
+
+    <% if @event.location.present? %>
+        <span>•</span>
+
+        <%= @event.location.capitalize %>
+    <% end %>
 
     <span>•</span>
 
@@ -26,6 +32,15 @@
     <h1 class="w-full mb-3 md:mb-0 md:w-3/4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize leading-tight"><%= @event.name %></h1>
 
     <div>
+        <% if @event.published? %>
+            <%= link_to @event, class: "inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-2 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700", target: "_blank" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
+            <% end %>
+        <% end %>
+
         <%= link_to edit_dashboard_event_path(@event), class: "inline-flex gap-1 items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-2 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700", data: {action: "click->dialog#open", turbo_frame: :modal} do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -40,12 +55,24 @@
     </div>
 </div>
 
-<p class="mb-3">Details: <%= @event.details %></p>
+<div class="w-full md:w-1/2">
+    <p class="mb-3"><span class="font-semibold">Details:</span> <%= @event.details %></p>
 
-<% if @event.street_address.present? %>
-    <p class="mb-3">Address: <%= @event.street_address %></p>
-<% end %>
+    <% if @event.street_address.present? %>
+        <p class="mb-3"><span class="font-semibold">Address:</span> <%= @event.street_address %></p>
+    <% end %>
 
-<% if @event.streaming_link.present? %>
-    <%= link_to 'Stream event', @event.streaming_link, target: '_blank', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3" %>
-<% end %>
+    <% if @event.streaming_platform.present? %>
+        <p class="mb-3"><span class="font-semibold">Streaming platform:</span> <%= @event.streaming_platform %></p>
+    <% end %>
+
+    <% if @event.streaming_link.present? %>
+        <p class="mb-3"><span class="font-semibold">Streaming link:</span> <%= link_to @event.streaming_link %></p>
+    <% end %>
+
+    <% if @event.streaming_link.present? %>
+        <%= link_to @event.streaming_link, target: '_blank', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3" do %>
+            Stream event on <%= @event.streaming_platform %>
+        <% end %>
+    <% end %>
+</div>

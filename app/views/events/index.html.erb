@@ -1,0 +1,14 @@
+<%= provide(:title, 'Events') %>
+
+<div class="py-8 mx-auto px-8 lg:px-8">
+
+    <div class="hidden mb-10 md:flex justify-between items-center">
+        <%= render 'events/components/tabs' %>
+
+        <p class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer">Search</p>
+    </div>
+
+    <%= content_tag(:"turbo-frame", id: "events", class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3") do %>
+        <%= render @events %>
+    <% end %>
+</div>

@@ -11,7 +11,7 @@ class Dashboard::EventsController < ApplicationController
       @events = current_account.events.where("LOWER(name) LIKE ? OR LOWER(details) LIKE ?", search_query, search_query)
     end
 
-    @pagy, @events = pagy(@events, limit: 3)
+    @pagy, @events = pagy(@events, limit: 10)
   end
 
   def new
@@ -59,7 +59,7 @@ class Dashboard::EventsController < ApplicationController
   private
 
   def event_params
-    params.fetch(:event, {}).permit(:name, :details, :start_date, :end_date, :start_time, :end_time, :streaming_link, :status, :cost_type, :event_type, :country, :state, :city, :time_zone, :street_address, :category_id, :image)
+    params.fetch(:event, {}).permit(:name, :details, :start_date, :end_date, :start_time, :end_time, :streaming_link, :status, :cost_type, :event_type, :country, :state, :city, :time_zone, :street_address, :category_id, :image, :location, :streaming_platform)
   end
 
   def find_event

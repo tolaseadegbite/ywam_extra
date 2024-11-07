@@ -2,26 +2,28 @@
 #
 # Table name: events
 #
-#  id             :bigint           not null, primary key
-#  city           :string
-#  cost_type      :integer          not null
-#  country        :string
-#  details        :text             not null
-#  end_date       :date             not null
-#  end_time       :time             not null
-#  event_type     :integer          not null
-#  name           :string           not null
-#  start_date     :date             not null
-#  start_time     :time             not null
-#  state          :string
-#  status         :integer          default(0)
-#  streaming_link :string
-#  street_address :string
-#  time_zone      :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  account_id     :bigint           not null
-#  category_id    :bigint           not null
+#  id                 :bigint           not null, primary key
+#  city               :string
+#  cost_type          :integer          not null
+#  country            :string
+#  details            :text             not null
+#  end_date           :date             not null
+#  end_time           :time             not null
+#  event_type         :integer          not null
+#  location           :string
+#  name               :string           not null
+#  start_date         :date             not null
+#  start_time         :time             not null
+#  state              :string
+#  status             :integer          default("draft")
+#  streaming_link     :string
+#  streaming_platform :string
+#  street_address     :string
+#  time_zone          :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  account_id         :bigint           not null
+#  category_id        :bigint           not null
 #
 # Indexes
 #
@@ -84,8 +86,8 @@ class Event < ApplicationRecord
 
   # cost type options
   enum cost_type: {
-    "Free": 0,
-    "Paid": 1
+    free: 0,
+    paid: 1
   }
 
   # enums for status
@@ -96,6 +98,7 @@ class Event < ApplicationRecord
   }
 
   scope :ordered, -> { order(id: :desc) }
+  scope :published, -> { where(status: :published) }
 
   def countries
     CS.countries.with_indifferent_access

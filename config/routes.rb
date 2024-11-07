@@ -45,8 +45,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   scope(path: ':username', constraints: { username: /[^\/]+/ }) do
-    get '/', to: 'profiles#show', as: :account_podcasts
-    get '/podcasts', to: 'profiles#show', as: :profile
+    get '/', to: 'profiles#show', as: :profile
+    get '/events', to: 'profiles#events', as: :profile_events
     get '/following', to: 'profiles#following', as: :profile_following
     get '/followers', to: 'profiles#followers', as: :profile_followers
     get '/edit', to: 'profiles#edit', as: :edit_profile
