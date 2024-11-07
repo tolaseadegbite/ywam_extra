@@ -1,8 +1,15 @@
 <%= provide(:title, 'Events') %>
 
+<%= render 'events/components/sidebar' %>
+
+<%= render 'events/components/sidebar_menu' %>
+
 <div class="py-8 mx-auto px-8 lg:px-8">
 
-    <div class="hidden mb-10 md:flex justify-between items-center">
+    <h1 class="mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize leading-tight">Discover Events</h1>
+    
+    <div class="hidden mb-5 md:flex justify-between items-center">
+
         <%= render 'events/components/tabs' %>
 
         <p class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer">Search</p>
