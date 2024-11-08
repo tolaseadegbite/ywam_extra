@@ -32,6 +32,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    @events = Event.all.limit(3).ordered
   end
 
   def edit

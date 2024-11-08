@@ -3,6 +3,8 @@
 # Table name: events
 #
 #  id                 :bigint           not null, primary key
+#  audience           :integer          default(0)
+#  booking_url        :string
 #  city               :string
 #  cost_type          :integer          not null
 #  country            :string
@@ -95,6 +97,15 @@ class Event < ApplicationRecord
     draft: 0,
     published: 1,
     archived: 2
+  }
+
+  # enums for audience
+  enum audience: {
+    anyone: 0,
+    serving_members_only: 1,
+    alumni_only: 2,
+    staffs_only: 3,
+    leadership_only: 4
   }
 
   scope :ordered, -> { order(id: :desc) }

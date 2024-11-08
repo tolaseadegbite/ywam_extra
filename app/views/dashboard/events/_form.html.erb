@@ -14,12 +14,12 @@
 
     <div class="field mb-5">
         <%= f.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_field :name, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        <%= f.text_field :name, autocomplete: "name", placeholder: 'Event name', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
     </div>
     
     <div class="field mb-5">
         <%= f.label :details, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_area :details, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+        <%= f.text_area :details, placeholder: 'Describe the event', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
     </div>
 
     <div class="field mb-5">
@@ -30,12 +30,12 @@
     <div class="grid md:grid-cols-2 md:gap-6">
         <div class="field mb-5">
             <%= f.label "Streaming platform", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :streaming_platform, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+            <%= f.text_field :streaming_platform, placeholder: 'Platform to stream event', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
         </div>
 
         <div class="field mb-5">
             <%= f.label "Streaming link", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :streaming_link, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+            <%= f.text_field :streaming_link, placeholder: 'URL to stream event', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
         </div>
     </div>
 
@@ -78,6 +78,11 @@
         </div>
     </div>
 
+    <div class="field mb-5">
+        <%= f.label :booking_url, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_field :booking_url, placeholder: 'URL to buy tickets', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+    </div>
+
     <%= turbo_frame_tag :cs_select do %>
         <div data-controller="form-element">
             <%= f.button "Validate", formaction: new_dashboard_event_path, formmethod: :get, data: { form_element_target: "remoteBtn", turbo_frame: :cs_select } %>
@@ -113,18 +118,23 @@
     <div class="grid md:grid-cols-2 md:gap-6">
         <div class="field mb-5">
             <%= f.label :location, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :location, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+            <%= f.text_field :location, placeholder: 'e.g Horiental hotel, Lagos. *Important for map*', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
         </div>
 
         <div class="field mb-5">
             <%= f.label :address, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :street_address, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
+            <%= f.text_field :street_address, placeholder: 'Address of the event. *Important for map*', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" %>
         </div>
     </div>
 
     <div class="field mb-5">
         <%= f.label :status, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
         <%= f.select :status, Event.statuses.keys.map{ |key| [key.humanize, key] }, prompt: "Status", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+    </div>
+
+    <div class="field mb-5">
+        <%= f.label :audience, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.select :audience, Event.audiences.keys.map{ |key| [key.humanize, key] }, prompt: "Audience", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
     </div>
 
     <div class="actions">

@@ -1,0 +1,185 @@
+<%= provide(:title, @event.name) %>
+
+<%= render 'events/components/sidebar' %>
+
+<%= render 'events/components/sidebar_menu' %>
+
+
+<div class="">
+    <div class="profile-header mx-auto h-72 w-full md:w-1/2 rounded-b-xl" style="background-image:url('<%= url_for(@event.image) %>'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+    </div>
+</div>
+
+<div class="py-5 px-8 lg:px-8 border-b">
+    <p class="text-lg text-blue-700 font-semibold mb-2">
+        <%= @event.start_date.strftime("%a, %b %d") %>
+    </p>
+    <h1 class="mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize leading-tight"><%= @event.name %></h1>
+    <% if @event.location.present? %>
+        <p class="mt-2"><%= @event.location %></p>
+    <% else %>
+        <p class="mt-2">Online, <%= @event.streaming_platform %></p>
+    <% end %>
+</div>
+
+<div class="py-3 px-8 border mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3">
+        <div class="space-y-3">
+            <div class="border p-3 rounded space-y-2">
+
+                <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
+                    Details
+                </h2>
+                <p>312 people responded</p>
+                <p>Event by<span class="font-semibold">  <%= @event.account.name %></span></p>
+                <p>Event type<span class="font-semibold">  <%= @event.event_type.capitalize %></span></p>
+                <p>Cost<span class="font-semibold">  <%= @event.cost_type.capitalize %></span></p>
+                <% if @event.location.present? %>
+                    <p class="font-semibold"><%= @event.location.capitalize %></p>
+                <% else %>
+                    <p>Online, <%= @event.streaming_platform %></p>
+                <% end %>
+                <% if @event.booking_url.present? %>
+                    <p>Tickets: <%= link_to @event.booking_url, target: '_blank' %></p>
+                <% end %>
+                <p>Audience: <span class="font-semibold"><%= @event.audience.capitalize %></span></p>
+                <p class="mb-2"><%= @event.details %></p>
+                <% if @event.streaming_link.present? %>
+                    <p>
+                        <%= link_to @event.streaming_link, target: '_blank', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3" do %>
+                            Stream event on <%= @event.streaming_platform %>
+                        <% end %>
+                    </p>
+                <% end %>
+            </div>
+
+            <div class="border p-3 rounded">
+                <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight mb-3">
+                    Meet your hosts
+                </h2>
+
+                <div class="flex-row md:flex flex-nowrap gap-3">
+                    <% @event.account.followers.limit(2).each do |follower| %>
+                        <div class="border rounded-lg p-3 text-center mb-3 md:mb-0">
+                            <div class="mx-auto p-2">
+                                <% if follower.avatar.attached? %>
+                                    <%= image_tag(follower.avatar, class: "w-36 h-36 rounded-full mx-auto") %>
+                                <% else %>
+                                    <%= image_tag('others/default avatar', class: "w-36 h-36 rounded-full mx-auto") %>
+                                <% end %>
+                                <h3 class="text-1.5xl font-semibold capitalize leading-tight mt-2"><%= follower.name %></h3>
+                                <div class="flex items-center gap-2">
+                                    <p class="mx-auto">13 past events<span class="mx-2">•</span>Organization</p>
+                                </div>
+                            </div>
+
+                            <div class="border-t p-2">
+                                <%= follower.bio %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            <% if @event.paid? %>
+                <div class="p-3 border">
+                    <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight mb-3">
+                        Tickets
+                    </h2>
+
+                    <%= link_to '', class: "w-full inline-flex gap-1 items-center py-2 px-4 text-white bg-blue-800 hover:bg-blue-900 rounded-md whitespace-nowrap", target: '_blank' do %>
+                    
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                            <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                        </svg>
+
+                        Get Tickets
+                    <% end %>
+                </div>
+            <% end %>
+
+            <% if @event.street_address? %>
+                <div class="border rounded-lg">
+                    <%= image_tag(@event.image, class: 'h-72 w-full rounded-t-lg') %>
+                    <div class="p-3">
+                        <h3 class="text-1.5xl font-semibold capitalize leading-tight"><%= @event.location %></h3>
+                        <p class="text-sm text-gray-500 m-0 p-0"><%= @event.street_address %></p>
+                    </div>
+                </div>
+            <% end %>
+
+            <div class="p-3 border rounded-lg">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
+                        Guests
+                    </h2>
+
+                    <%= link_to 'See all', '' %>
+                </div>
+
+                <div class="flex justify-between items-center w-1/2 mx-auto my-5">
+                    <div>
+                        <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
+                            50
+                        </h2>
+                        <p> Going</p>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
+                            300 
+                        </h2>
+                        <p>Interested</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border rounded-lg">
+                <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight mb-3">
+                    Popular in your network 
+                </h2>
+                
+                <% @events.each do |event| %>
+                    <div class="flex gap-3 mb-5">
+                        <div class="flex-shrink-0 lg:block">
+                            <%= link_to event_path(event) do %>
+                                <div class="flex-shrink-0 ml-auto">
+                                    <% if event.image.attached? %>
+                                        <%= image_tag(event.image, class: "w-12 h-12 object-cover rounded shadow") %>
+                                    <% else %>
+                                        <%= image_tag('podcasts/man.jpg', class: "w-12 h-12 object-cover rounded shadow") %>
+                                    <% end %>
+                                </div>
+                            <% end %>
+                        </div>
+
+                        <div class="">
+                            <p class="text-sm text-blue-700">
+                                <%= event.start_date.strftime("%a, %b %d") %>
+                            </p>
+                            <h3 class="text-1.5xl font-semibold capitalize leading-tight"><%= event.name %></h3>
+                            <% if event.location.present? %>
+                                <p class="text-sm"><%= event.location %></p>
+                            <% else %>
+                                <p class="text-sm">Online, <%= event.streaming_platform %></p>
+                            <% end %>
+                            <div class="flex items-center gap-1">
+                                <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full") %>
+                                <p class="text-xs">13 interested</p>
+                                <span>•</span>
+                                <p class="text-xs">2 going</p>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
