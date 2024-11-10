@@ -3,7 +3,7 @@
 # Table name: events
 #
 #  id                 :bigint           not null, primary key
-#  audience           :integer          default(0)
+#  audience           :integer          default("anyone")
 #  booking_url        :string
 #  city               :string
 #  cost_type          :integer          not null
@@ -76,8 +76,8 @@ class Event < ApplicationRecord
   #   event_co_hosts.find_by(account: account)&.destroy
   # end
 
-  # has_many :rsvps, as: :rsvpable, dependent: :destroy
-  # has_many :accounts, through: :rsvps
+  has_many :rsvps, dependent: :destroy
+  has_many :accounts, through: :rsvps
 
   # event types
   enum event_type: {

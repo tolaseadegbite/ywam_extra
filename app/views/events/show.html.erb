@@ -6,44 +6,97 @@
 
 
 <div class="">
-    <div class="profile-header mx-auto h-72 w-full md:w-1/2 rounded-b-xl" style="background-image:url('<%= url_for(@event.image) %>'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+    <div class="profile-header mx-auto h-72 lg:h-[23em] w-full md:w-1/2 rounded-b-xl" style="background-image:url('<%= url_for(@event.image) %>'); background-position: center; background-size: cover; background-repeat: no-repeat;">
     </div>
 </div>
 
-<div class="py-5 px-8 lg:px-8 border-b">
-    <p class="text-lg text-blue-700 font-semibold mb-2">
-        <%= @event.start_date.strftime("%a, %b %d") %>
-    </p>
-    <h1 class="mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize leading-tight"><%= @event.name %></h1>
-    <% if @event.location.present? %>
-        <p class="mt-2"><%= @event.location %></p>
-    <% else %>
-        <p class="mt-2">Online, <%= @event.streaming_platform %></p>
-    <% end %>
+<div class="py-5 px-8 lg:px-8 border-b flex justify-between items-center">
+    <div>
+        <p class="text-lg text-blue-700 font-semibold mb-2">
+            <%= @event.start_date.strftime("%a, %b %d") %>
+        </p>
+        <h1 class="mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize leading-tight"><%= @event.name %></h1>
+        <% if @event.location.present? %>
+            <p class="mt-2"><%= @event.location %></p>
+        <% else %>
+            <p class="mt-2">Online, <%= @event.streaming_platform %></p>
+        <% end %>
+    </div>
+
+    <div class="flex items-center gap-1">
+        <div id="rsvp">
+            <%= render 'rsvp_form', event: @event %>
+        </div>
+
+        <% if @current_account_rsvp_status.present? %>
+            <div id="cancel_rsvp">
+                <div id="cancel_rsvp">
+                    <%= render 'events/components/cancel_rsvp_button' %>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>
 
 <div class="py-3 px-8 border mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3">
         <div class="space-y-3">
-            <div class="border p-3 rounded space-y-2">
+            <div class="border p-3 rounded space-y-3">
 
                 <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
                     Details
                 </h2>
-                <p>312 people responded</p>
-                <p>Event by<span class="font-semibold">  <%= @event.account.name %></span></p>
-                <p>Event type<span class="font-semibold">  <%= @event.event_type.capitalize %></span></p>
-                <p>Cost<span class="font-semibold">  <%= @event.cost_type.capitalize %></span></p>
-                <% if @event.location.present? %>
-                    <p class="font-semibold"><%= @event.location.capitalize %></p>
-                <% else %>
-                    <p>Online, <%= @event.streaming_platform %></p>
-                <% end %>
+
+                <div class="flex gap-1 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                    </svg>
+                    <p>312 people responded</p>
+                </div>
+
+                <div class="flex gap-1 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                    </svg>
+                    <p>Event type<span class="font-semibold">  <%= @event.event_type.capitalize %></span></p>
+                </div>
+
+                <div class="flex gap-1 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <p>Cost<span class="font-semibold">  <%= @event.cost_type.capitalize %></span></p>
+                </div>
+                
+                <div class="flex gap-1 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                    <% if @event.location.present? %>
+                        <p class="font-semibold"><%= @event.location.capitalize %></p>
+                    <% else %>
+                        <p>Online, <%= @event.streaming_platform %></p>
+                    <% end %>
+                </div>
+                
                 <% if @event.booking_url.present? %>
-                    <p>Tickets: <%= link_to @event.booking_url, target: '_blank' %></p>
+                    <div class="flex gap-1 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+                        </svg>
+                        <p>Tickets: <%= link_to @event.booking_url, target: '_blank' %></p>
+                    </div>
                 <% end %>
-                <p>Audience: <span class="font-semibold"><%= @event.audience.capitalize %></span></p>
-                <p class="mb-2"><%= @event.details %></p>
+
+                <div class="flex gap-1 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m20.893 13.393-1.135-1.135a2.252 2.252 0 0 1-.421-.585l-1.08-2.16a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.21l-1.273-.363a.89.89 0 0 0-.738 1.595l.587.39c.59.395.674 1.23.172 1.732l-.2.2c-.212.212-.33.498-.33.796v.41c0 .409-.11.809-.32 1.158l-1.315 2.191a2.11 2.11 0 0 1-1.81 1.025 1.055 1.055 0 0 1-1.055-1.055v-1.172c0-.92-.56-1.747-1.414-2.089l-.655-.261a2.25 2.25 0 0 1-1.383-2.46l.007-.042a2.25 2.25 0 0 1 .29-.787l.09-.15a2.25 2.25 0 0 1 2.37-1.048l1.178.236a1.125 1.125 0 0 0 1.302-.795l.208-.73a1.125 1.125 0 0 0-.578-1.315l-.665-.332-.091.091a2.25 2.25 0 0 1-1.591.659h-.18c-.249 0-.487.1-.662.274a.931.931 0 0 1-1.458-1.137l1.411-2.353a2.25 2.25 0 0 0 .286-.76m11.928 9.869A9 9 0 0 0 8.965 3.525m11.928 9.868A9 9 0 1 1 8.965 3.525" />
+                    </svg>
+                    <p>Audience: <span class="font-semibold"><%= @event.audience.capitalize %></span></p>
+                </div>
+
+                <p class="mb-2"><%= @event.details.truncate(300) %> <span class="font-semibold">See more</span></p>
                 <% if @event.streaming_link.present? %>
                     <p>
                         <%= link_to @event.streaming_link, target: '_blank', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3" do %>
@@ -58,7 +111,7 @@
                     Meet your hosts
                 </h2>
 
-                <div class="flex-row md:flex flex-nowrap gap-3">
+                <div class="flex-row md:flex gap-3">
                     <% @event.account.followers.limit(2).each do |follower| %>
                         <div class="border rounded-lg p-3 text-center mb-3 md:mb-0">
                             <div class="mx-auto p-2">
@@ -69,13 +122,13 @@
                                 <% end %>
                                 <h3 class="text-1.5xl font-semibold capitalize leading-tight mt-2"><%= follower.name %></h3>
                                 <div class="flex items-center gap-2">
-                                    <p class="mx-auto">13 past events<span class="mx-2">•</span>Organization</p>
+                                    <p class="mx-auto text-sm">13 past events<span class="mx-2">•</span>Organization</p>
                                 </div>
                             </div>
 
-                            <div class="border-t p-2">
+                            <p class="border-t p-2 text-sm">
                                 <%= follower.bio %>
-                            </div>
+                            </p>
                         </div>
                     <% end %>
                 </div>
@@ -90,20 +143,21 @@
                         Tickets
                     </h2>
 
-                    <%= link_to '', class: "w-full inline-flex gap-1 items-center py-2 px-4 text-white bg-blue-800 hover:bg-blue-900 rounded-md whitespace-nowrap", target: '_blank' do %>
-                    
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                            <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                        </svg>
+                    <%= link_to '', class: "w-full inline-flex gap-1 items-center py-2 px-4 text-white bg-blue-800 hover:bg-blue-900 rounded", target: '_blank' do %>
+                        <div class="mx-auto flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                            </svg>
 
-                        Get Tickets
+                            Get Tickets
+                        </div>
                     <% end %>
                 </div>
             <% end %>
 
             <% if @event.street_address? %>
                 <div class="border rounded-lg">
-                    <%= image_tag(@event.image, class: 'h-72 w-full rounded-t-lg') %>
+                    <%= image_tag('map', class: 'h-72 w-full rounded-t-lg') %>
                     <div class="p-3">
                         <h3 class="text-1.5xl font-semibold capitalize leading-tight"><%= @event.location %></h3>
                         <p class="text-sm text-gray-500 m-0 p-0"><%= @event.street_address %></p>
@@ -120,20 +174,8 @@
                     <%= link_to 'See all', '' %>
                 </div>
 
-                <div class="flex justify-between items-center w-1/2 mx-auto my-5">
-                    <div>
-                        <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
-                            50
-                        </h2>
-                        <p> Going</p>
-                    </div>
-
-                    <div>
-                        <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight">
-                            300 
-                        </h2>
-                        <p>Interested</p>
-                    </div>
+                <div id="rsvp_details" class="flex justify-between items-center w-1/2 mx-auto my-5">
+                    <%= render 'events/components/rsvp_details' %>
                 </div>
             </div>
 
@@ -167,10 +209,14 @@
                                 <p class="text-sm">Online, <%= event.streaming_platform %></p>
                             <% end %>
                             <div class="flex items-center gap-1">
-                                <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full") %>
-                                <p class="text-xs">13 interested</p>
+                                <% if current_account.avatar.attached? %>
+                                    <%= image_tag(current_account.avatar, class: "w-8 h-8 rounded-full") %>
+                                <% else %>
+                                    <%= image_tag('others/default avatar', class: "w-8 h-8 rounded-full") %>
+                                <% end %>
+                                <p class="text-xs"><%= pluralize(event.rsvps.interested.count, 'Interested') %></p>
                                 <span>•</span>
-                                <p class="text-xs">2 going</p>
+                                <p class="text-xs"><%= pluralize(event.rsvps.going.count, 'Going') %></p>
                             </div>
                         </div>
                     </div>

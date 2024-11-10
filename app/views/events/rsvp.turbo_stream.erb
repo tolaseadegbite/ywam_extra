@@ -1,0 +1,10 @@
+<%= turbo_stream.replace 'rsvp' do %>
+  <%= render 'events/rsvp_form', event: @event %>
+<% end %>
+
+<%= turbo_stream.update 'rsvp_details' do %>
+  <%= render 'events/components/rsvp_details' %>
+<% end %>
+
+
+<%= render_turbo_stream_flash_messages %>

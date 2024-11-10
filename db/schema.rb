@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_08_084935) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_08_094902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -240,6 +240,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_08_084935) do
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
   end
 
+  create_table "rsvps", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "event_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_rsvps_on_account_id"
+    t.index ["event_id"], name: "index_rsvps_on_event_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -268,4 +278,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_08_084935) do
   add_foreign_key "podcasts", "accounts"
   add_foreign_key "podcasts", "categories"
   add_foreign_key "reviews", "accounts"
+  add_foreign_key "rsvps", "accounts"
+  add_foreign_key "rsvps", "events"
 end

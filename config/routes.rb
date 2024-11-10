@@ -21,7 +21,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
-  resources :events
+  resources :events, only: [:index, :show] do
+    member do
+      post 'rsvp'
+      delete 'cancel_rsvp'
+    end
+  end
 
   namespace :dashboard do
     resources :podcasts do

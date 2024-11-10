@@ -3,7 +3,7 @@
 # Table name: events
 #
 #  id                 :bigint           not null, primary key
-#  audience           :integer          default(0)
+#  audience           :integer          default("anyone")
 #  booking_url        :string
 #  city               :string
 #  cost_type          :integer          not null

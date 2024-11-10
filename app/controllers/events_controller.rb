@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_account!
-  before_action :find_event, only: %w[show edit update destroy]
-  before_action :restrict_account, only: %[show]
+  before_action :find_event, only: %w[show edit update destroy rsvp cancel_rsvp]
+  # before_action :restrict_account, only: %[edit update destroy]
 
   def index
     @events = Event.all.includes(:account).published.ordered
@@ -33,6 +33,7 @@ class EventsController < ApplicationController
 
   def show
     @events = Event.all.limit(3).ordered
+    @current_account_rsvp_status = @event.rsvps.find_by(account: current_account)&.status
   end
 
   def edit
@@ -57,6 +58,27 @@ class EventsController < ApplicationController
     end
   end
 
+  def rsvp
+    rsvp = @event.rsvps.find_or_initialize_by(account: current_account)
+    if rsvp.update(rsvp_params)
+      respond_to do |format|
+        format.html { redirect_to @event, notice: 'Your RSVP was successfully updated.' }
+        # format.turbo_stream { flash.now[:notice] = "Your RSVP was successfully updated." }
+      end
+    else
+      redirect_to @event, alert: 'There was an error updating your RSVP.'
+    end
+  end
+
+  def cancel_rsvp
+    rsvp = @event.rsvps.find_by(account: current_account)
+    if rsvp&.destroy
+      redirect_to @event, notice: 'Your RSVP was successfully canceled.'
+    else
+      redirect_to @event, alert: 'There was an error canceling your RSVP.'
+    end
+  end
+
   private
 
   def event_params
@@ -64,7 +86,11 @@ class EventsController < ApplicationController
   end
 
   def find_event
-    @event = Event.find(params[:id])
+    @event = Event.includes(:rsvps, :accounts).find(params[:id])
+  end
+
+  def rsvp_params
+    params.require(:rsvp).permit(:status, :event_id)
   end
 
   def restrict_account

@@ -65,6 +65,8 @@ class Account < ApplicationRecord
   has_many :episode_progresses, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :events, dependent: :destroy
+  has_many :rsvps, dependent: :destroy
+  has_many :rsvp_events, through: :rsvps, source: :event
 
   # Follows a account.
   def follow(other_account)

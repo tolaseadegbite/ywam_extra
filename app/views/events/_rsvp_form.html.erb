@@ -1,0 +1,8 @@
+<%= form_with url: rsvp_event_path(event), method: :post, local: true, data: { turbo_action: "advance", controller: "debounce", action: "input->debounce#submit" } do |f| %>
+  <div>
+    <%= hidden_field_tag 'rsvp[event_id]', event.id %>
+    <%= select_tag 'rsvp[status]', options_for_select(Rsvp.statuses.keys.map { |status| [status.humanize, status] }, selected: @current_account_rsvp_status), prompt: "RSVP", class: "rounded-lg cursor-pointer" %>
+
+    <%#= f.submit "Update RSVP", class: "cursor-pointer rounded py-2 px-4 bg-blue-800 text-white hover:bg-blue-700 mb-5 md:max-w-fit" %>
+  </div>
+<% end %>
