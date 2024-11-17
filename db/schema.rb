@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_08_094902) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_17_102231) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -123,6 +123,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_08_094902) do
     t.integer "status", default: 0
     t.index ["category_id"], name: "index_episodes_on_category_id"
     t.index ["podcast_id"], name: "index_episodes_on_podcast_id"
+  end
+
+  create_table "event_co_hosts", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "account_id", null: false
+    t.integer "role", default: 1
+    t.integer "status", default: 0
+    t.integer "decline_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_event_co_hosts_on_account_id"
+    t.index ["event_id", "account_id"], name: "index_event_co_hosts_on_event_id_and_account_id", unique: true
+    t.index ["event_id"], name: "index_event_co_hosts_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -265,6 +278,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_08_094902) do
   add_foreign_key "episode_tags", "tags"
   add_foreign_key "episodes", "categories"
   add_foreign_key "episodes", "podcasts"
+  add_foreign_key "event_co_hosts", "accounts"
+  add_foreign_key "event_co_hosts", "events"
   add_foreign_key "events", "accounts"
   add_foreign_key "events", "categories"
   add_foreign_key "follows", "accounts"

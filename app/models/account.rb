@@ -68,6 +68,9 @@ class Account < ApplicationRecord
   has_many :rsvps, dependent: :destroy
   has_many :rsvp_events, through: :rsvps, source: :event
 
+  has_many :event_co_hosts, dependent: :destroy
+  has_many :co_hosted_events, through: :event_co_hosts, source: :event
+
   # Follows a account.
   def follow(other_account)
     following << other_account unless self == other_account
