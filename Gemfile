@@ -37,3 +37,4 @@ gem 'faker'
 gem "active_storage_validations", "0.9.8"
 gem 'pagy', '~> 9.0'
 gem 'city-state'
+gem 'mini_magick'

@@ -37,6 +37,7 @@
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (category_id => categories.id)
 #
+
 class Event < ApplicationRecord
   # Make sure the follwing event attributes are present before saving to database
   validates :name, :details, :start_date, :start_time, :end_date, :end_time, :event_type, :cost_type, presence: true
@@ -60,6 +61,7 @@ class Event < ApplicationRecord
                                     message: "must be a valid image format" },
                     size:         { less_than: 1.megabytes,
                                     message:   "should be less than 1MB" }
+
 
   # associate the follwing objects to an event and also delete from database when the event is destroyed
   # has_many :event_speakers, dependent: :destroy
@@ -108,7 +110,7 @@ class Event < ApplicationRecord
     leadership_only: 4
   }
 
-  scope :ordered, -> { order(id: :desc) }
+  scope :ordered, -> { order("start_date ASC, start_time ASC") }
   scope :published, -> { where(status: :published) }
 
   def countries

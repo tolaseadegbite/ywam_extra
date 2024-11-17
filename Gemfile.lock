@@ -317,6 +317,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails
+  mini_magick
   name_of_person
   pagy (~> 9.0)
   pg (~> 1.1)

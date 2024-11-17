@@ -41,12 +41,18 @@ class EventsController < ApplicationController
   end
 
   def update
+
+    Rails.logger.debug "===== Event Update ====="
+    Rails.logger.debug "Params: #{params.inspect}"
+
     if @event.update(event_params)
+      Rails.logger.debug "Event updated successfully"
       respond_to do |format|
         format.html { redirect_to event_url(@event), notice: "Event updated successfully" }
         format.turbo_stream { flash.now[:notice] = "Event updated successfully" }
       end
     else
+      Rails.logger.debug "Event update failed: #{@event.errors.full_messages}"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -77,6 +83,18 @@ class EventsController < ApplicationController
     else
       redirect_to @event, alert: 'There was an error canceling your RSVP.'
     end
+  end
+
+  def interested
+    @events = Event.joins(:rsvps).where(rsvps: { account: current_account, status: :interested }).ordered
+  end
+
+  def going
+    @events = Event.joins(:rsvps).where(rsvps: { account: current_account, status: :going }).ordered
+  end
+
+  def past_events
+
   end
 
   private

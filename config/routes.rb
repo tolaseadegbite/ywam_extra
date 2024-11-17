@@ -26,6 +26,11 @@ Rails.application.routes.draw do
       post 'rsvp'
       delete 'cancel_rsvp'
     end
+    collection do
+      get 'going'
+      get 'interested'
+      get 'past_events'
+    end
   end
 
   namespace :dashboard do

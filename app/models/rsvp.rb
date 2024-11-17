@@ -28,5 +28,8 @@ class Rsvp < ApplicationRecord
     interested: 0, 
     going: 1 
   }
-  # validates :status, inclusion: { in: statuses.keys }
+  validates :status, inclusion: { in: statuses.keys }
+
+  # scope to find RSVPs with status 'going' for a given account
+  # scope :going_for_account, -> (account) { where(account: account, status: :going) }
 end

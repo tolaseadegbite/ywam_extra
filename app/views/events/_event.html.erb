@@ -21,6 +21,12 @@
             <% else %>
                 <p class="text-sm mt-2">Online, <%= event.streaming_platform %></p>
             <% end %>
+
+            <div class="flex items-center gap-1">
+                <p class="text-xs"><%= event.rsvps.interested.count%> interested</p>
+                <span>•</span>
+                <p class="text-xs"><%= event.rsvps.going.count %> going</p>
+            </div>
         </div>
     <% end %>
 <%# end %>
