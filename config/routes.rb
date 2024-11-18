@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     member do
       post 'rsvp'
       delete 'cancel_rsvp'
+      post 'accept_co_host'
+      post 'decline_co_host'
     end
     collection do
       get 'going'
@@ -34,11 +36,16 @@ Rails.application.routes.draw do
   end
 
   namespace :dashboard do
+    # get '/', to: '/dashboard/dashboard#index'
     resources :podcasts do
       resources :episodes
     end
-    resources :events
-    # get '/', to: '/dashboard/dashboard#index'
+    resources :events do
+      member do
+        post 'add_co_host'
+        delete 'remove_co_host'
+      end
+    end
   end
 
   resources :comments do

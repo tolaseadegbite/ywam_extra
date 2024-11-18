@@ -69,10 +69,38 @@
     <% if @event.streaming_link.present? %>
         <p class="mb-3"><span class="font-semibold">Streaming link:</span> <%= link_to @event.streaming_link %></p>
     <% end %>
+    
+    <br>
+    <hr>
+    <br>
 
-    <% if @event.streaming_link.present? %>
-        <%= link_to @event.streaming_link, target: '_blank', class: "rounded py-2 px-4 bg-blue-800 items-center text-white hover:bg-blue-900 order-2 md:order-3" do %>
-            Stream event on <%= @event.streaming_platform %>
-        <% end %>
+    <h2 class="text-xl sm:text-xl md:text-2xl font-semibold capitalize leading-tight mb-3">Co-Hosts</h2>
+    <% if @event.co_hosts.present? %>
+        <ul class="mb-5">
+            <%= turbo_frame_tag "co_hosts" do %>
+                <% @event_co_hosts.each do |co_host_record| %>
+                    <%= render 'dashboard/events/event_co_host', co_host_record: co_host_record %>
+                <% end %>
+            <% end %>
+        </ul>
+    <% else %>
+        <div class="p-4 my-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 flex items-center gap-2" role="alert">
+            <span class="font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                </svg>
+            </span>
+
+            There are no co hosts added to this event
+        </div>
+    <% end %>
+
+    <% if @event.account == current_account %>
+        <h3 class="text-1.5xl font-semibold leading-tight mb-3">Add a Co-host</h3>
+
+        <%#= turbo_frame_tag 'co_host_form' do %>
+            <%= render 'dashboard/events/components/co_host_form', event: @event %>
+        <%# end %>
+        
     <% end %>
 </div>

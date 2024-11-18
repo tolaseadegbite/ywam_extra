@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_account!
-  before_action :find_event, only: %w[show edit update destroy rsvp cancel_rsvp]
+  before_action :find_event, only: %w[show edit update destroy rsvp cancel_rsvp accept_co_host decline_co_host]
   # before_action :restrict_account, only: %[edit update destroy]
 
   def index
@@ -41,18 +41,12 @@ class EventsController < ApplicationController
   end
 
   def update
-
-    Rails.logger.debug "===== Event Update ====="
-    Rails.logger.debug "Params: #{params.inspect}"
-
     if @event.update(event_params)
-      Rails.logger.debug "Event updated successfully"
       respond_to do |format|
         format.html { redirect_to event_url(@event), notice: "Event updated successfully" }
         format.turbo_stream { flash.now[:notice] = "Event updated successfully" }
       end
     else
-      Rails.logger.debug "Event update failed: #{@event.errors.full_messages}"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -95,6 +89,29 @@ class EventsController < ApplicationController
 
   def past_events
 
+  end
+
+  def accept_co_host
+    co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
+    if co_host&.pending?
+      co_host.update(status: :accepted)
+      # NotificationJob.perform_later(@event.account, @event, "#{co_host.account.accountname} has accepted the co-host invitation for the event: #{@event.name}", :co_host_accepted)
+      redirect_to event_path(@event), notice: "Co-host invitation accepted."
+    else
+      redirect_to event_path(@event), alert: "Unable to accept co-host invitation."
+    end
+  end
+
+  def decline_co_host
+    co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
+    if co_host&.pending?
+      co_host.increment!(:decline_count)
+      co_host.update(status: :declined)
+      # NotificationJob.perform_later(@event.account, @event, "#{co_host.account.accountname} has declined the co-host invitation for the event: #{@event.name}", :co_host_declined)
+      redirect_to event_path(@event), notice: "Co-host invitation declined."
+    else
+      redirect_to event_path(@event), alert: "Unable to decline co-host invitation."
+    end
   end
 
   private

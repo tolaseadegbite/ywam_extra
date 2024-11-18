@@ -1,0 +1,43 @@
+<% if @event.co_hosts.present? %>
+    <% @event.event_co_hosts.where.not(status: :declined).order(status: :asc).each do |co_host_record| %>
+        <div class="border rounded-lg p-3 text-center mb-3 md:mb-0">
+            <div class="mx-auto p-2">
+                <% if co_host_record.account.avatar.attached? %>
+                    <%= image_tag(co_host_record.account.avatar, class: "w-36 h-36 rounded-full mx-auto") %>
+                <% else %>
+                    <%= image_tag('others/default avatar', class: "w-36 h-36 rounded-full mx-auto") %>
+                <% end %>
+                <h3 class="text-1.5xl font-semibold capitalize leading-tight mt-2"><%= co_host_record.account.name %></h3>
+                <div class="flex items-center gap-2">
+                    <p class="mx-auto text-sm">13 past events<span class="mx-2">•</span>Organization</p>
+                </div>
+            </div>
+
+            <p class="border-t p-2 text-sm">
+                <%= co_host_record.account.bio %>
+            </p>
+            <% if co_host_record.pending? && co_host_record.account == current_account %>
+                <%= button_to 'Accept', accept_co_host_event_path(@event, account_id: co_host_record.account.id), method: :post %>
+                <%= button_to 'Decline', decline_co_host_event_path(@event, account_id: co_host_record.account.id), method: :post %>
+            <% end %>
+        </div>
+    <% end %>
+<% else %>
+    <div class="border rounded-lg p-3 text-center mb-3 md:mb-0">
+        <div class="mx-auto p-2">
+            <% if @event.account.avatar.attached? %>
+                <%= image_tag(@event.account.avatar, class: "w-36 h-36 rounded-full mx-auto") %>
+            <% else %>
+                <%= image_tag('others/default avatar', class: "w-36 h-36 rounded-full mx-auto") %>
+            <% end %>
+            <h3 class="text-1.5xl font-semibold capitalize leading-tight mt-2"><%= @event.account.name %></h3>
+            <div class="flex items-center gap-2">
+                <p class="mx-auto text-sm">13 past events<span class="mx-2">•</span>Organization</p>
+            </div>
+        </div>
+
+        <p class="border-t p-2 text-sm">
+            <%= @event.account.bio %>
+        </p>
+    </div>
+<% end %>

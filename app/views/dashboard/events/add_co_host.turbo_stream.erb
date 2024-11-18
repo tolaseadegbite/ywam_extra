@@ -1,0 +1,7 @@
+<%= turbo_stream.append "co_hosts" do %>
+    <%= render 'dashboard/events/event_co_host', co_host_record: @co_host %>
+<% end %>
+
+<%= turbo_stream.update 'co_host_form' do %>
+    <%= render 'dashboard/events/components/co_host_form', event: @event %>
+<% end %>

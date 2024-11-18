@@ -1,6 +1,6 @@
 class Dashboard::EventsController < ApplicationController
   before_action :authenticate_account!
-  before_action :find_event, only: %w[show edit update destroy]
+  before_action :find_event, only: %w[show edit update destroy add_co_host remove_co_host accept_co_host decline_co_host]
   # before_action :restrict_account, only: %[show edit update destroy]
 
   def index
@@ -32,6 +32,10 @@ class Dashboard::EventsController < ApplicationController
   end
 
   def show
+    @event_co_hosts = @event.event_co_hosts.order(status: :asc)
+    accepted_co_hosts = @event.event_co_hosts.accepted.map(&:account)
+    declined_too_many_times = @event.event_co_hosts.where('decline_count > ?', 3).map(&:account)
+    @accounts = Account.all - accepted_co_hosts - declined_too_many_times
   end
 
   def edit
@@ -53,6 +57,65 @@ class Dashboard::EventsController < ApplicationController
     @event.destroy
     respond_to do |format|
       format.html { redirect_to dashboard_events_url, notice: "Event deleted successfully" }
+    end
+  end
+
+  def add_co_host
+    account = Account.find(params[:account_id])
+    @co_host = @event.event_co_hosts.find_or_initialize_by(account: account)
+
+    if @co_host.decline_count > 3
+      redirect_to dashboard_event_path(@event), alert: "This account has declined too many co-host invitations and cannot be added again."
+    else
+      @co_host.status = :pending
+      if @co_host.save
+        respond_to do |format|
+          # NotificationJob.perform_later(account, @event, "You have been added as a co-host to the event: #{@event.name}", :co_dashboard_added)
+          format.html { redirect_to dashboard_event_path(@event), notice: "Co-host added successfully." }
+          
+          # format.turbo_stream { flash.now[:notice] = "Co-host added successfully." }
+        end
+      else
+        redirect_to dashboard_event_path(@event), alert: "Unable to add co-host."
+      end
+    end
+  end
+
+  def remove_co_host
+    account = Account.find(params[:account_id])
+    @co_host = @event.event_co_hosts.find_by(account: account)
+    if @co_host&.destroy
+      respond_to do |format|
+        # NotificationJob.perform_later(account, @event, "You have been removed as a co-host from the event: #{@event.name}", :co_dashboard_removed)
+        format.html {redirect_to dashboard_event_path(@event), notice: "Co-host removed successfully."}
+
+        format.turbo_stream { flash.now[:notice] = "Co-host removed successfully." }
+      end
+    else
+      redirect_to dashboard_event_path(@event), alert: "Unable to remove co-host."
+    end
+  end
+
+  def accept_co_host
+    co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
+    if co_host&.pending?
+      co_host.update(status: :accepted)
+      # NotificationJob.perform_later(@event.account, @event, "#{co_host.account.accountname} has accepted the co-host invitation for the event: #{@event.name}", :co_dashboard_accepted)
+      redirect_to dashboard_event_path(@event), notice: "Co-host invitation accepted."
+    else
+      redirect_to dashboard_event_path(@event), alert: "Unable to accept co-host invitation."
+    end
+  end
+
+  def decline_co_host
+    co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
+    if co_host&.pending?
+      co_host.increment!(:decline_count)
+      co_host.update(status: :declined)
+      # NotificationJob.perform_later(@event.account, @event, "#{co_host.account.accountname} has declined the co-host invitation for the event: #{@event.name}", :co_dashboard_declined)
+      redirect_to dashboard_event_path(@event), notice: "Co-host invitation declined."
+    else
+      redirect_to dashboard_event_path(@event), alert: "Unable to decline co-host invitation."
     end
   end
 
