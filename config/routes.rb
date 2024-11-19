@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get 'going'
       get 'interested'
       get 'past_events'
+      get 'co_host_invites'
     end
   end
 

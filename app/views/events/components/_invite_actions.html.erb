@@ -1,0 +1,11 @@
+<span class="bg-green-300 py-1 px-2 rounded text-sm flex items-center gap-1">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+    </svg>
+    <%= co_host_record.status.capitalize %>
+</span>
+<% if co_host_record.pending? && co_host_record.account == current_account %>
+    <%= button_to 'Accept', accept_co_host_event_path(co_host_record.event, account_id: co_host_record.account.id), method: :post, data: { turbo_frame: "_top" }, class: "rounded py-1 text-sm px-2 bg-blue-800 items-center text-white hover:bg-blue-900" %>
+
+    <%= button_to 'Decline', decline_co_host_event_path(co_host_record.event, account_id: co_host_record.account.id), method: :post, data: { turbo_frame: "_top" }, class: "rounded text-sm py-1 px-2 bg-blue-800 items-center text-white hover:bg-blue-900" %>
+<% end %>

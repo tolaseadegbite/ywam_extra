@@ -1,6 +1,6 @@
-<%= form_with url: add_co_host_dashboard_event_path(@event), method: :post, local: true do |form| %>
+<%= form_with url: add_co_host_dashboard_event_path(event), method: :post, local: true do |form| %>
     <div class="field mb-3">
-        <%= select_tag :account_id, options_from_collection_for_select(@accounts, :id, :name), { include_blank: "Select co-host", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
+        <%= select_tag :account_id, options_from_collection_for_select(accounts, :id, :name), { include_blank: "Select co-host", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
     </div>
     
     <div class="actions">

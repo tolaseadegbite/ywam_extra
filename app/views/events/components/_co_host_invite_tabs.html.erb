@@ -1,0 +1,21 @@
+<% base_classes = "inline-block p-4 border-b-2 rounded-t-lg" %>
+
+<div class="text-sm text-gray-500 border-gray-200 dark:text-gray-400 dark:border-gray-700 w-fit mx-auto">
+    <ul class="flex flex-wrap -mb-px">
+        <li class="me-2">
+            <%= link_to 'All', co_host_invites_events_path, class: "#{base_classes} #{params[:status].nil? ? 'text-blue-600 border-blue-600 active dark:text-blue-500 dark:border-blue-500': ""}" %>
+        </li>
+
+        <li class="me-2">
+            <%= link_to 'Pending', co_host_invites_events_path(status: :pending), class: "#{base_classes} #{params[:status] == 'pending' ? 'text-blue-600 border-blue-600 active dark:text-blue-500 dark:border-blue-500': ""}" %>
+        </li>
+
+        <li class="me-2">
+            <%= link_to 'Accepted', co_host_invites_events_path(status: :accepted), class: "#{base_classes} #{params[:status] == 'accepted' ? 'text-blue-600 border-blue-600 active dark:text-blue-500 dark:border-blue-500': ""}" %>
+        </li>
+
+        <li class="me-2">
+            <%= link_to 'Declined', co_host_invites_events_path(status: :declined), class: "#{base_classes} #{params[:status] == 'declined' ? 'text-blue-600 border-blue-600 active dark:text-blue-500 dark:border-blue-500': ""}" %>
+        </li>
+    </ul>
+</div>

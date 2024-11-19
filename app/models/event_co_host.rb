@@ -39,8 +39,11 @@ class EventCoHost < ApplicationRecord
   enum status: { 
     pending: 0, 
     accepted: 1, 
-    declined: 2 
+    declined: 2,
+    cancel: 3
   }
+
+  scope :by_status, -> (status) { where(status: status) }
 
   private
 

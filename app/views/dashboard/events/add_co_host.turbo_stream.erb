@@ -3,5 +3,5 @@
 <% end %>
 
 <%= turbo_stream.update 'co_host_form' do %>
-    <%= render 'dashboard/events/components/co_host_form', event: @event %>
+    <%= render 'dashboard/events/components/co_host_form', event: @event, accounts: @accounts %>
 <% end %>

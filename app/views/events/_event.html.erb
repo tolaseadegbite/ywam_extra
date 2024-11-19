@@ -1,17 +1,17 @@
 <%#= turbo_frame_tag podcast do %>
-    <%= link_to event, class: "p-3 hover:bg-gray-100 transition duration-300 ease-in-out block border relative", data: { turbo_frame: "_top" } do %>
+    <%= link_to event, class: "hover:bg-gray-100 transition duration-300 ease-in-out block border relative rounded-b-lg", data: { turbo_frame: "_top" } do %>
 
         <% if event.image.attached? %>
-            <%= image_tag(event.image, class: "w-full h-48 object-cover") %>
+            <%= image_tag(event.image, class: "w-full h-48 object-cover rounded-t-lg") %>
         <% else %>
-            <%= image_tag('podcasts/hands.png', class: "w-full h-48 object-cover") %>
+            <%= image_tag('podcasts/hands.png', class: "w-full h-48 object-cover rounded-t-lg") %>
         <% end %>
 
         <% if event.free? %>
-            <p class="absolute bg-white text-xs px-4 py-1 rounded drop-shadow-md right-5 top-5">Free</p>
+            <p class="absolute bg-white text-xs px-4 py-1 rounded-b drop-shadow-md right-5 top-0">Free</p>
         <% end %>
 
-        <div class="my-4">
+        <div class="my-4 p-2">
             <p class="text-sm text-blue-700 font-semibold mb-2">
                 <%= event.start_date.strftime("%a, %b %d") %>
             </p>

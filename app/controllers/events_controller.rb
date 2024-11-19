@@ -92,26 +92,43 @@ class EventsController < ApplicationController
   end
 
   def accept_co_host
-    co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
-    if co_host&.pending?
-      co_host.update(status: :accepted)
+    @co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
+    if @co_host&.pending?
+      @co_host.update(status: :accepted)
       # NotificationJob.perform_later(@event.account, @event, "#{co_host.account.accountname} has accepted the co-host invitation for the event: #{@event.name}", :co_host_accepted)
-      redirect_to event_path(@event), notice: "Co-host invitation accepted."
+      respond_to do |format|
+        format.html { redirect_to event_path(@event), notice: "Co-host invitation accepted." }
+        format.turbo_stream { flash.now[:notice] = "Co-host invitation accepted." }
+      end
     else
       redirect_to event_path(@event), alert: "Unable to accept co-host invitation."
     end
   end
 
   def decline_co_host
-    co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
-    if co_host&.pending?
-      co_host.increment!(:decline_count)
-      co_host.update(status: :declined)
+    @co_host = @event.event_co_hosts.find_by(account_id: params[:account_id])
+    if @co_host&.pending?
+      @co_host.increment!(:decline_count)
+      @co_host.update(status: :declined)
       # NotificationJob.perform_later(@event.account, @event, "#{co_host.account.accountname} has declined the co-host invitation for the event: #{@event.name}", :co_host_declined)
-      redirect_to event_path(@event), notice: "Co-host invitation declined."
+      respond_to do |format|
+        format.html { redirect_to event_path(@event), notice: "Co-host invitation declined." }
+        format.turbo_stream { flash.now[:notice] = "Co-host invitation declined." }
+      end
     else
       redirect_to event_path(@event), alert: "Unable to decline co-host invitation."
     end
+  end
+
+  def co_host_invites
+    @event_co_hosts = current_account.event_co_hosts.order(status: :asc)
+    @status = params[:status]
+
+    if @status.present? && @event_co_hosts.statuses.keys.include?(@status)
+      @event_co_hosts = @event_co_hosts.by_status(@status)
+    end
+
+    @pagy, @event_co_hosts = pagy_countless(@event_co_hosts, limit: 16)
   end
 
   private

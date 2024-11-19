@@ -98,9 +98,9 @@
     <% if @event.account == current_account %>
         <h3 class="text-1.5xl font-semibold leading-tight mb-3">Add a Co-host</h3>
 
-        <%#= turbo_frame_tag 'co_host_form' do %>
-            <%= render 'dashboard/events/components/co_host_form', event: @event %>
-        <%# end %>
+        <div id="co_host_form">
+            <%= render 'dashboard/events/components/co_host_form', event: @event, accounts: @accounts %>
+        </div>
         
     <% end %>
 </div>

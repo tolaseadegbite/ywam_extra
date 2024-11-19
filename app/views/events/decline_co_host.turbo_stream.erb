@@ -1,0 +1,7 @@
+<%= turbo_stream.update 'invite_actions' do %>
+    <%= render 'events/components/invite_actions', co_host_record: @co_host %>
+<% end %>
+
+<%= turbo_stream.update 'sidebar_co_host_invites' do %>
+    <%= render 'events/components/sidebar_co_host_invites' %>
+<% end %>
